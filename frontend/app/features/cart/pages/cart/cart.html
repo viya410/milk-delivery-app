@@ -1,0 +1,39 @@
+<section class="cart-page">
+  <div class="container">
+    <h1>Shopping Cart</h1>
+
+    @if (cartItems().length === 0) {
+      <div class="empty-cart">Cart is Empty</div>
+    } @else {
+      @for (item of cartItems(); track item.id) {
+        <div class="cart-item">
+          <div class="item-details">
+            <h3>
+              {{ item.productName }}
+            </h3>
+
+            <p>₹{{ item.price }}</p>
+          </div>
+
+          <div class="quantity-controls">
+            <button (click)="decrease(item.id)">-</button>
+
+            <span>
+              {{ item.quantity }}
+            </span>
+
+            <button (click)="increase(item.id)">+</button>
+          </div>
+
+          <button class="remove-btn" (click)="remove(item.id)">Remove</button>
+        </div>
+      }
+
+      <div class="cart-total">
+        <h2>Total ₹{{ getTotal() }}</h2>
+      </div>
+
+      <button class="checkout-btn" routerLink="/checkout">Proceed To Checkout</button>
+    }
+  </div>
+</section>

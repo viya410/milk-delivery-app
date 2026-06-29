@@ -1,0 +1,105 @@
+<div class="login-wrapper">
+
+  <mat-card class="login-card">
+
+    <div class="brand-section">
+
+      <h1>Milk Delivery</h1>
+
+      <p>
+        Fresh dairy products delivered daily
+      </p>
+
+    </div>
+
+    <form
+      [formGroup]="loginForm"
+      (ngSubmit)="submit()">
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Email or Mobile Number</mat-label>
+
+        <input
+          matInput
+          type="text"
+          formControlName="username">
+
+        @if (
+          loginForm.controls.username.touched &&
+          loginForm.controls.username.invalid
+        ) {
+
+          <mat-error>
+            Email or Mobile Number is required
+          </mat-error>
+
+        }
+
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+
+        <mat-label>Password</mat-label>
+
+        <input
+          matInput
+          [type]="hidePassword() ? 'password' : 'text'"
+          formControlName="password">
+
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="hidePassword.set(!hidePassword())">
+
+          <mat-icon>
+            {{ hidePassword() ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+
+        </button>
+
+      </mat-form-field>
+
+      <mat-checkbox>
+
+        Remember Me
+
+      </mat-checkbox>
+
+      <div class="forgot-password">
+
+        <a routerLink="/auth/forgot-password">
+
+          Forgot Password?
+
+        </a>
+
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit">
+
+        Login
+
+      </button>
+
+      <div class="signup-link">
+
+        Don't have an account?
+
+        <a routerLink="/auth/signup">
+
+          Sign Up
+
+        </a>
+
+      </div>
+
+    </form>
+
+  </mat-card>
+
+</div>
