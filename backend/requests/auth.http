@@ -1,0 +1,11 @@
+### Signup
+
+POST http://localhost:8080/api/auth/signup
+Content-Type: application/json
+
+{
+  "fullName": "Vishnu",
+  "email": "vishnu@gmail.com",
+  "phoneNumber": "9876543210",
+  "password": "Vishnu@123"
+}
