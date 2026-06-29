@@ -1,0 +1,31 @@
+<section>
+  <h1>Payment History</h1>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+
+        <th>Amount</th>
+
+        <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      @for (payment of payments(); track payment.id) {
+        <tr>
+          <td>
+            {{ payment.paymentDate }}
+          </td>
+
+          <td>₹{{ payment.amount }}</td>
+
+          <td>
+            {{ payment.status }}
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</section>

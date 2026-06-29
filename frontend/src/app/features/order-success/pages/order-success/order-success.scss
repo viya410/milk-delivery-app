@@ -1,0 +1,184 @@
+:host {
+
+  display: block;
+
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #fcfcfa,
+      #f8fff5
+    );
+
+}
+
+.success-page {
+
+  min-height: 100vh;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  text-align: center;
+
+  padding:
+    2rem;
+
+}
+
+.success-card {
+
+  background: white;
+
+  padding:
+    4rem;
+
+  border-radius: 32px;
+
+  box-shadow:
+    0 12px 40px rgba(
+      0,
+      0,
+      0,
+      0.08
+    );
+
+  max-width: 700px;
+
+  width: 100%;
+
+}
+
+.success-icon {
+
+  font-size: 5rem;
+
+  margin-bottom: 1rem;
+
+}
+
+h1 {
+
+  color: #2e7d32;
+
+  font-size:
+    clamp(
+      2rem,
+      4vw,
+      3rem
+    );
+
+  margin-bottom: 1rem;
+
+}
+
+p {
+
+  color: #666;
+
+  font-size: 1.1rem;
+
+  line-height: 1.8;
+
+  margin-bottom: 2rem;
+
+}
+
+.actions {
+
+  display: flex;
+
+  gap: 1rem;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+}
+
+.primary-btn {
+
+  border: none;
+
+  background: #2e7d32;
+
+  color: white;
+
+  padding:
+    1rem
+    2rem;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition:
+    all .3s ease;
+
+}
+
+.primary-btn:hover {
+
+  background: #1b5e20;
+
+  transform:
+    translateY(-3px);
+
+}
+
+.secondary-btn {
+
+  border: 2px solid #2e7d32;
+
+  color: #2e7d32;
+
+  background: white;
+
+  padding:
+    1rem
+    2rem;
+
+  border-radius: 14px;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition:
+    all .3s ease;
+
+}
+
+.secondary-btn:hover {
+
+  background: #f1f8e9;
+
+  transform:
+    translateY(-3px);
+
+}
+
+@media (max-width: 768px) {
+
+  .success-card {
+
+    padding:
+      2rem;
+
+  }
+
+  .actions {
+
+    flex-direction: column;
+
+  }
+
+}

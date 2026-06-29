@@ -1,0 +1,23 @@
+<section class="checkout-page">
+  <div class="container">
+    <h1>Delivery Address</h1>
+
+    <form [formGroup]="checkoutForm" (ngSubmit)="placeOrder()">
+      <input placeholder="Customer Name" formControlName="customerName" readonly />
+
+      <input placeholder="Mobile Number" formControlName="mobileNumber" readonly />
+
+      <input placeholder="House No" formControlName="houseNo" />
+
+      <input placeholder="Street" formControlName="street" />
+
+      <input placeholder="City" formControlName="city" />
+
+      <input placeholder="State" formControlName="state" />
+
+      <input placeholder="Pincode" formControlName="pincode" />
+
+      <button type="submit">Place Order</button>
+    </form>
+  </div>
+</section>

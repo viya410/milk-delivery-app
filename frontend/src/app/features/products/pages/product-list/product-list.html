@@ -1,0 +1,47 @@
+<section class="products-page">
+  <div class="container">
+    <div class="page-header">
+      <h1>Fresh Dairy Products</h1>
+
+      <p>Freshly sourced from our farm and delivered to your doorstep.</p>
+    </div>
+
+    @if (loading()) {
+      <div class="loading">Loading Products...</div>
+    } @else if (errorMessage()) {
+      <div class="error">
+        {{ errorMessage() }}
+      </div>
+    } @else {
+      <div class="products-grid">
+        @for (product of products(); track product.id) {
+          <div class="product-card">
+            <img [src]="product.imageUrl" [alt]="product.name" />
+
+            <div class="product-content">
+              <h3>
+                {{ product.name }}
+              </h3>
+
+              <p>
+                {{ product.description }}
+              </p>
+
+              <div class="product-price">
+                ₹{{ product.price }}
+
+                <span> / {{ product.unit }} </span>
+              </div>
+
+              <div class="product-actions">
+                <button class="cart-btn" (click)="addToCart(product.id)">Add To Cart</button>
+
+                <button class="view-btn" (click)="viewProduct(product.id)">View Details</button>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+</section>

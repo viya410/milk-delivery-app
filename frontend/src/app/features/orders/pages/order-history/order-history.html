@@ -1,0 +1,38 @@
+<section class="orders-page">
+  <div class="container">
+    <h1>My Orders</h1>
+
+    @if (loading()) {
+      Loading...
+
+    } @else {
+      @for (order of orders(); track order.id) {
+        <div class="order-card">
+          <div class="header">
+            <div>
+              <h3>Order #{{ order.id }}</h3>
+
+              <p>
+                {{ order.status }}
+              </p>
+            </div>
+
+            <h2>₹{{ order.totalAmount }}</h2>
+          </div>
+
+          <div class="items">
+            @for (item of order.items; track item.id) {
+              <div>
+                {{ item.product.name }}
+
+                ×
+
+                {{ item.quantity }}
+              </div>
+            }
+          </div>
+        </div>
+      }
+    }
+  </div>
+</section>

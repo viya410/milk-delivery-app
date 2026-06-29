@@ -1,0 +1,248 @@
+<!-- TOP ACTION BAR -->
+
+<section class="top-bar">
+  <div class="container top-bar-content">
+    <div class="brand">🥛 Fresh Farm Milk</div>
+
+    <div class="auth-buttons">
+      <button class="login-btn" routerLink="/auth/login">Login</button>
+
+      <button class="signup-btn" routerLink="/auth/signup">Sign Up</button>
+    </div>
+  </div>
+</section>
+
+<!-- HERO -->
+
+<section>
+  <div class="container hero">
+    <div class="hero-content">
+      <span class="tag"> 🌱 Farm Fresh Dairy Products </span>
+
+      <h1>Fresh Milk Delivered From Our Farm To Your Doorstep</h1>
+
+      <p>
+        Every morning before sunrise, our dairy team begins caring for the cattle, collecting fresh
+        milk under hygienic conditions, performing quality checks, and preparing deliveries so your
+        family receives fresh, nutritious dairy products every day.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="primary-btn" (click)="navigateToProducts()">Explore Products</button>
+
+        <button class="secondary-btn" (click)="scrollToContact()">Contact Us</button>
+      </div>
+    </div>
+
+    <div class="hero-image">
+      <img src="assets/images/farm-hero.jpg" alt="Dairy Farm" />
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section class="about">
+  <div class="container">
+    <h2>Our Farm Story</h2>
+
+    <p>
+      Our dairy farm was built on a simple belief: healthy cattle produce healthier milk. We focus
+      on animal welfare, clean farming practices, and consistent quality at every stage.
+    </p>
+
+    <p>
+      Every day begins with feeding schedules, health monitoring, veterinary supervision, hygienic
+      milking, quality testing, and rapid cooling to preserve freshness.
+    </p>
+
+    <p>
+      From farm to home, every step is carefully managed so your family receives fresh, nutritious
+      dairy products every day.
+    </p>
+  </div>
+</section>
+
+<!-- DAILY FARM ACTIVITIES -->
+
+<section>
+  <div class="container">
+    <h2>A Day At Our Farm</h2>
+
+    <div class="activities-grid">
+      <div class="activity-card">
+        <h3>🌾 Morning Feeding</h3>
+
+        <p>Balanced nutrition plans prepared daily to support cattle health.</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>🩺 Health Monitoring</h3>
+
+        <p>Daily observation and veterinary care help maintain animal wellbeing.</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>🥛 Hygienic Milking</h3>
+
+        <p>Milk is collected using clean equipment and safe handling practices.</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>❄️ Rapid Cooling</h3>
+
+        <p>Fresh milk is cooled immediately to preserve quality and freshness.</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>🔬 Quality Testing</h3>
+
+        <p>Every batch is inspected before packaging and delivery.</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>🚚 Delivery</h3>
+
+        <p>Fresh products delivered directly to customers every morning.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FARM TO HOME -->
+
+<section class="about">
+  <div class="container">
+    <h2>Farm To Home Journey</h2>
+
+    <div class="timeline">
+      <div>🐄 Healthy Cattle</div>
+
+      <div>🌾 Balanced Nutrition</div>
+
+      <div>🥛 Milking</div>
+
+      <div>🔬 Quality Testing</div>
+
+      <div>❄️ Cooling</div>
+
+      <div>🚚 Delivery</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+
+<!-- FEATURED PRODUCTS -->
+
+<section>
+  <div class="container">
+    <h2>Featured Products</h2>
+
+    <div class="products-grid">
+      @for (product of products; track product.id) {
+        <div class="product-card">
+          <img [src]="product.imageUrl" [alt]="product.name" />
+
+          <div class="product-body">
+            <h3>
+              {{ product.name }}
+            </h3>
+
+            <p>
+              {{ product.description }}
+            </p>
+
+            <div class="product-price">
+              ₹{{ product.price }}
+
+              <span> / {{ product.unit }} </span>
+            </div>
+
+            <button class="primary-btn">View Product</button>
+          </div>
+        </div>
+      }
+    </div>
+
+    <div class="products-footer">
+      <button class="secondary-btn" (click)="navigateToProducts()">View All Products</button>
+    </div>
+  </div>
+</section>
+
+<!-- WHY CHOOSE US -->
+
+<section class="about">
+  <div class="container">
+    <h2>Why Families Trust Us</h2>
+
+    <div class="activities-grid">
+      <div class="activity-card">
+        <h3>500+</h3>
+
+        <p>Families Served</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>50+</h3>
+
+        <p>Healthy Dairy Cattle</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>365</h3>
+
+        <p>Days Delivery</p>
+      </div>
+
+      <div class="activity-card">
+        <h3>100%</h3>
+
+        <p>Quality Checked</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+
+<section>
+  <div class="container">
+    <h2>Customer Testimonials</h2>
+
+    <div class="activities-grid">
+      <div class="activity-card">
+        <p>"Excellent milk quality and always delivered on time."</p>
+
+        <strong> — Lakshmi </strong>
+      </div>
+
+      <div class="activity-card">
+        <p>"Fresh products and reliable service every single day."</p>
+
+        <strong> — Ramesh </strong>
+      </div>
+
+      <div class="activity-card">
+        <p>"The transparency of the farm process gives us confidence."</p>
+
+        <strong> — Suresh </strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section class="about" #contactSection>
+  <div class="container contact-info">
+    <h2>Contact Us</h2>
+
+    <p>📍 Hyderabad, Telangana</p>
+
+    <p>📞 +91 98765 43210</p>
+
+    <p>✉️ support@freshfarmmilk.com</p>
+  </div>
+</section>

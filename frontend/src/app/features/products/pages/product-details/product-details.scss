@@ -1,0 +1,55 @@
+.details-page {
+  padding: 4rem 2rem;
+}
+
+.details-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 3rem;
+
+  align-items: center;
+}
+
+.image-section img {
+  width: 100%;
+
+  border-radius: 20px;
+}
+
+.info-section h1 {
+  color: #2e7d32;
+
+  margin-bottom: 1rem;
+}
+
+.price {
+  margin: 2rem 0;
+
+  font-size: 2rem;
+
+  font-weight: 700;
+
+  color: #2e7d32;
+}
+
+.cart-btn {
+  padding: 1rem 2rem;
+
+  border: none;
+
+  background: #2e7d32;
+
+  color: white;
+
+  border-radius: 12px;
+
+  cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .details-grid {
+    grid-template-columns: 1fr;
+  }
+}

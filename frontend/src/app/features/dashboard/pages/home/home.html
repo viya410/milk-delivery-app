@@ -1,0 +1,97 @@
+@if (!loading) {
+  <div class="dashboard-home">
+    <section class="welcome-section">
+      <h1>Welcome {{ userName }} 👋</h1>
+
+      <p>Manage your milk deliveries and subscriptions.</p>
+    </section>
+
+    <section class="stats-grid">
+      @for (stat of stats; track stat.title) {
+        <mat-card class="stat-card" (click)="navigateToCard(stat)">
+          <h3>
+            {{ stat.title }}
+          </h3>
+
+          <h2>
+            {{ stat.value }}
+          </h2>
+        </mat-card>
+      }
+    </section>
+
+    <section class="quick-actions">
+      <mat-card>
+        <h2>Quick Actions</h2>
+
+        <div class="actions">
+          <button mat-raised-button routerLink="/products">Order Milk</button>
+
+          <button mat-raised-button>Manage Plan</button>
+
+          <button mat-raised-button routerLink="/dashboard/addresses">Addresses</button>
+        </div>
+      </mat-card>
+    </section>
+
+    <section class="recent-orders">
+      <mat-card>
+        <div class="section-header">
+          <h2>Recent Orders</h2>
+
+          <button mat-button color="primary" routerLink="/dashboard/orders">View All</button>
+        </div>
+
+        @if (recentOrders.length > 0) {
+          <div class="recent-orders-grid">
+            @for (order of recentOrders; track order.id) {
+              <div class="recent-order-card">
+                <div class="order-top">
+                  <strong> Order #{{ order.id }} </strong>
+
+                  <span class="status">
+                    {{ order.status }}
+                  </span>
+                </div>
+
+                <div class="products">
+                  @for (item of order.items; track item.id) {
+                    <div class="product-item">
+                      <span> 🥛 {{ item.product.name }} </span>
+
+                      <span> × {{ item.quantity }} </span>
+                    </div>
+                  }
+                </div>
+
+                <div class="order-footer">
+                  <div class="amount">₹{{ order.totalAmount }}</div>
+
+                  <small>
+                    {{ order.orderDate | date: 'dd MMM yyyy, hh:mm a' }}
+                  </small>
+                </div>
+              </div>
+            }
+          </div>
+        } @else {
+          <div class="no-orders">
+            <mat-icon> shopping_bag </mat-icon>
+
+            <h3>No Recent Orders</h3>
+
+            <p>Looks like you haven't placed any orders yet.</p>
+
+            <button mat-raised-button color="primary" routerLink="/products">
+              Browse Products
+            </button>
+          </div>
+        }
+      </mat-card>
+    </section>
+  </div>
+} @else {
+  <div class="dashboard-loading">
+    <h2>Loading Dashboard...</h2>
+  </div>
+}

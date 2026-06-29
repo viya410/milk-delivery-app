@@ -1,0 +1,29 @@
+.orders-page {
+
+  mat-card {
+
+    padding: 24px;
+
+  }
+
+  table {
+
+    width: 100%;
+
+  }
+
+  tr.mat-mdc-row {
+
+    transition:
+      background 200ms ease;
+
+  }
+
+  tr.mat-mdc-row:hover {
+
+    background:
+      rgba(0, 0, 0, 0.03);
+
+  }
+
+}

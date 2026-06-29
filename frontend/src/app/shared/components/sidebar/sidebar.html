@@ -1,0 +1,95 @@
+<div
+  class="sidebar"
+  [class.expanded]="layoutService.sidebarExpanded()"
+  [class.collapsed]="!layoutService.sidebarExpanded()"
+>
+  <mat-nav-list>
+    @if (!authService.isLoggedIn()) {
+      <a
+        mat-list-item
+        routerLink="/landing"
+        routerLinkActive="active-link"
+        matTooltip="Home"
+        [matTooltipDisabled]="layoutService.sidebarExpanded()"
+      >
+        <mat-icon>home</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span class="menu-text" [class.hidden]="!layoutService.sidebarExpanded()"> Home </span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/products" routerLinkActive="active-link">
+        <mat-icon>shopping_bag</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Products</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/auth/login" routerLinkActive="active-link">
+        <mat-icon>login</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Login</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/auth/register" routerLinkActive="active-link">
+        <mat-icon>person_add</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Register</span>
+        }
+      </a>
+    } @else {
+      <a mat-list-item routerLink="/dashboard/home" routerLinkActive="active-link">
+        <mat-icon>home</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Home</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/products" routerLinkActive="active-link">
+        <mat-icon>shopping_bag</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Products</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/cart" routerLinkActive="active-link">
+        <mat-icon>shopping_cart</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Cart</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/dashboard/orders" routerLinkActive="active-link">
+        <mat-icon>receipt</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Orders</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/dashboard/addresses" routerLinkActive="active-link">
+        <mat-icon>location_on</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Addresses</span>
+        }
+      </a>
+
+      <a mat-list-item routerLink="/dashboard/profile" routerLinkActive="active-link">
+        <mat-icon>person</mat-icon>
+
+        @if (layoutService.sidebarExpanded()) {
+          <span>Profile</span>
+        }
+      </a>
+    }
+  </mat-nav-list>
+</div>
