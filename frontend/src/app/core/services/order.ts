@@ -5,10 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class OrderService {
-
   private http = inject(HttpClient);
 
   private apiUrl = 'http://localhost:8080/api/orders';
@@ -17,34 +16,29 @@ export class OrderService {
 
   readonly loading = signal(false);
 
-  placeOrder() {
+  placeOrder(addressId: number) {
+    return this.http.post(
+      this.apiUrl,
 
-    return this.http.post(this.apiUrl, {});
-
+      {
+        addressId,
+      },
+    );
   }
 
   getOrders() {
-
     this.loading.set(true);
 
     return this.http.get<any[]>(this.apiUrl).pipe(
-
-      tap(response => {
-
+      tap((response) => {
         this.orders.set(response);
 
         this.loading.set(false);
-
-      })
-
+      }),
     );
-
   }
 
   refreshOrders(): void {
-
     this.getOrders().subscribe();
-
   }
-
 }
