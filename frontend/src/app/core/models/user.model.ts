@@ -3,6 +3,6 @@ export interface User {
   fullName: string;
   email: string;
   phoneNumber: string;
-  role: 'ADMIN' | 'USER';
+  role: 'ROLE_ADMIN' | 'ROLE_USER';
   token?: string;
 }
