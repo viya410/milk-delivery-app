@@ -1,139 +1,46 @@
 package com.milkdelivery.order.controller;
 
-import com.milkdelivery.cart.entity.CartItem;
-import com.milkdelivery.cart.repository.CartItemRepository;
+import com.milkdelivery.order.dto.PlaceOrderRequest;
 import com.milkdelivery.order.entity.Order;
-import com.milkdelivery.order.entity.OrderItem;
-import com.milkdelivery.order.repository.OrderRepository;
-import com.milkdelivery.user.entity.User;
-import com.milkdelivery.user.repository.UserRepository;
-
+import com.milkdelivery.order.service.OrderService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import com.milkdelivery.order.dto.OrderResponse;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
 
-    private final OrderRepository orderRepository;
+    private final OrderService orderService;
 
-    private final CartItemRepository cartItemRepository;
-
-    private final UserRepository userRepository;
-
-    public OrderController(
-
-            OrderRepository orderRepository,
-
-            CartItemRepository cartItemRepository,
-
-            UserRepository userRepository
-
-    ) {
-
-        this.orderRepository = orderRepository;
-
-        this.cartItemRepository = cartItemRepository;
-
-        this.userRepository = userRepository;
-
-    }
-
-    private User getCurrentUser(
-
-            Authentication authentication
-
-    ) {
-
-        String username = authentication.getName();
-
-        return userRepository
-
-                .findByEmail(username)
-
-                .or(() ->
-
-                        userRepository.findByPhoneNumber(username)
-
-                )
-
-                .orElseThrow();
-
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
     }
 
     @PostMapping
     public Order placeOrder(
-
+            @RequestBody PlaceOrderRequest request,
             Authentication authentication
-
     ) {
-
-        User user = getCurrentUser(authentication);
-
-        List<CartItem> cartItems =
-
-                cartItemRepository.findByUser(user);
-
-        List<OrderItem> orderItems =
-
-                new ArrayList<>();
-
-        double total = 0;
-
-        Order order = new Order();
-
-        order.setUser(user);
-
-        order.setOrderDate(LocalDateTime.now());
-
-        order.setStatus("PLACED");
-
-        for (CartItem cartItem : cartItems) {
-
-            OrderItem item = new OrderItem();
-
-            item.setProduct(cartItem.getProduct());
-
-            item.setQuantity(cartItem.getQuantity());
-
-            // IMPORTANT
-            item.setOrder(order);
-
-            orderItems.add(item);
-
-            total += cartItem.getProduct().getPrice()
-                    * cartItem.getQuantity();
-
-        }
-
-        order.setItems(orderItems);
-
-        order.setTotalAmount(total);
-
-        Order savedOrder =
-
-                orderRepository.save(order);
-
-        cartItemRepository.deleteAll(cartItems);
-
-        return savedOrder;
-
+        return orderService.placeOrder(request, authentication);
     }
 
     @GetMapping
-    public List<Order> getOrders(
-
-            Authentication authentication
-
-    ) {
-
-        User user = getCurrentUser(authentication);
-
-        return orderRepository.findByUserOrderByOrderDateDesc(user);
+    public List<OrderResponse> getOrders(Authentication authentication) {
+        return orderService.getOrders(authentication);
     }
 
+    @PutMapping("/{orderId}/cancel")
+    public ResponseEntity<OrderResponse> cancelOrder(
+            @PathVariable Long orderId,
+            Authentication authentication
+    ) {
+
+        return ResponseEntity.ok(
+                orderService.cancelOrder(orderId, authentication)
+        );
+    }
 }

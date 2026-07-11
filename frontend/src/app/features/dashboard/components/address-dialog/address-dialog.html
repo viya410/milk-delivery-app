@@ -1,59 +1,44 @@
 <h2 mat-dialog-title>
-
-  Address
-
+  {{ isEdit ? 'Edit Address' : 'Add Address' }}
 </h2>
 
 <mat-dialog-content>
 
-  <form [formGroup]="addressForm">
+  <form [formGroup]="addressForm" class="address-form">
 
     <mat-form-field appearance="outline">
-
-      <mat-label>
-        Address Type
-      </mat-label>
-
-      <input
-        matInput
-        formControlName="type">
-
+      <mat-label>Customer Name</mat-label>
+      <input matInput formControlName="customerName">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-
-      <mat-label>
-        Name
-      </mat-label>
-
-      <input
-        matInput
-        formControlName="name">
-
+      <mat-label>Mobile Number</mat-label>
+      <input matInput formControlName="mobileNumber">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-
-      <mat-label>
-        Address
-      </mat-label>
-
-      <input
-        matInput
-        formControlName="addressLine">
-
+      <mat-label>House / Flat No.</mat-label>
+      <input matInput formControlName="houseNo">
     </mat-form-field>
 
     <mat-form-field appearance="outline">
+      <mat-label>Street / Area</mat-label>
+      <input matInput formControlName="street">
+    </mat-form-field>
 
-      <mat-label>
-        City
-      </mat-label>
+    <mat-form-field appearance="outline">
+      <mat-label>City</mat-label>
+      <input matInput formControlName="city">
+    </mat-form-field>
 
-      <input
-        matInput
-        formControlName="city">
+    <mat-form-field appearance="outline">
+      <mat-label>State</mat-label>
+      <input matInput formControlName="state">
+    </mat-form-field>
 
+    <mat-form-field appearance="outline">
+      <mat-label>Pincode</mat-label>
+      <input matInput formControlName="pincode">
     </mat-form-field>
 
   </form>
@@ -62,18 +47,15 @@
 
 <mat-dialog-actions align="end">
 
-  <button
-    mat-button
-    (click)="cancel()">
-
+  <button mat-button (click)="cancel()">
     Cancel
-
   </button>
 
   <button
     mat-raised-button
     color="primary"
-    (click)="save()">
+    (click)="save()"
+    [disabled]="addressForm.invalid">
 
     Save
 

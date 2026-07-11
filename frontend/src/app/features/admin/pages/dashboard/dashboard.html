@@ -1,1 +1,191 @@
-<p>dashboard works!</p>
+@if (adminService.loading()) {
+  <p>Loading Dashboard...</p>
+} @else {
+  <div class="hero">
+    <div>
+      <h1>👋 Welcome Back!</h1>
+
+      <p>Here's a quick overview of your milk delivery business.</p>
+    </div>
+  </div>
+
+  <!-- ================= Statistics ================= -->
+
+  <div class="stats-grid">
+    <mat-card class="stat-card green" (click)="navigate('/admin/users')">
+      <mat-icon>groups</mat-icon>
+
+      <div>
+        <span>Total Users</span>
+
+        <h2>{{ adminService.dashboard()?.totalUsers }}</h2>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card blue" (click)="navigate('/admin/products')">
+      <mat-icon>inventory_2</mat-icon>
+
+      <div>
+        <span>Products</span>
+
+        <h2>{{ adminService.dashboard()?.totalProducts }}</h2>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card orange" (click)="navigate('/admin/orders')">
+      <mat-icon>receipt_long</mat-icon>
+
+      <div>
+        <span>Orders</span>
+
+        <h2>{{ adminService.dashboard()?.totalOrders }}</h2>
+      </div>
+    </mat-card>
+
+    <!-- Pending Orders -->
+
+    <mat-card class="stat-card purple" (click)="goToPendingOrders()">
+      <mat-icon>schedule</mat-icon>
+
+      <div>
+        <span>Pending</span>
+
+        <h2>{{ adminService.dashboard()?.pendingOrders }}</h2>
+      </div>
+    </mat-card>
+
+    <!-- Delivered Orders -->
+
+    <mat-card class="stat-card teal" (click)="goToDeliveredOrders()">
+      <mat-icon>check_circle</mat-icon>
+
+      <div>
+        <span>Delivered</span>
+
+        <h2>{{ adminService.dashboard()?.completedOrders }}</h2>
+      </div>
+    </mat-card>
+
+    <mat-card class="stat-card pink">
+      <mat-icon>payments</mat-icon>
+
+      <div>
+        <span>Total Revenue</span>
+
+        <h2>₹{{ adminService.dashboard()?.totalRevenue }}</h2>
+      </div>
+    </mat-card>
+  </div>
+
+  <!-- ================= Quick Actions ================= -->
+
+  <mat-card class="quick-actions">
+    <h2>Quick Actions</h2>
+
+    <div class="action-grid">
+      <button mat-raised-button color="primary" (click)="navigate('/admin/products')">
+        <mat-icon> add </mat-icon>
+
+        Add Product
+      </button>
+
+      <button mat-raised-button color="accent" (click)="navigate('/admin/orders')">
+        <mat-icon> receipt_long </mat-icon>
+
+        Manage Orders
+      </button>
+
+      <button mat-raised-button color="primary" (click)="navigate('/admin/users')">
+        <mat-icon> groups </mat-icon>
+
+        View Users
+      </button>
+
+      <button mat-raised-button (click)="navigate('/admin/products')">
+        <mat-icon> inventory </mat-icon>
+
+        Manage Products
+      </button>
+    </div>
+  </mat-card>
+
+  <!-- ================= Bottom ================= -->
+
+  <div class="bottom-grid">
+    <!-- Recent Orders -->
+
+    <mat-card class="orders-card">
+      <div class="section-header">
+        <h2>Recent Orders ({{ adminService.dashboard()?.recentOrders?.length || 0 }})</h2>
+
+        <mat-icon> receipt_long </mat-icon>
+      </div>
+
+      @if (adminService.dashboard()?.recentOrders?.length) {
+        @for (order of adminService.dashboard()!.recentOrders; track order.id) {
+          <div class="order-card">
+            <div class="order-left">
+              <div class="avatar">
+                {{ getCustomerInitials(order.user?.fullName) }}
+              </div>
+
+              <div>
+                <div class="customer">
+                  {{ order.user?.fullName ?? 'Unknown Customer' }}
+                </div>
+
+                <div class="date">
+                  {{ order.orderDate | date: 'medium' }}
+                </div>
+              </div>
+            </div>
+
+            <div class="order-right">
+              <div class="amount">₹{{ order.totalAmount }}</div>
+
+              <span
+                class="status"
+                [class.placed]="order.status === 'PLACED'"
+                [class.packed]="order.status === 'PACKED'"
+                [class.delivery]="order.status === 'OUT_FOR_DELIVERY'"
+                [class.delivered]="order.status === 'DELIVERED'"
+              >
+                {{ getStatusLabel(order.status) }}
+              </span>
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="empty">No recent orders yet.</div>
+      }
+    </mat-card>
+
+    <!-- Products -->
+
+    <mat-card class="products-card">
+      <div class="section-header">
+        <h2>Unavailable Products</h2>
+
+        <mat-icon> warning </mat-icon>
+      </div>
+
+      @if (adminService.dashboard()?.unavailableProducts?.length) {
+        @for (product of adminService.dashboard()!.unavailableProducts; track product.id) {
+          <div class="product-item">
+            <mat-icon> inventory_2 </mat-icon>
+
+            <div>
+              <strong>
+                {{ product.name }}
+              </strong>
+
+              <small> Currently unavailable </small>
+            </div>
+          </div>
+        }
+      } @else {
+        <div class="empty">🎉 All products are available</div>
+      }
+    </mat-card>
+  </div>
+}

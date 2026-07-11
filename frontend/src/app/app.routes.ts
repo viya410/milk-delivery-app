@@ -1,18 +1,36 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth-guard';
+import { adminGuard } from './core/guards/admin-guard';
+import { rootRedirectGuard } from './core/guards/route-redirect-guard';
 
 export const routes: Routes = [
+
+  // Smart root redirect
   {
-    path: 'auth',
-    loadChildren: () =>
-      import('./features/auth/auth.routes').then((m) => m.AUTH_ROUTES),
+    path: '',
+    canActivate: [rootRedirectGuard],
+    children: [],
   },
 
+  // Landing
   {
     path: 'landing',
     loadChildren: () =>
-      import('./features/landing/landing.routes').then((m) => m.LANDING_ROUTES),
+      import('./features/landing/landing.routes').then(
+        (m) => m.LANDING_ROUTES
+      ),
   },
 
+  // Authentication
+  {
+    path: 'auth',
+    loadChildren: () =>
+      import('./features/auth/auth.routes').then(
+        (m) => m.AUTH_ROUTES
+      ),
+  },
+
+  // Main Application
   {
     path: '',
     loadComponent: () =>
@@ -21,6 +39,7 @@ export const routes: Routes = [
       ),
 
     children: [
+
       {
         path: 'products',
         loadChildren: () =>
@@ -31,6 +50,7 @@ export const routes: Routes = [
 
       {
         path: 'cart',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/cart/cart.routes').then(
             (m) => m.CART_ROUTES
@@ -39,6 +59,7 @@ export const routes: Routes = [
 
       {
         path: 'checkout',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/checkout/checkout.routes').then(
             (m) => m.CHECKOUT_ROUTES
@@ -47,6 +68,7 @@ export const routes: Routes = [
 
       {
         path: 'dashboard',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/dashboard/dashboard.routes').then(
             (m) => m.DASHBOARD_ROUTES
@@ -54,15 +76,17 @@ export const routes: Routes = [
       },
 
       {
-        path: 'admin',
-        loadChildren: () =>
-          import('./features/admin/admin.routes').then(
-            (m) => m.ADMIN_ROUTES
+        path: 'orders',
+        canActivate: [authGuard],
+        loadComponent: () =>
+          import('./features/orders/pages/order-history/order-history').then(
+            (m) => m.OrderHistory
           ),
       },
 
       {
         path: 'order-success',
+        canActivate: [authGuard],
         loadChildren: () =>
           import('./features/order-success/order-success.routes').then(
             (m) => m.ORDER_SUCCESS_ROUTES
@@ -70,23 +94,33 @@ export const routes: Routes = [
       },
 
       {
-        path: 'orders',
+        path: 'admin',
+        canActivate: [authGuard, adminGuard],
         loadComponent: () =>
-          import(
-            './features/orders/pages/order-history/order-history'
-          ).then((m) => m.OrderHistory),
+          import('./layouts/admin-layout/admin-layout').then(
+            (m) => m.AdminLayout
+          ),
+
+        children: [
+
+          {
+            path: '',
+            loadChildren: () =>
+              import('./features/admin/admin.routes').then(
+                (m) => m.ADMIN_ROUTES
+              ),
+          },
+
+        ],
       },
+
     ],
   },
 
-  {
-    path: '',
-    redirectTo: 'landing',
-    pathMatch: 'full',
-  },
-
+  // Wildcard must always be last
   {
     path: '**',
-    redirectTo: 'landing',
+    redirectTo: '/',
   },
+
 ];

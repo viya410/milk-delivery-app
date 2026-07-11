@@ -69,11 +69,9 @@ public class DashboardController {
         return new DashboardSummaryResponse(
 
                 totalOrders,
+                activePlans,
 
-                totalAddresses,
-
-                activePlans
-
+                totalAddresses
         );
 
     }

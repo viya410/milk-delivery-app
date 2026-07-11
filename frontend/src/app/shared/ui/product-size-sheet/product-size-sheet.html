@@ -1,0 +1,53 @@
+<div class="sheet">
+
+  <h2>
+
+    Select Quantity
+
+  </h2>
+
+  <p>
+
+    {{ product.name }}
+
+  </p>
+
+  @for(size of product.sizes; track size.id){
+
+    <div
+      class="size-card"
+      [class.selected]="selected()?.id===size.id"
+      (click)="select(size)">
+
+      <div>
+
+        <strong>
+
+          {{ size.size }}
+
+        </strong>
+
+      </div>
+
+      <div>
+
+        ₹{{ size.price }}
+
+      </div>
+
+    </div>
+
+  }
+
+  <button
+    mat-raised-button
+    color="primary"
+    class="add-btn"
+    [disabled]="!selected()"
+    (click)="add()">
+
+    Add To Cart
+
+  </button>
+
+</div>

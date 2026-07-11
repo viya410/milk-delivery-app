@@ -1,45 +1,135 @@
-<div class="addresses-page">
-  <div class="header">
-    <h1>My Addresses</h1>
+@if (!loading()) {
+  <div class="addresses-page">
+    <!-- ==================================================
+         HEADER
+    =================================================== -->
 
-    <button mat-raised-button color="primary" (click)="addAddress()">Add Address</button>
-  </div>
+    <div class="header">
+      <div class="header-content">
+        <h1>My Addresses</h1>
 
-  <div class="address-grid">
-    @for (address of addresses; track $index) {
-      <mat-card>
-        <div class="card-header">
-          <h3>
-            {{ address.type }}
-          </h3>
+        <p>Manage your delivery addresses</p>
+      </div>
 
-          @if (address.default) {
-            <mat-chip> Default </mat-chip>
-          }
-        </div>
+      <button
+        mat-raised-button
+        color="primary"
+        class="add-address-btn"
+        (click)="addAddress()"
+      >
+        <mat-icon>add</mat-icon>
+
+        Add Address
+      </button>
+    </div>
+
+    <!-- ==================================================
+         ADDRESS LIST
+    =================================================== -->
+
+    @if (addresses().length > 0) {
+      <div class="address-grid">
+        @for (address of addresses(); track address.id) {
+          <mat-card class="address-card">
+            <!-- CARD HEADER -->
+
+            <div class="card-header">
+              <h3>
+                {{ address.customerName }}
+              </h3>
+
+              <mat-chip>
+                Saved Address
+              </mat-chip>
+            </div>
+
+            <!-- ADDRESS DETAILS -->
+
+            <div class="address-details">
+              <div class="address-row">
+                <mat-icon>location_on</mat-icon>
+
+                <div>
+                  <strong>Address</strong>
+
+                  <p>
+                    {{ address.houseNo }}, {{ address.street }}
+                  </p>
+
+                  <p>
+                    {{ address.city }}, {{ address.state }} -
+                    {{ address.pincode }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="address-row">
+                <mat-icon>phone</mat-icon>
+
+                <div>
+                  <strong>Mobile</strong>
+
+                  <p>
+                    {{ address.mobileNumber }}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+              <button
+                mat-icon-button
+                class="edit-btn"
+                aria-label="Edit address"
+                (click)="editAddress(address)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                class="delete-btn"
+                aria-label="Delete address"
+                (click)="deleteAddress(address)"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-card>
+        }
+      </div>
+    } @else {
+      <!-- ==================================================
+           EMPTY STATE
+      =================================================== -->
+
+      <div class="no-addresses">
+        <mat-icon>location_on</mat-icon>
+
+        <h2>No Addresses Found</h2>
 
         <p>
-          {{ address.name }}
+          Add your first delivery address to get started.
         </p>
 
-        <p>
-          {{ address.addressLine }}
-        </p>
-
-        <p>
-          {{ address.city }}
-        </p>
-
-        <div class="actions">
-          <button mat-icon-button (click)="editAddress(address, $index)">
-            <mat-icon> edit </mat-icon>
-          </button>
-
-          <button mat-icon-button (click)="deleteAddress($index)">
-            <mat-icon> delete </mat-icon>
-          </button>
-        </div>
-      </mat-card>
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="addAddress()"
+        >
+          Add Address
+        </button>
+      </div>
     }
   </div>
-</div>
+} @else {
+  <!-- ==================================================
+       LOADING
+  =================================================== -->
+
+  <div class="dashboard-loading">
+    <h2>Loading Addresses...</h2>
+  </div>
+}

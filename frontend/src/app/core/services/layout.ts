@@ -1,14 +1,26 @@
 import { Injectable, signal } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class LayoutService {
 
-  sidebarExpanded = signal(true);
+  readonly sidebarExpanded = signal(true);
 
-  toggleSidebar() {
+  toggleSidebar(): void {
     this.sidebarExpanded.update(value => !value);
+  }
+
+  expandSidebar(): void {
+    this.sidebarExpanded.set(true);
+  }
+
+  collapseSidebar(): void {
+    this.sidebarExpanded.set(false);
+  }
+
+  setSidebar(expanded: boolean): void {
+    this.sidebarExpanded.set(expanded);
   }
 
 }

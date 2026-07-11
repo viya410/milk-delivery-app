@@ -97,15 +97,29 @@ export class Login {
 
       next: () => {
 
-        this.loading = false;
+  this.loading = false;
 
-        this.router.navigateByUrl(
+  const role = this.authService.user()?.role;
 
-          '/dashboard'
+  if (role === 'ROLE_ADMIN') {
 
-        );
+    this.router.navigateByUrl(
 
-      },
+      '/admin/dashboard'
+
+    );
+
+  } else {
+
+    this.router.navigateByUrl(
+
+      '/dashboard/home'
+
+    );
+
+  }
+
+},
 
       error: () => {
 

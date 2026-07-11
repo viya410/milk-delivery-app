@@ -1,16 +1,17 @@
 @if (loading()) {
   <div class="loading">Loading Product...</div>
-
 } @else if (errorMessage()) {
   <div class="error">
     {{ errorMessage() }}
   </div>
-
 } @else if (product()) {
   <div class="details-page">
     <div class="details-grid">
       <div class="image-section">
-        <img [src]="product()?.imageUrl" [alt]="product()?.name" />
+        <img
+          [src]="'assets/images/products/' + product()?.imageUrl"
+          [alt]="product()?.name"
+        />
       </div>
 
       <div class="info-section">
@@ -23,8 +24,7 @@
         </p>
 
         <div class="price">
-          ₹{{ product()?.price }}
-
+₹{{ getDisplayPrice() }}
           <span> / {{ product()?.unit }} </span>
         </div>
 

@@ -1,47 +1,49 @@
 <section class="products-page">
-  <div class="container">
-    <div class="page-header">
-      <h1>Fresh Dairy Products</h1>
+  <div class="hero">
+    <div class="hero-left">
+      <span class="hero-tag"> 🌿 100% Farm Fresh </span>
 
-      <p>Freshly sourced from our farm and delivered to your doorstep.</p>
+      <h1>Fresh Dairy Delivered Daily</h1>
+
+      <p>Milk, Curd, Butter, Paneer & more, delivered fresh from our farm.</p>
     </div>
 
-    @if (loading()) {
-      <div class="loading">Loading Products...</div>
-    } @else if (errorMessage()) {
-      <div class="error">
-        {{ errorMessage() }}
-      </div>
-    } @else {
-      <div class="products-grid">
-        @for (product of products(); track product.id) {
-          <div class="product-card">
-            <img [src]="product.imageUrl" [alt]="product.name" />
+    <div class="hero-right">🥛</div>
+  </div>
 
-            <div class="product-content">
-              <h3>
-                {{ product.name }}
-              </h3>
+  <div class="search-section">
+    <div class="search-box">
+      <i class="fa-solid fa-magnifying-glass"></i>
 
-              <p>
-                {{ product.description }}
-              </p>
+      <input placeholder="Search milk, paneer, butter..." (input)="search($event)" />
+    </div>
+  </div>
 
-              <div class="product-price">
-                ₹{{ product.price }}
+  <div class="category-list">
+    <button class="active">All</button>
 
-                <span> / {{ product.unit }} </span>
-              </div>
+    <button class="coming-soon">🥛 Milk</button>
 
-              <div class="product-actions">
-                <button class="cart-btn" (click)="addToCart(product.id)">Add To Cart</button>
+    <button class="coming-soon">🥣 Curd</button>
 
-                <button class="view-btn" (click)="viewProduct(product.id)">View Details</button>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
+    <button class="coming-soon">🧀 Paneer</button>
+
+    <button class="coming-soon">🧈 Butter</button>
+
+    <button class="coming-soon">🍯 Ghee</button>
+  </div>
+
+  <div class="products-grid">
+    @for (product of filteredProducts(); track product.id) {
+      <app-product-card
+        [product]="product"
+        [quantity]="cartService.getQuantity(product.id)"
+        (view)="viewProduct($event)"
+        (add)="addToCart($event)"
+        (increase)="increase($event)"
+        (decrease)="decrease($event)"
+      >
+      </app-product-card>
     }
   </div>
 </section>

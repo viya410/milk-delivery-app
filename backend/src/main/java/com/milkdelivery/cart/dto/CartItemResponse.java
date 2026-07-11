@@ -14,6 +14,12 @@ public class CartItemResponse {
 
     private Integer quantity;
 
+    private String unit;
+
+    private Double maxOrderQuantity;
+
+    private Long productSizeId;
+
     public CartItemResponse() {
     }
 
@@ -23,7 +29,10 @@ public class CartItemResponse {
             String productName,
             Double price,
             String imageUrl,
-            Integer quantity
+            Integer quantity,
+            String unit,
+            Double maxOrderQuantity,
+            Long productSizeId
     ) {
 
         this.id = id;
@@ -32,6 +41,9 @@ public class CartItemResponse {
         this.price = price;
         this.imageUrl = imageUrl;
         this.quantity = quantity;
+        this.unit = unit;
+        this.maxOrderQuantity = maxOrderQuantity;
+        this.productSizeId = productSizeId;
 
     }
 
@@ -57,6 +69,18 @@ public class CartItemResponse {
 
     public Integer getQuantity() {
         return quantity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public Double getMaxOrderQuantity() {
+        return maxOrderQuantity;
+    }
+
+    public Long getProductSizeId() {
+        return productSizeId;
     }
 
 }

@@ -23,7 +23,7 @@ export class AuthService {
 
   private readonly API_URL = `${environment.apiUrl}/auth`;
   private router = inject(Router);
-  private currentUser = signal<User | null> (this.storage.getUser());
+  private currentUser = signal<User | null>(this.storage.getUser());
   readonly user = this.currentUser.asReadonly();
 
   login(request: LoginRequest): Observable<LoginResponse> {
@@ -64,17 +64,14 @@ export class AuthService {
   getToken(): string | null {
     return this.storage.getToken();
   }
-  
+
   saveToken(token: string): void {
     this.storage.setToken(token);
   }
 
   updateCurrentUser(user: User): void {
+    this.currentUser.set(user);
 
-  this.currentUser.set(user);
-
-  this.storage.setUser(user);
-
-}
-  
+    this.storage.setUser(user);
+  }
 }

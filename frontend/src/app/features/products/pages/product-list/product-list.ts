@@ -1,139 +1,170 @@
-import {
-  Component,
-  OnInit,
-  inject,
-  signal
-} from '@angular/core';
-
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 import { ProductService } from '../../../../core/services/product';
+import { Product } from '../../models/product';
+
+import { ProductCardComponent } from '../../../../shared/ui/product-card/product-card';
 import { CartService } from '../../../../core/services/cart';
 import { AuthService } from '../../../../core/services/auth';
+
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { ProductSizeSheet } from '../../../../shared/ui/product-size-sheet/product-size-sheet';
+import { ProductSize } from '../../models/product';
 
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [
-    CommonModule,
-  ],
+  imports: [CommonModule, ProductCardComponent],
   templateUrl: './product-list.html',
-  styleUrl: './product-list.scss'
+  styleUrl: './product-list.scss',
 })
 export class ProductList implements OnInit {
+  private readonly productService = inject(ProductService);
 
-  private productService =
-    inject(ProductService);
+  private readonly router = inject(Router);
 
-  private cartService =
-    inject(CartService);
+  private readonly bottomSheet = inject(MatBottomSheet);
 
-  private router =
-    inject(Router);
+  readonly cartService = inject(CartService);
 
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
-  products = signal<any[]>([]);
+  readonly allProducts = signal<Product[]>([]);
 
-  loading = signal(true);
+  readonly filteredProducts = signal<Product[]>([]);
 
-  errorMessage = signal('');
+  readonly searchText = signal('');
+
+  readonly loading = signal(true);
+
+  readonly errorMessage = signal('');
 
   ngOnInit(): void {
-
-    this.productService
-      .getProducts()
-      .subscribe({
-
-        next: (response) => {
-
-          console.log('Products Loaded', response);
-
-          this.products.set(response);
-
-          this.loading.set(false);
-        },
-
-        error: (error) => {
-
-          console.error(error);
-
-          this.errorMessage.set(
-            'Unable to load products'
-          );
-
-          this.loading.set(false);
-        }
-      });
+    this.loadProducts();
   }
 
-  viewProduct(
-    productId: number
-  ): void {
+  private loadProducts(): void {
+    this.loading.set(true);
 
-    if (!productId) {
+    this.productService.getProducts().subscribe({
+      next: (response: Product[]) => {
+        this.allProducts.set(response);
+
+        this.filteredProducts.set(response);
+
+        this.loading.set(false);
+      },
+
+      error: (error) => {
+        console.error(error);
+
+        this.errorMessage.set('Unable to load products.');
+
+        this.loading.set(false);
+      },
+    });
+  }
+
+  search(event: Event): void {
+    const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
+
+    this.searchText.set(value);
+
+    if (!value) {
+      this.filteredProducts.set(this.allProducts());
 
       return;
     }
 
-    this.router.navigate([
-      '/products',
-      productId
-    ]);
+    this.filteredProducts.set(
+      this.allProducts().filter(
+        (product) =>
+          product.name.toLowerCase().includes(value) ||
+          product.description.toLowerCase().includes(value) ||
+          product.unit.toLowerCase().includes(value),
+      ),
+    );
   }
 
-  trackByProductId(
-    index: number,
-    product: any
-  ): number {
+  addToCart(productId: number): void {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/auth/login']);
 
-    return product.id;
+      return;
+    }
+
+    const product = this.allProducts().find((x) => x.id === productId);
+
+    if (!product) {
+      return;
+    }
+
+    if (product.sizes?.length) {
+      this.bottomSheet
+        .open(ProductSizeSheet, {
+          data: product,
+        })
+        .afterDismissed()
+        .subscribe((size: ProductSize) => {
+          if (!size) {
+            return;
+          }
+
+          this.cartService
+            .addToCart({
+              productId,
+
+              productSizeId: size.id,
+
+              quantity: 1,
+            })
+            .subscribe();
+        });
+
+      return;
+    }
+
+    this.cartService
+      .addToCart({
+        productId,
+
+        quantity: 1,
+      })
+      .subscribe();
   }
 
-addToCart(
-  productId: number
-): void {
+  increase(productId: number): void {
+    const item = this.cartService.getCartItem(productId);
 
-  let isLoggedIn!: Boolean;
-  isLoggedIn = this.authService.isLoggedIn();
+    if (!item) {
+      return;
+    }
 
-  if (!isLoggedIn) {
-
-    this.router.navigate([
-      '/auth/login'
-    ]);
-
-    return;
-  }
-
-  this.cartService
-    .addToCart({
-
-      productId,
-
-      quantity: 1
-
-    })
-    .subscribe({
-
-      next: () => {
-
-        this.router.navigate([
-          '/cart'
-        ]);
-
-      },
-
-      error: error => {
-
-        console.error(
-          error
-        );
-
-      }
-
+    this.cartService.increaseQuantity(item.id).subscribe({
+      next: () => this.cartService.loadCart(),
     });
+  }
 
-}
+  decrease(productId: number): void {
+    const item = this.cartService.getCartItem(productId);
+
+    if (!item) {
+      return;
+    }
+
+    const request =
+      item.quantity === 1
+        ? this.cartService.removeItem(item.id)
+        : this.cartService.decreaseQuantity(item.id);
+
+    request.subscribe({
+      next: () => this.cartService.loadCart(),
+    });
+  }
+
+  viewProduct(productId: number): void {
+    this.router.navigate(['/products', productId]);
+  }
 }

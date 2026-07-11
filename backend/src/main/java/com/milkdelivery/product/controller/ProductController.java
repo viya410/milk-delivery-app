@@ -1,28 +1,28 @@
 package com.milkdelivery.product.controller;
 
 import com.milkdelivery.product.entity.Product;
-import com.milkdelivery.product.repository.ProductRepository;
-
+import com.milkdelivery.product.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
-        import java.util.List;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     public ProductController(
-            ProductRepository productRepository
+            ProductService productService
     ) {
-        this.productRepository = productRepository;
+        this.productService = productService;
     }
 
     @GetMapping
     public List<Product> getProducts() {
 
-        return productRepository.findAll();
+        return productService.getAllProducts();
+
     }
 
     @GetMapping("/{id}")
@@ -30,12 +30,8 @@ public class ProductController {
             @PathVariable Long id
     ) {
 
-        return productRepository
-                .findById(id)
-                .orElseThrow(() ->
-                        new RuntimeException(
-                                "Product not found with id: " + id
-                        )
-                );
+        return productService.getProductById(id);
+
     }
+
 }

@@ -1,105 +1,98 @@
-<div class="login-wrapper">
-
-  <mat-card class="login-card">
-
-    <div class="brand-section">
-
-      <h1>Milk Delivery</h1>
-
-      <p>
-        Fresh dairy products delivered daily
-      </p>
-
+<!-- <div class="login-page">
+  <div class="login-card">
+    <div class="brand">
+      <img src="assets/images/logo.jpg" alt="RK Dairy Farms" />
     </div>
 
-    <form
-      [formGroup]="loginForm"
-      (ngSubmit)="submit()">
+    <h1>Welcome Back!</h1>
 
+    <p class="subtitle">Login to continue your fresh journey</p>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
       <mat-form-field appearance="outline">
+        <mat-label>Email or Phone Number</mat-label>
 
-        <mat-label>Email or Mobile Number</mat-label>
+        <input matInput formControlName="username" />
 
-        <input
-          matInput
-          type="text"
-          formControlName="username">
-
-        @if (
-          loginForm.controls.username.touched &&
-          loginForm.controls.username.invalid
-        ) {
-
-          <mat-error>
-            Email or Mobile Number is required
-          </mat-error>
-
+        @if (loginForm.controls.username.touched && loginForm.controls.username.invalid) {
+          <mat-error> Email or Mobile Number is required </mat-error>
         }
-
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-
         <mat-label>Password</mat-label>
 
-        <input
-          matInput
-          [type]="hidePassword() ? 'password' : 'text'"
-          formControlName="password">
+        <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" />
 
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="hidePassword.set(!hidePassword())">
-
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
           <mat-icon>
             {{ hidePassword() ? 'visibility_off' : 'visibility' }}
           </mat-icon>
-
         </button>
-
       </mat-form-field>
 
-      <mat-checkbox>
+      <div class="options">
+        <mat-checkbox> Remember Me </mat-checkbox>
 
-        Remember Me
+        <a routerLink="/auth/forgot-password"> Forgot Password? </a>
+      </div>
 
-      </mat-checkbox>
+      <button mat-raised-button color="primary" class="login-btn">Login</button>
+
+      <div class="signup">
+        New here?
+
+        <a routerLink="/auth/signup"> Sign Up </a>
+      </div>
+    </form>
+  </div>
+</div> -->
+<div class="login-wrapper">
+  <mat-card class="login-card">
+    <div class="brand-section">
+      <img class="brand-logo" src="assets/images/logo.jpg" alt="RK Dairy Farms" />
+
+      <h1>Milk Delivery</h1>
+
+      <p>Fresh dairy products delivered daily</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submit()">
+      <mat-form-field appearance="outline">
+        <mat-label>Email or Mobile Number</mat-label>
+
+        <input matInput type="text" formControlName="username" />
+
+        @if (loginForm.controls.username.touched && loginForm.controls.username.invalid) {
+          <mat-error> Email or Mobile Number is required </mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+
+        <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" />
+
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
+          <mat-icon>
+            {{ hidePassword() ? 'visibility_off' : 'visibility' }}
+          </mat-icon>
+        </button>
+      </mat-form-field>
 
       <div class="forgot-password">
+        <mat-checkbox> Remember Me </mat-checkbox>
 
-        <a routerLink="/auth/forgot-password">
-
-          Forgot Password?
-
-        </a>
-
+          <a routerLink="/auth/forgot-password" class="forgot-password"> Forgot Password? </a>
       </div>
 
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit">
-
-        Login
-
-      </button>
+      <button mat-raised-button color="primary" type="submit">Login</button>
 
       <div class="signup-link">
-
         Don't have an account?
 
-        <a routerLink="/auth/signup">
-
-          Sign Up
-
-        </a>
-
+        <a routerLink="/auth/signup"> Sign Up </a>
       </div>
-
     </form>
-
   </mat-card>
-
 </div>

@@ -1,0 +1,30 @@
+<div
+  class="toast"
+  [class.show]="visible"
+  [class.success]="type === 'success'"
+  [class.error]="type === 'error'"
+  [class.warning]="type === 'warning'"
+  [class.info]="type === 'info'">
+
+  <div class="toast-icon">
+    <ng-container [ngSwitch]="type">
+      <span *ngSwitchCase="'success'">✓</span>
+      <span *ngSwitchCase="'error'">✕</span>
+      <span *ngSwitchCase="'warning'">!</span>
+      <span *ngSwitchCase="'info'">i</span>
+    </ng-container>
+  </div>
+
+  <div class="toast-message">
+    {{ message }}
+  </div>
+
+  <button
+    type="button"
+    class="toast-close"
+    (click)="close()"
+    aria-label="Close notification">
+    ✕
+  </button>
+
+</div>

@@ -41,4 +41,8 @@ export class OrderService {
   refreshOrders(): void {
     this.getOrders().subscribe();
   }
+
+  cancelOrder(orderId: number) {
+    return this.http.put<any>(`${this.apiUrl}/${orderId}/cancel`, {});
+  }
 }

@@ -1,0 +1,117 @@
+<div class="transactions-page">
+  <mat-card class="transactions-card">
+    <!-- ================= Header ================= -->
+
+    <div class="page-header">
+      <div>
+        <h1>Inventory Transactions</h1>
+
+        <p>View complete inventory audit history</p>
+      </div>
+    </div>
+
+    <!-- ================= Search ================= -->
+
+    <div class="toolbar">
+      <div class="search-box">
+        <mat-icon> search </mat-icon>
+
+        <input
+          type="text"
+          placeholder="Search transactions..."
+          (input)="updateSearch($any($event.target).value)"
+        />
+      </div>
+    </div>
+
+    @if (inventoryService.loading()) {
+      <div class="loading">Loading transactions...</div>
+    } @else {
+      <table mat-table [dataSource]="filteredTransactions()" class="transactions-table">
+        <!-- Date -->
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef>Date & Time</th>
+
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.createdAt | date: 'dd MMM yyyy HH:mm' }}
+          </td>
+        </ng-container>
+
+        <!-- Product -->
+
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+
+          <td mat-cell *matCellDef="let transaction">
+            <div class="product-info">
+              <div class="product-avatar">🥛</div>
+
+              <strong>
+                {{ transaction.productName }}
+              </strong>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Type -->
+
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Transaction</th>
+
+          <td mat-cell *matCellDef="let transaction">
+            <span class="transaction-type" [ngClass]="transaction.type.toLowerCase()">
+              {{ transaction.type }}
+            </span>
+          </td>
+        </ng-container>
+
+        <!-- Quantity -->
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Quantity</th>
+
+          <td mat-cell *matCellDef="let transaction">
+            <strong>
+              {{ transaction.quantity }}
+            </strong>
+          </td>
+        </ng-container>
+
+        <!-- Remarks -->
+
+        <ng-container matColumnDef="remarks">
+          <th mat-header-cell *matHeaderCellDef>Remarks</th>
+
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.remarks || '-' }}
+          </td>
+        </ng-container>
+
+        <!-- Reference -->
+
+        <ng-container matColumnDef="reference">
+          <th mat-header-cell *matHeaderCellDef>Reference</th>
+
+          <td mat-cell *matCellDef="let transaction">
+            {{ transaction.reference || '-' }}
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (filteredTransactions().length === 0) {
+        <div class="empty">
+          <mat-icon> history </mat-icon>
+
+          <h3>No Transactions Found</h3>
+
+          <p>Inventory transactions will appear here.</p>
+        </div>
+      }
+    }
+  </mat-card>
+</div>

@@ -2,30 +2,26 @@
 
   min-height: 100vh;
 
-  padding: 4rem 2rem;
+  background: #f7faf7;
 
-  background: #f8fff5;
+  padding: 3rem 1.5rem;
+
 }
 
 .container {
 
-  max-width: 700px;
+  max-width: 900px;
 
   margin: auto;
 
   background: white;
 
-  padding: 3rem;
+  padding: 2.5rem;
 
-  border-radius: 24px;
+  border-radius: 20px;
 
-  box-shadow:
-    0 8px 24px rgba(
-      0,
-      0,
-      0,
-      .08
-    );
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+
 }
 
 h1 {
@@ -35,41 +31,179 @@ h1 {
   color: #2e7d32;
 
   margin-bottom: 2rem;
+
 }
 
-form {
+.address-grid {
 
-  display: flex;
-
-  flex-direction: column;
+  display: grid;
 
   gap: 1rem;
+
+  margin-bottom: 1.5rem;
+
 }
 
-input {
+.address-card {
 
-  padding: 1rem;
+  border: 2px solid #e0e0e0;
 
-  border: 1px solid #ddd;
+  border-radius: 14px;
 
-  border-radius: 12px;
-
-  font-size: 1rem;
-}
-
-button {
-
-  border: none;
-
-  padding: 1rem;
-
-  background: #2e7d32;
-
-  color: white;
-
-  border-radius: 12px;
+  padding: 1.2rem;
 
   cursor: pointer;
 
+  transition: .25s;
+
+  background: white;
+
+}
+
+.address-card:hover {
+
+  transform: translateY(-3px);
+
+  border-color: #81c784;
+
+}
+
+.address-card.selected {
+
+  border-color: #2e7d32;
+
+  background: #edf8ed;
+
+  box-shadow: 0 8px 18px rgba(46,125,50,.15);
+
+}
+
+.card-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: .8rem;
+
+}
+
+.card-header h3 {
+
+  margin: 0;
+
+  color: #2e7d32;
+
+}
+
+.selected-icon {
+
+  color: #2e7d32;
+
+  font-size: 30px;
+
+}
+
+.address-card p {
+
+  margin: .3rem 0;
+
+  color: #555;
+
+}
+
+.add-address-btn {
+
+  width: 100%;
+
+  margin: 1rem 0 2rem;
+
+  height: 48px;
+
+}
+
+.summary {
+
+  border-top: 1px solid #eee;
+
+  padding-top: 1.5rem;
+
+}
+
+.summary h2 {
+
+  color: #2e7d32;
+
+  margin-bottom: 1rem;
+
+}
+
+.summary-row {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: .8rem;
+
   font-size: 1rem;
+
+}
+
+.summary-row.total {
+
+  font-size: 1.2rem;
+
+  font-weight: 700;
+
+  color: #2e7d32;
+
+}
+
+.place-order-btn {
+
+  width: 100%;
+
+  margin-top: 2rem;
+
+  height: 56px;
+
+  font-size: 1.1rem;
+
+}
+
+.no-address {
+
+  text-align: center;
+
+  padding: 3rem 1rem;
+
+  color: #666;
+
+}
+
+.no-address mat-icon {
+
+  font-size: 56px;
+
+  width: 56px;
+
+  height: 56px;
+
+  color: #9e9e9e;
+
+  margin-bottom: 1rem;
+
+}
+
+@media (max-width: 768px) {
+
+  .container {
+
+    padding: 1.5rem;
+
+  }
+
 }

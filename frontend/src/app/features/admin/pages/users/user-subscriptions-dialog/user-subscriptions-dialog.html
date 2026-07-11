@@ -1,0 +1,144 @@
+<h2 mat-dialog-title>
+  <mat-icon>local_drink</mat-icon>
+  User Subscriptions
+</h2>
+
+<mat-dialog-content>
+
+  @if (loading()) {
+
+    <div class="loading">
+
+      <mat-spinner diameter="40"></mat-spinner>
+
+      <p>Loading subscriptions...</p>
+
+    </div>
+
+  } @else {
+
+    @if (subscriptions().length) {
+
+      <div class="subscription-list">
+
+        @for (subscription of subscriptions(); track subscription.id) {
+
+          <mat-card class="subscription-card">
+
+            <div class="card-header">
+
+              <div>
+
+                <h3>
+
+                  {{ subscription.productName }}
+
+                </h3>
+
+                <p>
+
+                  {{ subscription.quantity }}
+
+                  {{ subscription.unit }}
+
+                </p>
+
+              </div>
+
+              <span
+                class="status"
+                [class.active]="subscription.status === 'ACTIVE'"
+                [class.paused]="subscription.status === 'PAUSED'"
+              >
+
+                {{ subscription.status }}
+
+              </span>
+
+            </div>
+
+            <div class="details">
+
+              <div>
+
+                <strong>Frequency</strong>
+
+                <span>
+
+                  {{ subscription.frequency.replace('_', ' ') }}
+
+                </span>
+
+              </div>
+
+              <div>
+
+                <strong>Start Date</strong>
+
+                <span>
+
+                  {{ subscription.startDate | date }}
+
+                </span>
+
+              </div>
+
+              <div>
+
+                <strong>End Date</strong>
+
+                <span>
+
+                  {{ subscription.endDate ? (subscription.endDate | date) : '-' }}
+
+                </span>
+
+              </div>
+
+            </div>
+
+          </mat-card>
+
+        }
+
+      </div>
+
+    } @else {
+
+      <div class="empty">
+
+        <mat-icon>
+
+          local_drink
+
+        </mat-icon>
+
+        <h3>
+
+          No Subscriptions
+
+        </h3>
+
+        <p>
+
+          This customer has not subscribed to any products.
+
+        </p>
+
+      </div>
+
+    }
+
+  }
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button mat-raised-button mat-dialog-close>
+
+    Close
+
+  </button>
+
+</mat-dialog-actions>

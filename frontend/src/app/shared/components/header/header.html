@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+<!-- <mat-toolbar color="primary">
 
   <button mat-icon-button (click)="layoutService.toggleSidebar()">
     <mat-icon>menu</mat-icon>
@@ -12,4 +12,46 @@
     <mat-icon>logout</mat-icon>
   </button>
 
+</mat-toolbar> -->
+<mat-toolbar color="primary" class="app-header">
+  <!-- MENU -->
+
+  <button
+    mat-icon-button
+    class="header-icon-btn"
+    aria-label="Open menu"
+    (click)="layoutService.toggleSidebar()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- LOGO / BRAND -->
+
+  <a class="brand" routerLink="/dashboard">
+    <img
+      src="assets/images/logo.jpg"
+      alt="Fresh Farm"
+    />
+
+    <div class="brand-text">
+      <h2>Fresh Farm</h2>
+
+      <span>Pure • Natural • Healthy</span>
+    </div>
+  </a>
+
+  <!-- SPACER -->
+
+  <span class="spacer"></span>
+
+  <!-- LOGOUT -->
+
+  <button
+    mat-icon-button
+    class="header-icon-btn"
+    aria-label="Logout"
+    (click)="logout()"
+  >
+    <mat-icon>logout</mat-icon>
+  </button>
 </mat-toolbar>

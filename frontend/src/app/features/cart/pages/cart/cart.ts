@@ -2,7 +2,8 @@ import { Component, OnInit, inject, signal } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
-import { CartService } from '../../../../core/services/cart';
+import { CartService, CartItem } from '../../../../core/services/cart';
+
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -15,7 +16,7 @@ import { RouterLink } from '@angular/router';
 export class Cart implements OnInit {
   private cartService = inject(CartService);
 
-  cartItems = signal<any[]>([]);
+  cartItems = signal<CartItem[]>([]);
 
   ngOnInit(): void {
     this.loadCart();
@@ -24,14 +25,23 @@ export class Cart implements OnInit {
   loadCart(): void {
     this.cartService.getCart().subscribe({
       next: (response) => {
+        response.sort((a, b) => a.id - b.id);
+
         this.cartItems.set(response);
-        console.log('Cart Loaded:', response);
+      },
+
+      error: (error) => {
+        console.error(error);
       },
     });
   }
 
-  increase(id: number): void {
-    this.cartService.increaseQuantity(id).subscribe(() => {
+  increase(item: CartItem): void {
+    if (this.isMaxReached(item)) {
+      return;
+    }
+
+    this.cartService.increaseQuantity(item.id).subscribe(() => {
       this.loadCart();
     });
   }
@@ -46,6 +56,10 @@ export class Cart implements OnInit {
     this.cartService.removeItem(id).subscribe(() => {
       this.loadCart();
     });
+  }
+
+  isMaxReached(item: CartItem): boolean {
+    return item.quantity >= item.maxOrderQuantity;
   }
 
   getTotal(): number {

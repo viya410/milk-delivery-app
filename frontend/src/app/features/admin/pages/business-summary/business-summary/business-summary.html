@@ -1,0 +1,120 @@
+<div class="summary-page">
+  <!-- ================= Header ================= -->
+
+  <div class="page-header">
+    <div>
+      <h1>Business Day Summary</h1>
+
+      <p>
+        @if (summary()) {
+          {{ summary()?.businessDate | date: 'fullDate' }}
+        }
+      </p>
+    </div>
+  </div>
+
+  @if (loading()) {
+    <div class="loading">
+      <mat-spinner diameter="55"></mat-spinner>
+
+      <p>Preparing today's summary...</p>
+    </div>
+  } @else if (summary()) {
+    <!-- ================= KPI Cards ================= -->
+
+    <div class="stats-grid">
+      @for (card of revenueCards(); track card.title) {
+        <mat-card class="stat-card">
+          <div class="icon">
+            <mat-icon>{{ card.icon }}</mat-icon>
+          </div>
+
+          <div class="content">
+            <h2>{{ card.value }}</h2>
+
+            <p>{{ card.title }}</p>
+          </div>
+        </mat-card>
+      }
+    </div>
+
+    <!-- ================= Inventory Overview ================= -->
+
+    <mat-card class="inventory-overview">
+      <h2>Inventory Overview</h2>
+
+      <div class="overview-grid">
+        <div class="overview-card blue">
+          <h3>{{ summary()?.openingStock }}</h3>
+
+          <span>Current Stock</span>
+        </div>
+
+        <div class="overview-card orange">
+          <h3>{{ summary()?.reservedStock }}</h3>
+
+          <span>Reserved Stock</span>
+        </div>
+
+        <div class="overview-card green">
+          <h3>{{ summary()?.availableStock }}</h3>
+
+          <span>Available Stock</span>
+        </div>
+      </div>
+    </mat-card>
+
+    <!-- ================= Product Performance ================= -->
+
+    <mat-card class="products-card">
+      <h2>Today's Product Performance</h2>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Added</th>
+            <th>Removed</th>
+            <th>Sold</th>
+            <th>Revenue</th>
+            <th>Available</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (product of products(); track product.productId) {
+            <tr>
+              <td>
+                <div class="product">
+                  🥛
+
+                  {{ product.productName }}
+                </div>
+              </td>
+
+              <td>
+                {{ product.stockAdded }}
+              </td>
+
+              <td>
+                {{ product.stockRemoved }}
+              </td>
+
+              <td>
+                {{ product.quantitySold }}
+              </td>
+
+              <td class="revenue">
+                ₹{{ product.revenue }}
+              </td>
+
+              <td class="available">
+                {{ product.availableStock }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </mat-card>
+  }
+</div>

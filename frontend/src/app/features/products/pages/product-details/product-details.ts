@@ -65,4 +65,22 @@ export class ProductDetails implements OnInit {
         },
       });
   }
+
+  // imageError(event: Event): void {
+  //   (event.target as HTMLImageElement).src = 'assets/images/products/no-image.png';
+  // }
+
+  getDisplayPrice(): number {
+
+  const product = this.product();
+
+  if (!product) {
+    return 0;
+  }
+
+  return product.sizes?.length
+    ? product.sizes[0].price
+    : product.price;
+
+}
 }

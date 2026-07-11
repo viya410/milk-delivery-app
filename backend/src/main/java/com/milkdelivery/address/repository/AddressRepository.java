@@ -6,6 +6,7 @@ import com.milkdelivery.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AddressRepository
         extends JpaRepository<Address, Long> {
@@ -17,5 +18,7 @@ public interface AddressRepository
     long countByUser(
             User user
     );
+
+    Optional<Address> findFirstByUser(User user);
 
 }

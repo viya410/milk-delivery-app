@@ -1,67 +1,287 @@
 <div class="orders-page">
-  <mat-card>
-    <h1>My Orders</h1>
+  <mat-card class="orders-card">
+    <!-- ==================================================
+         PAGE HEADER
+    =================================================== -->
 
-    <table mat-table [dataSource]="orders()">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef>Order ID</th>
+    <div class="page-header">
+      <div class="page-title">
+        <h1>My Orders</h1>
 
-        <td mat-cell *matCellDef="let order">
-          {{ order.id }}
-        </td>
-      </ng-container>
+        <p>Track all your recent milk orders</p>
+      </div>
 
-      <ng-container matColumnDef="date">
-        <th mat-header-cell *matHeaderCellDef>Date</th>
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
 
-        <td mat-cell *matCellDef="let order">
-          {{ order.orderDate | date: 'dd MMM yyyy, hh:mm a' }}
-        </td>
-      </ng-container>
+        <input
+          type="text"
+          placeholder="Search by Order ID, Product..."
+          (input)="updateSearch($any($event.target).value)"
+        />
+      </div>
+    </div>
 
-      <ng-container matColumnDef="amount">
-        <th mat-header-cell *matHeaderCellDef>Amount</th>
+    <!-- ==================================================
+         FILTERS
+    =================================================== -->
 
-        <td mat-cell *matCellDef="let order">₹{{ order.totalAmount }}</td>
-      </ng-container>
+    <div class="filters">
+      <button
+        class="filter-btn"
+        [class.active]="selectedStatus() === 'ALL'"
+        (click)="changeFilter('ALL')"
+      >
+        All ({{ totalOrders() }})
+      </button>
 
-      <ng-container matColumnDef="status">
-        <th mat-header-cell *matHeaderCellDef>Status</th>
+      <button
+        class="filter-btn placed-filter"
+        [class.active]="selectedStatus() === 'PLACED'"
+        (click)="changeFilter('PLACED')"
+      >
+        Placed ({{ placedCount() }})
+      </button>
 
-        <td mat-cell *matCellDef="let order">
-          <mat-chip>
-            {{ order.status }}
-          </mat-chip>
-        </td>
-      </ng-container>
+      <button
+        class="filter-btn processing-filter"
+        [class.active]="selectedStatus() === 'PACKED'"
+        (click)="changeFilter('PACKED')"
+      >
+        Processing ({{ processingCount() }})
+      </button>
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <button
+        class="filter-btn delivery-filter"
+        [class.active]="selectedStatus() === 'OUT_FOR_DELIVERY'"
+        (click)="changeFilter('OUT_FOR_DELIVERY')"
+      >
+        Out for Delivery ({{ deliveryCount() }})
+      </button>
 
-        <td mat-cell *matCellDef="let order">
-          <button mat-icon-button (click)="openOrderDetails(order)">
-            <mat-icon> visibility </mat-icon>
-          </button>
-        </td>
-      </ng-container>
+      <button
+        class="filter-btn delivered-filter"
+        [class.active]="selectedStatus() === 'DELIVERED'"
+        (click)="changeFilter('DELIVERED')"
+      >
+        Delivered ({{ deliveredCount() }})
+      </button>
+    </div>
 
-      <ng-container matColumnDef="products">
-        <th mat-header-cell *matHeaderCellDef>Products</th>
+    <!-- ==================================================
+         CONTENT
+    =================================================== -->
 
-        <td mat-cell *matCellDef="let order">
+    @if (loading()) {
+      <div class="loading">
+        Loading your orders...
+      </div>
+    } @else {
+      @if (filteredOrders().length > 0) {
+        <!-- ==============================================
+             DESKTOP / TABLET TABLE
+        =============================================== -->
 
-  <div *ngFor="let item of order.items">
+        <div class="orders-table">
+          <table mat-table [dataSource]="filteredOrders()">
+            <!-- Order -->
 
-    {{ item.product.name }} × {{ item.quantity }}
+            <ng-container matColumnDef="id">
+              <th mat-header-cell *matHeaderCellDef>
+                Order
+              </th>
 
-  </div>
+              <td mat-cell *matCellDef="let order">
+                <strong>
+                  #{{ order.id }}
+                </strong>
+              </td>
+            </ng-container>
 
-</td>
-      </ng-container>
+            <!-- Date -->
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>
+                Date
+              </th>
 
-      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-    </table>
+              <td mat-cell *matCellDef="let order">
+                {{ order.orderDate | date: 'dd MMM yyyy, hh:mm a' }}
+              </td>
+            </ng-container>
+
+            <!-- Products -->
+
+            <ng-container matColumnDef="products">
+              <th mat-header-cell *matHeaderCellDef>
+                Products
+              </th>
+
+              <td mat-cell *matCellDef="let order">
+                🥛 {{ getProductsPreview(order) }}
+              </td>
+            </ng-container>
+
+            <!-- Amount -->
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef>
+                Amount
+              </th>
+
+              <td mat-cell *matCellDef="let order">
+                <strong>
+                  ₹{{ order.totalAmount }}
+                </strong>
+              </td>
+            </ng-container>
+
+            <!-- Status -->
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef>
+                Status
+              </th>
+
+              <td mat-cell *matCellDef="let order">
+                <span
+                  class="status"
+                  [ngClass]="getStatusClass(order.status)"
+                >
+                  {{ getStatusLabel(order.status) }}
+                </span>
+              </td>
+            </ng-container>
+
+            <!-- Action -->
+
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>
+                Action
+              </th>
+
+              <td mat-cell *matCellDef="let order">
+                @if (order.status === 'PLACED') {
+                  <button
+                    mat-raised-button
+                    color="warn"
+                    (click)="cancelOrder(order)"
+                  >
+                    <mat-icon>cancel</mat-icon>
+
+                    Cancel Order
+                  </button>
+                } @else {
+                  <span class="action-disabled">
+                    <mat-icon>lock</mat-icon>
+
+                    Locked
+                  </span>
+                }
+              </td>
+            </ng-container>
+
+            <!-- Header Row -->
+
+            <tr
+              mat-header-row
+              *matHeaderRowDef="displayedColumns"
+            ></tr>
+
+            <!-- Data Row -->
+
+            <tr
+              mat-row
+              *matRowDef="let row; columns: displayedColumns"
+              class="order-row"
+            ></tr>
+          </table>
+        </div>
+
+        <!-- ==============================================
+             MOBILE ORDER CARDS
+        =============================================== -->
+
+        <div class="mobile-orders">
+          @for (order of filteredOrders(); track order.id) {
+            <div class="mobile-order-card">
+              <!-- Order Header -->
+
+              <div class="mobile-order-header">
+                <div class="mobile-order-info">
+                  <h3>
+                    #{{ order.id }}
+                  </h3>
+
+                  <span class="order-date">
+                    {{ order.orderDate | date: 'dd MMM yyyy, hh:mm a' }}
+                  </span>
+                </div>
+
+                <span
+                  class="status"
+                  [ngClass]="getStatusClass(order.status)"
+                >
+                  {{ getStatusLabel(order.status) }}
+                </span>
+              </div>
+
+              <!-- Products -->
+
+              <div class="mobile-order-products">
+                <span class="product-icon">
+                  🥛
+                </span>
+
+                <span class="product-preview">
+                  {{ getProductsPreview(order) }}
+                </span>
+              </div>
+
+              <!-- Footer -->
+
+              <div class="mobile-order-footer">
+                <strong class="mobile-order-price">
+                  ₹{{ order.totalAmount }}
+                </strong>
+
+                @if (order.status === 'PLACED') {
+                  <button
+                    mat-raised-button
+                    color="warn"
+                    class="mobile-cancel-btn"
+                    (click)="cancelOrder(order)"
+                  >
+                    <mat-icon>cancel</mat-icon>
+
+                    Cancel
+                  </button>
+                } @else {
+                  <span class="action-disabled">
+                    <mat-icon>lock</mat-icon>
+
+                    Locked
+                  </span>
+                }
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <!-- ==============================================
+             EMPTY STATE
+        =============================================== -->
+
+        <div class="empty">
+          <mat-icon>
+            shopping_bag
+          </mat-icon>
+
+          <h3>
+            No matching orders found
+          </h3>
+        </div>
+      }
+    }
   </mat-card>
 </div>

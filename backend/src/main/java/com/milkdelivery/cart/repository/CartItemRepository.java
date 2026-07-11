@@ -2,8 +2,9 @@ package com.milkdelivery.cart.repository;
 
 import com.milkdelivery.cart.entity.CartItem;
 import com.milkdelivery.product.entity.Product;
-import org.springframework.data.jpa.repository.JpaRepository;
+import com.milkdelivery.product.entity.ProductSize;
 import com.milkdelivery.user.entity.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,8 +20,10 @@ public interface CartItemRepository
             User user
     );
 
-    Optional<CartItem> findByProductAndUser(
+    Optional<CartItem> findByProductAndUserAndProductSize(
             Product product,
-            User user
+            User user,
+            ProductSize productSize
     );
+
 }

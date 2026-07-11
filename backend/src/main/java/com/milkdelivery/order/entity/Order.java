@@ -1,26 +1,30 @@
 package com.milkdelivery.order.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.milkdelivery.address.entity.Address;
 import com.milkdelivery.user.entity.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.milkdelivery.subscription.entity.Subscription;
 
 @Entity
 @Table(name = "orders")
 public class Order {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private Double totalAmount;
 
-    private String status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private OrderStatus status;
 
+    @Column(nullable = false)
     private LocalDateTime orderDate;
 
     @OneToMany(
@@ -31,11 +35,17 @@ public class Order {
     @JsonManagedReference
     private List<OrderItem> items;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "user_id"
-    )
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id", nullable = false)
+    private Address address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "subscription_id")
+    private Subscription subscription;
 
     public Order() {
     }
@@ -48,19 +58,15 @@ public class Order {
         return totalAmount;
     }
 
-    public void setTotalAmount(
-            Double totalAmount
-    ) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public String getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(
-            String status
-    ) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -68,9 +74,7 @@ public class Order {
         return orderDate;
     }
 
-    public void setOrderDate(
-            LocalDateTime orderDate
-    ) {
+    public void setOrderDate(LocalDateTime orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -78,9 +82,7 @@ public class Order {
         return items;
     }
 
-    public void setItems(
-            List<OrderItem> items
-    ) {
+    public void setItems(List<OrderItem> items) {
         this.items = items;
     }
 
@@ -88,10 +90,23 @@ public class Order {
         return user;
     }
 
-    public void setUser(
-            User user
-    ) {
+    public void setUser(User user) {
         this.user = user;
     }
 
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public Subscription getSubscription() {
+        return subscription;
+    }
+
+    public void setSubscription(Subscription subscription) {
+        this.subscription = subscription;
+    }
 }

@@ -1,0 +1,11 @@
+@if (showCart()) {
+  <div id="floating-cart" class="floating-cart" routerLink="/cart">
+    🛒
+
+    @if (cartCount() > 0) {
+      <span class="cart-badge">
+        {{ cartCount() }}
+      </span>
+    }
+  </div>
+}

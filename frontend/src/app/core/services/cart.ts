@@ -65,7 +65,7 @@ export class CartService {
     return this.cartItems().find((x) => x.productId === productId);
   }
 
-  addToCart(request: { productId: number; quantity: number }) {
+  addToCart(request: { productId: number; quantity: number; productSizeId?: number }) {
     return this.http.post(this.apiUrl, request).pipe(tap(() => this.loadCart()));
   }
 

@@ -1,17 +1,8 @@
-import {
-  Component,
-  OnInit,
-  computed,
-  inject
-} from '@angular/core';
+import { Component, OnInit, computed, inject } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
 import { Router, RouterLink } from '@angular/router';
-
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
 
 import { AuthService } from '../../../../core/services/auth';
 import { DashboardService } from '../../../../core/services/dashboard';
@@ -20,98 +11,62 @@ import { OrderService } from '../../../../core/services/order';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatIconModule,
-    RouterLink
-  ],
+  imports: [CommonModule, RouterLink],
   templateUrl: './home.html',
-  styleUrl: './home.scss'
+  styleUrl: './home.scss',
 })
 export class Home implements OnInit {
+  private readonly dashboardService = inject(DashboardService);
 
-  private dashboardService =
-    inject(DashboardService);
+  private readonly orderService = inject(OrderService);
 
-  private orderService =
-    inject(OrderService);
+  private readonly router = inject(Router);
 
-  private router =
-    inject(Router);
+  private readonly authService = inject(AuthService);
 
-  private authService =
-    inject(AuthService);
+  readonly userName = this.authService.user()?.fullName ?? 'User';
 
-  userName =
-    this.authService.user()?.fullName || 'User';
+  readonly loading = computed(() => this.dashboardService.loading() || this.orderService.loading());
 
-  loading = computed(() =>
-    this.dashboardService.loading() ||
-    this.orderService.loading()
-  );
-
-  stats = computed(() => {
-
-    const summary =
-      this.dashboardService.summary();
+  readonly stats = computed(() => {
+    const summary = this.dashboardService.summary();
 
     if (!summary) {
-
       return [];
-
     }
 
     return [
-
       {
         title: 'Orders',
         value: summary.totalOrders,
-        clickable: true,
-        route: '/dashboard/orders'
+        route: '/dashboard/orders',
       },
 
       {
         title: 'Active Plans',
         value: summary.activePlans,
-        clickable: true,
-        route: '/subscriptions'
+        route: '/subscriptions',
       },
 
       {
         title: 'Addresses',
         value: summary.totalAddresses,
-        clickable: true,
-        route: '/dashboard/addresses'
-      }
-
+        route: '/dashboard/addresses',
+      },
     ];
-
   });
 
-  recentOrders = computed(() =>
-
-    this.orderService.orders().slice(0, 3)
-
-  );
+  readonly recentOrders = computed(() => this.orderService.orders().slice(0, 3));
 
   ngOnInit(): void {
-
     this.dashboardService.getSummary().subscribe();
 
     this.orderService.getOrders().subscribe();
-
   }
 
   navigateToCard(stat: any): void {
-
-    if (stat.clickable && stat.route) {
-
+    if (stat.route) {
       this.router.navigate([stat.route]);
-
     }
-
   }
-
 }

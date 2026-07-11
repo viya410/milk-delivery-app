@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, OnInit } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -8,116 +8,58 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 
-import {
-  AddressDialog
-} from '../../components/address-dialog/address-dialog';
+import { AddressDialog } from '../../components/address-dialog/address-dialog';
+import { AddressService } from '../../../../core/services/address';
 
 @Component({
   selector: 'app-addresses',
   standalone: true,
   imports: [
     CommonModule,
-
     MatCardModule,
     MatButtonModule,
     MatDialogModule,
     MatChipsModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './addresses.html',
-  styleUrl: './addresses.scss'
+  styleUrl: './addresses.scss',
 })
-export class Addresses {
-
+export class Addresses implements OnInit {
   private dialog = inject(MatDialog);
 
-  addresses = [
-    {
-      type: 'Home',
-      name: 'Vishnu',
-      addressLine: 'Flat 101, Green Residency',
-      city: 'Hyderabad',
-      default: true
-    },
-    {
-      type: 'Office',
-      name: 'Vishnu',
-      addressLine: 'Hitech City',
-      city: 'Hyderabad',
-      default: false
-    }
-  ];
+  private addressService = inject(AddressService);
+
+  addresses = computed(() => this.addressService.addresses());
+
+  loading = computed(() => this.addressService.loading());
+
+  ngOnInit(): void {
+    this.addressService.getAddresses().subscribe();
+  }
 
   addAddress(): void {
+    const dialogRef = this.dialog.open(AddressDialog, {
+      width: '500px',
+      maxWidth: 'calc(100vw - 24px)',
+    });
 
-    const dialogRef =
-      this.dialog.open(
-        AddressDialog,
-        {
-          width: '500px'
-        }
-      );
-
-    dialogRef.afterClosed()
-      .subscribe(result => {
-
-        if (result) {
-
-          this.addresses.push({
-            ...result,
-            default: false
-          });
-
-        }
-
-      });
-
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.addressService.saveAddress(result).subscribe();
+      }
+    });
   }
 
-  editAddress(
-    address: any,
-    index: number
-  ): void {
-
-    const dialogRef =
-      this.dialog.open(
-        AddressDialog,
-        {
-          width: '500px',
-          data: address
-        }
-      );
-
-    dialogRef.afterClosed()
-      .subscribe(result => {
-
-        if (result) {
-
-          this.addresses[index] = {
-            ...this.addresses[index],
-            ...result
-          };
-
-          this.addresses =
-            [...this.addresses];
-
-        }
-
-      });
-
+  editAddress(address: any): void {
+    this.dialog.open(AddressDialog, {
+      width: '500px',
+      maxWidth: 'calc(100vw - 24px)',
+      data: address,
+    });
   }
 
-  deleteAddress(
-    index: number
-  ): void {
-
-    this.addresses.splice(
-      index,
-      1
-    );
-
-    this.addresses =
-      [...this.addresses];
-
+  deleteAddress(address: any): void {
+    this.addressService.deleteAddress(address.id).subscribe();
   }
 }

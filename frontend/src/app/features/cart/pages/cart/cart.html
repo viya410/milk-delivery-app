@@ -3,14 +3,28 @@
     <h1>Shopping Cart</h1>
 
     @if (cartItems().length === 0) {
-      <div class="empty-cart">Cart is Empty</div>
-    } @else {
+  <div class="empty-cart">
+    <div class="empty-cart-icon">🛒</div>
+
+    <h2>Your Cart is Empty</h2>
+
+    <p>Add some fresh dairy products to your cart and they’ll appear here.</p>
+
+    <button class="shop-btn" routerLink="/products">
+      Browse Products
+    </button>
+  </div>
+} @else {
       @for (item of cartItems(); track item.id) {
         <div class="cart-item">
           <div class="item-details">
             <h3>
               {{ item.productName }}
             </h3>
+
+            <span class="product-size">
+              {{ item.unit }}
+            </span>
 
             <p>₹{{ item.price }}</p>
           </div>
@@ -22,8 +36,14 @@
               {{ item.quantity }}
             </span>
 
-            <button (click)="increase(item.id)">+</button>
+            <button (click)="increase(item)" [disabled]="isMaxReached(item)">+</button>
           </div>
+
+          @if (isMaxReached(item)) {
+            <div class="limit-message">
+              Maximum {{ item.maxOrderQuantity }} {{ item.unit }} per order
+            </div>
+          }
 
           <button class="remove-btn" (click)="remove(item.id)">Remove</button>
         </div>

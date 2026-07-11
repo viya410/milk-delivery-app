@@ -1,53 +1,703 @@
+:host {
+  display: block;
+}
+
+/* ======================================================
+   PAGE
+====================================================== */
+
 .addresses-page {
   display: flex;
   flex-direction: column;
+
   gap: 24px;
+
+  padding: 24px;
+
+  box-sizing: border-box;
 }
+
+/* ======================================================
+   HEADER
+====================================================== */
 
 .header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
 }
+
+.header-content {
+  min-width: 0;
+}
+
+.header h1 {
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.header p {
+  margin: 6px 0 0;
+
+  color: #6b7280;
+
+  font-size: 15px;
+}
+
+.add-address-btn {
+  flex-shrink: 0;
+
+  border-radius: 999px;
+}
+
+.add-address-btn mat-icon {
+  margin-right: 4px;
+}
+
+/* ======================================================
+   ADDRESS GRID
+====================================================== */
 
 .address-grid {
   display: grid;
 
-  grid-template-columns:
-    repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 
   gap: 24px;
 }
 
-mat-card {
-  padding: 20px;
+/* ======================================================
+   ADDRESS CARD
+====================================================== */
+
+.address-card {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 22px;
+
+  border: 1px solid #dcefdc;
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  background: linear-gradient(145deg, #ffffff 0%, #f8fff7 100%);
+
+  box-sizing: border-box;
+
+  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.08);
 
   transition:
     transform 300ms ease,
     box-shadow 300ms ease;
-
-  &:hover {
-
-    transform:
-      translateY(-4px);
-
-    box-shadow:
-      0 12px 24px rgba(0,0,0,.12);
-
-  }
 }
+
+/* Green accent line */
+
+.address-card::before {
+  content: '';
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 5px;
+
+  background: linear-gradient(90deg, #2e7d32, #66bb6a);
+}
+
+.address-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 16px 32px rgba(46, 125, 50, 0.14);
+}
+
+/* ======================================================
+   CARD HEADER
+====================================================== */
 
 .card-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
 
   gap: 12px;
 
-  margin-top: 16px;
+  margin-bottom: 20px;
+}
+
+.card-header h3 {
+  min-width: 0;
+
+  margin: 0;
+
+  color: #1f2937;
+
+  font-size: 20px;
+  font-weight: 700;
+
+  overflow-wrap: anywhere;
+}
+
+.card-header mat-chip {
+  flex-shrink: 0;
+
+  background: #e8f5e9;
+
+  color: #2e7d32;
+
+  font-size: 11px;
+  font-weight: 700;
+}
+
+/* ======================================================
+   ADDRESS DETAILS
+====================================================== */
+
+.address-details {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+.address-row {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 12px;
+
+  min-width: 0;
+
+  padding: 12px;
+
+  border-radius: 14px;
+
+  background: rgba(232, 245, 233, 0.55);
+}
+
+.address-row > mat-icon {
+  flex-shrink: 0;
+
+  width: 34px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #2e7d32;
+
+  font-size: 20px;
+
+  box-shadow: 0 4px 10px rgba(46, 125, 50, 0.1);
+}
+
+.address-row > div {
+  min-width: 0;
+}
+
+.address-row strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #2e7d32;
+
+  font-size: 13px;
+}
+
+.address-row p {
+  margin: 0 0 3px;
+
+  color: #4b5563;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+.address-row p:last-child {
+  margin-bottom: 0;
+}
+
+/* ======================================================
+   ACTIONS
+====================================================== */
+
+/* ======================================================
+   ACTIONS
+====================================================== */
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 18px;
+  padding-top: 14px;
+
+  border-top: 1px solid #e5eee5;
+}
+
+.actions button {
+  width: 40px;
+  height: 40px;
+
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  line-height: 1;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.actions button:hover {
+  transform: translateY(-2px);
+}
+
+.actions button mat-icon {
+  width: 20px;
+  height: 20px;
+
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.edit-btn {
+  background: #e8f5e9;
+}
+
+.edit-btn mat-icon {
+  color: #2e7d32;
+}
+
+.delete-btn {
+  background: #ffebee;
+}
+
+.delete-btn mat-icon {
+  color: #d32f2f;
+}
+
+/* ======================================================
+   EMPTY STATE
+====================================================== */
+
+.no-addresses {
+  padding: 70px 30px;
+
+  border-radius: 24px;
+
+  background: linear-gradient(145deg, #ffffff, #f8fff7);
+
+  text-align: center;
+
+  box-shadow: 0 8px 24px rgba(46, 125, 50, 0.08);
+}
+
+.no-addresses > mat-icon {
+  width: 64px;
+  height: 64px;
+
+  color: #2e7d32;
+
+  font-size: 64px;
+}
+
+.no-addresses h2 {
+  margin: 16px 0 0;
+
+  color: #1f2937;
+
+  font-size: 26px;
+}
+
+.no-addresses p {
+  margin: 10px 0 24px;
+
+  color: #6b7280;
+
+  font-size: 15px;
+}
+
+.no-addresses button {
+  border-radius: 999px;
+}
+
+/* ======================================================
+   LOADING
+====================================================== */
+
+.dashboard-loading {
+  min-height: 60vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-loading h2 {
+  color: #2e7d32;
+}
+
+/* ======================================================
+   TABLET
+====================================================== */
+
+@media (max-width: 992px) {
+  .address-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 768px) {
+  /* PAGE */
+
+  .addresses-page {
+    gap: 18px;
+
+    padding: 14px;
+  }
+
+  /* HEADER */
+
+  .header {
+    gap: 12px;
+  }
+
+  .header h1 {
+    font-size: 24px;
+  }
+
+  .header p {
+    margin-top: 4px;
+
+    font-size: 13px;
+  }
+
+  .add-address-btn {
+    min-width: auto;
+
+    padding: 0 14px;
+
+    font-size: 12px;
+  }
+
+  .add-address-btn mat-icon {
+    width: 18px;
+    height: 18px;
+
+    margin-right: 2px;
+
+    font-size: 18px;
+  }
+
+  /* GRID */
+
+  .address-grid {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  /* ADDRESS CARD */
+
+  .address-card {
+    padding: 16px;
+
+    border-radius: 16px;
+  }
+
+  .address-card::before {
+    height: 4px;
+  }
+
+  /* CARD HEADER */
+
+  .card-header {
+    gap: 8px;
+
+    margin-bottom: 12px;
+  }
+
+  .card-header h3 {
+    font-size: 16px;
+  }
+
+  .card-header mat-chip {
+    font-size: 9px;
+  }
+
+  /* ADDRESS DETAILS */
+
+  .address-details {
+    gap: 10px;
+  }
+
+  .address-row {
+    gap: 9px;
+
+    padding: 10px;
+
+    border-radius: 12px;
+  }
+
+  .address-row > mat-icon {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 8px;
+
+    font-size: 18px;
+  }
+
+  .address-row strong {
+    margin-bottom: 3px;
+
+    font-size: 11px;
+  }
+
+  .address-row p {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  /* ACTIONS */
+
+  /* ACTIONS */
+
+  .actions {
+    gap: 6px;
+
+    margin-top: 12px;
+    padding-top: 10px;
+  }
+
+  .actions button {
+    width: 36px;
+    height: 36px;
+
+    padding: 0;
+  }
+
+  .actions button mat-icon {
+    width: 18px;
+    height: 18px;
+
+    margin: 0;
+
+    font-size: 18px;
+    line-height: 18px;
+  }
+  .actions button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .actions mat-icon {
+    width: 18px;
+    height: 18px;
+
+    font-size: 18px;
+  }
+
+  /* EMPTY STATE */
+
+  .no-addresses {
+    padding: 40px 20px;
+
+    border-radius: 18px;
+  }
+
+  .no-addresses > mat-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 48px;
+  }
+
+  .no-addresses h2 {
+    margin-top: 12px;
+
+    font-size: 21px;
+  }
+
+  .no-addresses p {
+    margin: 8px 0 20px;
+
+    font-size: 13px;
+  }
+}
+
+/* ======================================================
+   SMALL MOBILE
+====================================================== */
+
+@media (max-width: 480px) {
+  /* PAGE */
+
+  .addresses-page {
+    gap: 16px;
+
+    padding: 10px;
+  }
+
+  /* HEADER */
+
+  .header {
+    gap: 8px;
+  }
+
+  .header h1 {
+    font-size: 22px;
+  }
+
+  .header p {
+    font-size: 12px;
+  }
+
+  .add-address-btn {
+    padding: 0 10px;
+
+    font-size: 11px;
+  }
+
+  .add-address-btn mat-icon {
+    width: 16px;
+    height: 16px;
+
+    font-size: 16px;
+  }
+
+  /* GRID */
+
+  .address-grid {
+    gap: 10px;
+  }
+
+  /* ADDRESS CARD */
+
+  .address-card {
+    padding: 14px;
+
+    border-radius: 14px;
+  }
+
+  /* CARD HEADER */
+
+  .card-header {
+    margin-bottom: 10px;
+  }
+
+  .card-header h3 {
+    font-size: 15px;
+  }
+
+  .card-header mat-chip {
+    font-size: 8px;
+  }
+
+  /* DETAILS */
+
+  .address-details {
+    gap: 8px;
+  }
+
+  .address-row {
+    gap: 8px;
+
+    padding: 9px;
+  }
+
+  .address-row > mat-icon {
+    width: 28px;
+    height: 28px;
+
+    font-size: 17px;
+  }
+
+  .address-row strong {
+    font-size: 10px;
+  }
+
+  .address-row p {
+    font-size: 11px;
+  }
+
+  /* ACTIONS */
+
+  .actions {
+    margin-top: 10px;
+    padding-top: 8px;
+  }
+
+  .actions button {
+    width: 34px;
+    height: 34px;
+  }
+
+  .actions button mat-icon {
+    width: 17px;
+    height: 17px;
+
+    margin: 0;
+
+    font-size: 17px;
+    line-height: 17px;
+  }
+
+  /* EMPTY STATE */
+
+  .no-addresses {
+    padding: 32px 16px;
+  }
+
+  .no-addresses > mat-icon {
+    width: 42px;
+    height: 42px;
+
+    font-size: 42px;
+  }
+
+  .no-addresses h2 {
+    font-size: 19px;
+  }
+
+  .no-addresses p {
+    font-size: 12px;
+  }
 }

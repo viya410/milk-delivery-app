@@ -1,0 +1,1392 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+/* ==========================================================
+   PAGE
+========================================================== */
+
+.inventory-page {
+  padding: 24px;
+  min-width: 0;
+}
+
+.inventory-card {
+  width: 100%;
+  min-width: 0;
+
+  padding: 24px;
+
+  border-radius: 24px;
+
+  box-sizing: border-box;
+
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================
+   PAGE HEADER
+========================================================== */
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  width: 100%;
+  min-width: 0;
+}
+
+.page-title h1 {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  color: #1f2937;
+
+  overflow-wrap: break-word;
+}
+
+.page-title p {
+  margin: 6px 0 0;
+
+  font-size: 15px;
+  line-height: 1.5;
+
+  color: #6b7280;
+}
+
+/* ==========================================================
+   BUSINESS DAY CARD
+========================================================== */
+
+.business-day-card {
+  width: 100%;
+  min-width: 0;
+
+  margin: 0 0 28px;
+
+  border: 1px solid #edf2f7;
+  border-radius: 28px;
+
+  overflow: hidden;
+
+  box-sizing: border-box;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 12px 35px rgba(15, 23, 42, 0.05),
+    0 3px 10px rgba(15, 23, 42, 0.03);
+}
+
+/* ==========================================================
+   BUSINESS DAY BANNER
+========================================================== */
+
+.business-day-banner {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 24px;
+
+  width: 100%;
+  min-width: 0;
+
+  padding: 32px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  background: linear-gradient(
+    135deg,
+    #f8fbff 0%,
+    #eef6ff 28%,
+    #f4fcf8 72%,
+    #fffdf7 100%
+  );
+}
+
+.business-day-banner::before {
+  content: '';
+
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  right: -120px;
+  top: -160px;
+
+  border-radius: 50%;
+
+  background: rgba(37, 99, 235, 0.05);
+}
+
+.business-day-banner::after {
+  content: '';
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  left: -80px;
+  bottom: -90px;
+
+  border-radius: 50%;
+
+  background: rgba(34, 197, 94, 0.05);
+}
+
+.banner-content {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  min-width: 0;
+}
+
+.banner-icon {
+  width: 72px;
+  height: 72px;
+
+  flex: 0 0 72px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 22px;
+
+  overflow: visible;
+
+  background: linear-gradient(135deg, #5b8def, #7cb3ff);
+
+  box-shadow: 0 12px 24px rgba(91, 141, 239, 0.2);
+
+  animation: floatIcon 5s ease-in-out infinite;
+}
+
+.banner-icon mat-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 36px;
+  line-height: 36px;
+
+  color: white;
+
+  overflow: visible;
+}
+
+.banner-text {
+  min-width: 0;
+}
+
+.banner-text h2 {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  color: #1e293b;
+}
+
+.banner-text p {
+  margin: 7px 0 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+
+  color: #64748b;
+
+  overflow-wrap: anywhere;
+}
+
+/* ==========================================================
+   BUSINESS DAY STATUS
+========================================================== */
+
+.status-pill {
+  position: relative;
+  z-index: 1;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 9px 18px;
+
+  border: 1px solid transparent;
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.status-pill .dot {
+  width: 9px;
+  height: 9px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+}
+
+.status-pill.open {
+  background: #ecfdf5;
+
+  color: #15803d;
+
+  border-color: #bbf7d0;
+}
+
+.status-pill.open .dot {
+  background: #22c55e;
+}
+
+.status-pill.closed {
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  border-color: #fecaca;
+}
+
+.status-pill.closed .dot {
+  background: #ef4444;
+}
+
+/* ==========================================================
+   BUSINESS DETAILS
+========================================================== */
+
+.business-details {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+
+  width: 100%;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+}
+
+.detail-card {
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  padding: 20px;
+
+  border: 1px solid #edf2f7;
+  border-radius: 18px;
+
+  box-sizing: border-box;
+
+  background: white;
+
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.04);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.detail-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 14px 26px rgba(15, 23, 42, 0.08);
+}
+
+.detail-card.opened {
+  background: #f8fffb;
+}
+
+.detail-card.closed-card {
+  background: #fafbff;
+}
+
+.detail-icon {
+  width: 50px;
+  height: 50px;
+
+  flex: 0 0 50px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 15px;
+
+  overflow: visible;
+
+  background: white;
+
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+.detail-icon mat-icon {
+  width: 27px;
+  height: 27px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 27px;
+  line-height: 27px;
+
+  overflow: visible;
+}
+
+.opened .detail-icon mat-icon {
+  color: #16a34a;
+}
+
+.closed-card .detail-icon mat-icon {
+  color: #7c3aed;
+}
+
+.detail-content,
+.detail-card > div:last-child {
+  min-width: 0;
+}
+
+.detail-card small {
+  display: block;
+
+  font-size: 12px;
+  line-height: 1.3;
+
+  color: #64748b;
+}
+
+.detail-card h3 {
+  margin: 5px 0 0;
+
+  font-size: 22px;
+  line-height: 1.2;
+
+  color: #0f172a;
+}
+
+/* ==========================================================
+   BUSINESS ACTIONS
+========================================================== */
+
+.business-actions {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 16px;
+
+  width: 100%;
+
+  padding: 0 24px 24px;
+
+  box-sizing: border-box;
+}
+
+.business-actions .action-btn:only-child {
+  grid-column: 1 / -1;
+}
+
+.action-btn {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+
+  min-height: 70px;
+
+  padding: 14px 18px !important;
+
+  border-radius: 18px !important;
+
+  box-sizing: border-box !important;
+
+  color: white !important;
+
+  overflow: hidden !important;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+}
+
+.action-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.16);
+}
+
+.action-btn mat-icon {
+  width: 32px !important;
+  height: 32px !important;
+
+  min-width: 32px;
+
+  flex: 0 0 32px;
+
+  margin: 0 !important;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 30px !important;
+  line-height: 32px !important;
+
+  overflow: visible !important;
+}
+
+.action-content,
+.action-btn > div {
+  min-width: 0;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  justify-content: center;
+
+  text-align: left;
+}
+
+.action-btn strong {
+  display: block;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+}
+
+.action-btn span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+  line-height: 1.3;
+
+  opacity: 0.9;
+
+  white-space: normal;
+
+  overflow-wrap: anywhere;
+}
+
+.start-btn {
+  background: linear-gradient(135deg, #5b8def, #76a9fa) !important;
+}
+
+.generate-btn {
+  background: linear-gradient(135deg, #34d399, #6ee7b7) !important;
+}
+
+.close-btn {
+  background: linear-gradient(135deg, #fb7185, #fda4af) !important;
+}
+
+.summary-btn {
+  background: linear-gradient(135deg, #0ea5e9, #3b82f6) !important;
+}
+
+::ng-deep .business-actions .action-btn .mdc-button__label {
+  display: flex !important;
+
+  align-items: center !important;
+
+  justify-content: flex-start !important;
+
+  gap: 12px !important;
+
+  width: 100% !important;
+
+  min-width: 0 !important;
+
+  overflow: hidden !important;
+}
+
+/* ==========================================================
+   SUMMARY CARDS
+========================================================== */
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 24px;
+}
+
+.summary-card {
+  min-width: 0;
+
+  padding: 22px;
+
+  border-radius: 18px;
+
+  box-sizing: border-box;
+
+  text-align: center;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.summary-card mat-icon {
+  width: 42px;
+  height: 42px;
+
+  margin-bottom: 8px;
+
+  font-size: 36px;
+  line-height: 42px;
+}
+
+.summary-card h2 {
+  margin: 4px 0;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  color: #1f2937;
+}
+
+.summary-card p {
+  margin: 4px 0 0;
+
+  font-size: 13px;
+  line-height: 1.4;
+
+  color: #6b7280;
+}
+
+.summary-card.products {
+  background: #eef6ff;
+}
+
+.summary-card.products mat-icon {
+  color: #2563eb;
+}
+
+.summary-card.current {
+  background: #eaf7ff;
+}
+
+.summary-card.current mat-icon {
+  color: #0284c7;
+}
+
+.summary-card.reserved {
+  background: #fff8e7;
+}
+
+.summary-card.reserved mat-icon {
+  color: #f59e0b;
+}
+
+.summary-card.available {
+  background: #edfdf3;
+}
+
+.summary-card.available mat-icon {
+  color: #16a34a;
+}
+
+/* ==========================================================
+   TOOLBAR
+========================================================== */
+
+.toolbar {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.search-box {
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 18px;
+
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+
+  box-sizing: border-box;
+
+  background: #fafafa;
+}
+
+.search-box mat-icon {
+  flex-shrink: 0;
+
+  color: #9ca3af;
+}
+
+.search-box input {
+  width: 100%;
+  min-width: 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  font-size: 15px;
+}
+
+/* ==========================================================
+   INVENTORY TABLE
+========================================================== */
+
+.inventory-table {
+  width: 100%;
+
+  min-width: 760px;
+}
+
+.inventory-table th {
+  font-size: 14px;
+  font-weight: 700;
+
+  color: #4b5563;
+}
+
+.inventory-table td {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.product-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+}
+
+.product-avatar {
+  width: 48px;
+  height: 48px;
+
+  flex: 0 0 48px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  font-size: 22px;
+
+  background: #eef4ff;
+}
+
+/* ==========================================================
+   STOCK COLORS
+========================================================== */
+
+.stock-current {
+  font-weight: 700;
+
+  color: #2563eb;
+}
+
+.stock-reserved {
+  font-weight: 700;
+
+  color: #f59e0b;
+}
+
+.stock-available {
+  font-weight: 700;
+
+  color: #16a34a;
+}
+
+/* ==========================================================
+   TABLE ACTIONS
+========================================================== */
+
+.actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.actions button {
+  transition: transform 0.25s ease;
+}
+
+.actions button:hover {
+  transform: scale(1.08);
+}
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loading {
+  padding: 60px 20px;
+
+  text-align: center;
+
+  font-size: 18px;
+
+  color: #6b7280;
+}
+
+/* ==========================================================
+   EMPTY STATE
+========================================================== */
+
+.empty {
+  padding: 80px 24px;
+
+  text-align: center;
+}
+
+.empty mat-icon {
+  width: 72px;
+  height: 72px;
+
+  font-size: 72px;
+
+  color: #d1d5db;
+}
+
+.empty h3 {
+  margin-top: 20px;
+
+  font-size: 24px;
+}
+
+.empty p {
+  color: #6b7280;
+}
+
+/* ==========================================================
+   ANIMATION
+========================================================== */
+
+@keyframes floatIcon {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 992px) {
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .business-day-banner {
+    padding: 24px;
+  }
+
+  .business-details {
+    padding: 20px;
+  }
+
+  .business-actions {
+    padding: 0 20px 20px;
+  }
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 768px) {
+  .inventory-page {
+    padding: 12px;
+  }
+
+  .inventory-card {
+    padding: 14px;
+
+    border-radius: 18px;
+
+    /*
+      The card itself should not scroll.
+      Only the table area will overflow horizontally.
+    */
+    overflow: hidden;
+  }
+
+  /* ================= PAGE TITLE ================= */
+
+  .page-header {
+    margin-bottom: 16px;
+  }
+
+  .page-title h1 {
+    font-size: 23px;
+    line-height: 1.25;
+  }
+
+  .page-title p {
+    margin-top: 5px;
+
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  /* ================= BUSINESS CARD ================= */
+
+  .business-day-card {
+    margin-bottom: 20px;
+
+    border-radius: 18px;
+  }
+
+  /* ================= BANNER ================= */
+
+  .business-day-banner {
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) auto;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 14px;
+  }
+
+  .banner-content {
+    gap: 10px;
+  }
+
+  .banner-icon {
+    width: 42px;
+    height: 42px;
+
+    flex-basis: 42px;
+
+    border-radius: 12px;
+
+    animation: none;
+  }
+
+  .banner-icon mat-icon {
+    width: 23px;
+    height: 23px;
+
+    font-size: 23px;
+    line-height: 23px;
+  }
+
+  .banner-text h2 {
+    font-size: 17px;
+  }
+
+  .banner-text p {
+    margin-top: 3px;
+
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  .status-pill {
+    gap: 5px;
+
+    padding: 6px 9px;
+
+    font-size: 9px;
+  }
+
+  .status-pill .dot {
+    width: 6px;
+    height: 6px;
+  }
+
+  /* ================= BUSINESS DETAILS ================= */
+
+  .business-details {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+
+    padding: 12px;
+  }
+
+  .detail-card {
+    gap: 8px;
+
+    padding: 10px;
+
+    border-radius: 12px;
+  }
+
+  .detail-card:hover {
+    transform: none;
+  }
+
+  .detail-icon {
+    width: 30px;
+    height: 30px;
+
+    flex-basis: 30px;
+
+    border-radius: 8px;
+  }
+
+  .detail-icon mat-icon {
+    width: 17px;
+    height: 17px;
+
+    font-size: 17px;
+    line-height: 17px;
+  }
+
+  .detail-card small {
+    font-size: 8px;
+  }
+
+  .detail-card h3 {
+    margin-top: 2px;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+  }
+
+  /* ================= BUSINESS ACTIONS ================= */
+
+  .business-actions {
+    grid-template-columns: minmax(0, 1fr);
+
+    gap: 8px;
+
+    padding: 0 12px 12px;
+  }
+
+  .business-actions .action-btn,
+  .business-actions .action-btn:only-child {
+    grid-column: auto;
+
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    min-height: 52px;
+
+    margin: 0 !important;
+
+    padding: 8px 12px !important;
+
+    border-radius: 13px !important;
+  }
+
+  .action-btn mat-icon {
+    width: 23px !important;
+    height: 23px !important;
+
+    min-width: 23px;
+
+    flex-basis: 23px;
+
+    font-size: 23px !important;
+    line-height: 23px !important;
+  }
+
+  .action-btn strong {
+    font-size: 11px;
+  }
+
+  .action-btn span {
+    margin-top: 2px;
+
+    font-size: 8px;
+  }
+
+  ::ng-deep .business-actions .action-btn .mdc-button__label {
+    gap: 9px !important;
+  }
+
+  /* ================= SUMMARY CARDS ================= */
+
+  .summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+  }
+
+  .summary-card {
+    padding: 14px 8px;
+
+    border-radius: 14px;
+  }
+
+  .summary-card:hover {
+    transform: none;
+  }
+
+  .summary-card mat-icon {
+    width: 30px;
+    height: 30px;
+
+    margin-bottom: 5px;
+
+    font-size: 26px;
+    line-height: 30px;
+  }
+
+  .summary-card h2 {
+    margin: 2px 0;
+
+    font-size: 21px;
+  }
+
+  .summary-card p {
+    margin-top: 3px;
+
+    font-size: 10px;
+    line-height: 1.3;
+  }
+
+  /* ================= TOOLBAR ================= */
+
+  .toolbar {
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 10px;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: none;
+
+    padding: 11px 14px;
+  }
+
+  .toolbar button {
+    width: 100%;
+  }
+
+  /* ================= TABLE ================= */
+
+  /*
+    Because Angular Material table needs more width,
+    horizontal scrolling belongs here rather than on
+    the entire inventory card.
+  */
+
+  .inventory-card {
+    overflow-x: auto;
+  }
+
+  .inventory-table {
+    min-width: 720px;
+  }
+
+  /* ================= STATES ================= */
+
+  .loading {
+    padding: 40px 16px;
+
+    font-size: 15px;
+  }
+
+  .empty {
+    padding: 50px 16px;
+  }
+
+  .empty mat-icon {
+    width: 54px;
+    height: 54px;
+
+    font-size: 54px;
+  }
+
+  .empty h3 {
+    font-size: 20px;
+  }
+}
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+  .inventory-page {
+    padding: 8px;
+  }
+
+  .inventory-card {
+    padding: 10px;
+
+    border-radius: 15px;
+  }
+
+  .page-title h1 {
+    font-size: 21px;
+  }
+
+  .page-title p {
+    font-size: 11px;
+  }
+
+  .business-day-banner {
+    padding: 11px;
+  }
+
+  .business-details {
+    padding: 10px;
+
+    gap: 6px;
+  }
+
+  .business-actions {
+    padding: 0 10px 10px;
+  }
+
+  .summary-grid {
+    gap: 8px;
+  }
+
+  .summary-card {
+    padding: 12px 6px;
+  }
+}
+
+/* ==========================================================
+   VERY SMALL MOBILE
+========================================================== */
+
+@media (max-width: 360px) {
+  .inventory-page {
+    padding: 6px;
+  }
+
+  .inventory-card {
+    padding: 8px;
+  }
+
+  .page-title h1 {
+    font-size: 19px;
+  }
+
+  .page-title p {
+    font-size: 10px;
+  }
+
+  /* Put status below the title on very narrow phones */
+
+  .business-day-banner {
+    grid-template-columns: 1fr;
+
+    gap: 8px;
+
+    padding: 10px;
+  }
+
+  .status-pill {
+    justify-self: flex-start;
+  }
+
+  .banner-icon {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+  }
+
+  .banner-icon mat-icon {
+    width: 20px;
+    height: 20px;
+
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .banner-text h2 {
+    font-size: 15px;
+  }
+
+  .banner-text p {
+    font-size: 9px;
+  }
+
+  .business-details {
+    gap: 6px;
+
+    padding: 8px;
+  }
+
+  .detail-card {
+    gap: 5px;
+
+    padding: 7px;
+  }
+
+  .detail-icon {
+    width: 25px;
+    height: 25px;
+
+    flex-basis: 25px;
+  }
+
+  .detail-icon mat-icon {
+    width: 15px;
+    height: 15px;
+
+    font-size: 15px;
+    line-height: 15px;
+  }
+
+  .detail-card small {
+    font-size: 7px;
+  }
+
+  .detail-card h3 {
+    font-size: 11px;
+  }
+
+  .business-actions {
+    padding: 0 8px 8px;
+  }
+
+  .business-actions .action-btn {
+    min-height: 48px;
+
+    padding: 7px 9px !important;
+  }
+
+  .action-btn mat-icon {
+    width: 20px !important;
+    height: 20px !important;
+
+    min-width: 20px;
+
+    flex-basis: 20px;
+
+    font-size: 20px !important;
+    line-height: 20px !important;
+  }
+
+  .action-btn strong {
+    font-size: 10px;
+  }
+
+  .action-btn span {
+    font-size: 7px;
+  }
+
+  .summary-card {
+    padding: 10px 5px;
+  }
+
+  .summary-card mat-icon {
+    width: 26px;
+    height: 26px;
+
+    font-size: 22px;
+    line-height: 26px;
+  }
+
+  .summary-card h2 {
+    font-size: 18px;
+  }
+
+  .summary-card p {
+    font-size: 9px;
+  }
+}

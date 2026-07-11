@@ -8,6 +8,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { AuthService } from '../../../core/services/auth';
 import { LayoutService } from '../../../core/services/layout';
+import { Router, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar',
@@ -26,11 +28,23 @@ import { LayoutService } from '../../../core/services/layout';
 export class Sidebar {
 
   readonly authService = inject(AuthService);
+  readonly router = inject(Router);
 
   readonly layoutService = inject(LayoutService);
+  
+  readonly isAdmin = () =>
+  this.authService.user()?.role === 'ROLE_ADMIN';
 
   constructor() {
+this.router.events
+  .pipe(filter(event => event instanceof NavigationEnd))
+  .subscribe(() => {
 
+    if (window.innerWidth <= 768) {
+      this.layoutService.collapseSidebar();
+    }
+
+  });
     effect(() => {
 
       console.log(

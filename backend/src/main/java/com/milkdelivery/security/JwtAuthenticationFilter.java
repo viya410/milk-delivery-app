@@ -47,6 +47,10 @@ public class JwtAuthenticationFilter
     ) throws ServletException, IOException {
         String path = request.getServletPath();
 
+        System.out.println("========== REQUEST ==========");
+        System.out.println(request.getMethod() + " " + path);
+        System.out.println("=============================");
+
         if (
 
                 path.startsWith("/api/auth")
@@ -112,6 +116,7 @@ public class JwtAuthenticationFilter
                             .loadUserByUsername(
                                     email
                             );
+            System.out.println(userDetails.getAuthorities());
 
             UsernamePasswordAuthenticationToken authToken =
 

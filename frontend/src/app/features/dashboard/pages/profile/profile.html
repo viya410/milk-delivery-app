@@ -1,4 +1,6 @@
 <div class="profile-page">
+  <!-- PROFILE HEADER -->
+
   <mat-card class="profile-header">
     <div class="avatar">
       {{ user()?.fullName?.charAt(0) }}
@@ -15,50 +17,89 @@
     </div>
   </mat-card>
 
+  <!-- PROFILE CARDS -->
+
   <div class="profile-grid">
-    <mat-card>
-      <h2>Personal Information</h2>
+    <!-- PERSONAL INFORMATION -->
 
-      <div class="info-row">
-        <strong>Full Name</strong>
+    <mat-card class="profile-card">
+      <div class="card-title">
+        <div class="title-icon">
+          <mat-icon>person</mat-icon>
+        </div>
 
-        <span>{{ user()?.fullName }}</span>
+        <h2>Personal Information</h2>
       </div>
 
-      <div class="info-row">
-        <strong>Mobile Number</strong>
+      <div class="info-list">
+        <div class="info-row">
+          <strong>Full Name</strong>
 
-        <span>{{ user()?.phoneNumber || 'Not Provided' }}</span>
+          <span>{{ user()?.fullName }}</span>
+        </div>
+
+        <div class="info-row">
+          <strong>Mobile Number</strong>
+
+          <span>
+            {{ user()?.phoneNumber || 'Not Provided' }}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <strong>Email</strong>
+
+          <span>
+            {{ user()?.email || 'Not Provided' }}
+          </span>
+        </div>
       </div>
 
-      <div class="info-row">
-        <strong>Email</strong>
+      <div class="edit-button-wrapper">
+        <button
+          mat-raised-button
+          color="primary"
+          class="edit-profile-btn"
+          (click)="openEditProfile()"
+        >
+          <mat-icon>edit</mat-icon>
 
-        <span>{{ user()?.email || 'Not Provided' }}</span>
+          Edit Profile
+        </button>
       </div>
-
-      <button mat-raised-button color="primary" (click)="openEditProfile()">Edit Profile</button>
     </mat-card>
 
-    <mat-card>
-      <h2>Account Information</h2>
+    <!-- ACCOUNT INFORMATION -->
 
-      <div class="info-row">
-        <strong>Customer Since</strong>
+    <mat-card class="profile-card">
+      <div class="card-title">
+        <div class="title-icon">
+          <mat-icon>account_circle</mat-icon>
+        </div>
 
-        <span>{{ accountInfo.joinedDate }}</span>
+        <h2>Account Information</h2>
       </div>
 
-      <div class="info-row">
-        <strong>Subscription Plan</strong>
+      <div class="info-list">
+        <div class="info-row">
+          <strong>Customer Since</strong>
 
-        <span>{{ accountInfo.subscriptionPlan }}</span>
-      </div>
+          <span>{{ accountInfo.joinedDate }}</span>
+        </div>
 
-      <div class="info-row">
-        <strong>Status</strong>
+        <div class="info-row">
+          <strong>Subscription Plan</strong>
 
-        <span>{{ accountInfo.status }}</span>
+          <span>{{ accountInfo.subscriptionPlan }}</span>
+        </div>
+
+        <div class="info-row">
+          <strong>Status</strong>
+
+          <span class="account-status">
+            {{ accountInfo.status }}
+          </span>
+        </div>
       </div>
     </mat-card>
   </div>

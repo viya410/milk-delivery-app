@@ -1,248 +1,455 @@
-<!-- TOP ACTION BAR -->
+<!-- PART 1: Navbar + Hero -->
+<header class="navbar">
+  <div class="container nav-content">
+    <a class="brand" routerLink="/">
+      <img src="assets/images/logo.jpg" alt="Fresh Farm" />
+      <div>
+        <h2>Fresh Farm</h2>
+        <span>Pure • Natural • Healthy</span>
+      </div>
+    </a>
 
-<section class="top-bar">
-  <div class="container top-bar-content">
-    <div class="brand">🥛 Fresh Farm Milk</div>
+    <nav class="desktop-nav">
+      <a href="#home">Home</a>
+      <a href="#features">Why Us</a>
+      <a href="#process">How It Works</a>
+      <a href="#products">Products</a>
+      <a href="#plans">Plans</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact" (click)="scrollToContact(); $event.preventDefault()">Contact</a>
+    </nav>
 
-    <div class="auth-buttons">
-      <button class="login-btn" routerLink="/auth/login">Login</button>
+    <div class="nav-actions">
+      <button class="btn-outline" routerLink="/auth/login">Login</button>
+      <button class="btn-primary" routerLink="/auth/signup">Sign Up</button>
+    </div>
 
-      <button class="signup-btn" routerLink="/auth/signup">Sign Up</button>
+    <button class="menu-toggle" (click)="toggleMobileMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+</header>
+
+@if (mobileMenuOpen()) {
+  <div class="mobile-overlay" (click)="closeMobileMenu()">
+    <div class="mobile-menu" (click)="$event.stopPropagation()">
+      <div class="mobile-header">
+        <div class="mobile-brand">
+          <img src="assets/images/logo.jpg" alt="Fresh Farm" />
+          <div>
+            <h3>Fresh Farm</h3>
+            <span>Pure • Natural • Healthy</span>
+          </div>
+        </div>
+
+        <button class="close-btn" (click)="closeMobileMenu()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      <nav class="mobile-nav">
+        <a href="#home" (click)="closeMobileMenu()"><mat-icon>home</mat-icon>Home</a>
+        <a href="#features" (click)="closeMobileMenu()"><mat-icon>eco</mat-icon>Why Us</a>
+        <a href="#process" (click)="closeMobileMenu()"
+          ><mat-icon>local_shipping</mat-icon>How It Works</a
+        >
+        <a href="#products" (click)="closeMobileMenu()"
+          ><mat-icon>shopping_bag</mat-icon>Products</a
+        >
+        <a href="#plans" (click)="closeMobileMenu()"><mat-icon>event_repeat</mat-icon>Plans</a>
+        <a href="#testimonials" (click)="closeMobileMenu()"
+          ><mat-icon>reviews</mat-icon>Testimonials</a
+        >
+        <a href="#contact" (click)="scrollToContact(); closeMobileMenu(); $event.preventDefault()">
+          <mat-icon>call</mat-icon>Contact
+        </a>
+      </nav>
+
+      <div class="mobile-buttons">
+        <button class="btn-outline" routerLink="/auth/login">Login</button>
+        <button class="btn-primary" routerLink="/auth/signup">Sign Up</button>
+      </div>
     </div>
   </div>
-</section>
+}
 
-<!-- HERO -->
-
-<section>
-  <div class="container hero">
+<section class="hero" id="home">
+  <div class="container hero-grid">
     <div class="hero-content">
-      <span class="tag"> 🌱 Farm Fresh Dairy Products </span>
+      <span class="badge">🌿 100% ORGANIC & FARM FRESH</span>
 
-      <h1>Fresh Milk Delivered From Our Farm To Your Doorstep</h1>
+      <h1>
+        Bringing
+        <div class="product-badge">Farm Fresh</div>
+        Goodness to Your Doorstep
+      </h1>
 
       <p>
-        Every morning before sunrise, our dairy team begins caring for the cattle, collecting fresh
-        milk under hygienic conditions, performing quality checks, and preparing deliveries so your
-        family receives fresh, nutritious dairy products every day.
+        Fresh milk collected every morning from healthy cattle, quality checked, chilled immediately
+        and delivered fresh to your family.
       </p>
 
-      <div class="hero-buttons">
-        <button class="primary-btn" (click)="navigateToProducts()">Explore Products</button>
+      <div class="hero-actions">
+        <button class="btn-primary" routerLink="/auth/signup">Start Subscription</button>
 
-        <button class="secondary-btn" (click)="scrollToContact()">Contact Us</button>
+        <button class="btn-outline" routerLink="/products">Browse Products</button>
+      </div>
+
+      <div class="hero-highlights">
+        <div class="highlight-chip">
+          <span>🌿</span>
+          <p>100% Organic</p>
+        </div>
+
+        <div class="highlight-chip">
+          <span>🥛</span>
+          <p>Farm Fresh</p>
+        </div>
+
+        <div class="highlight-chip">
+          <span>🚚</span>
+          <p>Daily Delivery</p>
+        </div>
+
+        <div class="highlight-chip">
+          <span>❤️</span>
+          <p>Healthy & Natural</p>
+        </div>
       </div>
     </div>
 
     <div class="hero-image">
-      <img src="assets/images/farm-hero.jpg" alt="Dairy Farm" />
+      <img src="assets/images/farm-hero.jpg" alt="Farm Fresh" />
+    </div>
+  </div>
+</section>
+<!-- ==========================================================
+PART 2 : FEATURES + PROCESS + PLANS
+Replace your existing Features, Process and Plans sections
+========================================================== -->
+
+<section class="features" id="features">
+  <div class="container">
+    <div class="section-heading">
+      <span>WHY CHOOSE US</span>
+      <h2>Fresh From Our Farm</h2>
+      <p>Every drop of milk is collected fresh, tested and delivered with care.</p>
+    </div>
+
+    <div class="feature-grid">
+      <article class="feature-card">
+        <div class="icon">🌿</div>
+        <h3>100% Organic</h3>
+        <p>No preservatives, hormones or harmful additives.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="icon">🐄</div>
+        <h3>Healthy Cattle</h3>
+        <p>Our cows are ethically raised and well cared for.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="icon">🥛</div>
+        <h3>Morning Fresh</h3>
+        <p>Collected and delivered every morning.</p>
+      </article>
+
+      <article class="feature-card">
+        <div class="icon">🚚</div>
+        <h3>Doorstep Delivery</h3>
+        <p>Fast delivery before your day begins.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-
-<section class="about">
+<section class="process" id="process">
   <div class="container">
-    <h2>Our Farm Story</h2>
-
-    <p>
-      Our dairy farm was built on a simple belief: healthy cattle produce healthier milk. We focus
-      on animal welfare, clean farming practices, and consistent quality at every stage.
-    </p>
-
-    <p>
-      Every day begins with feeding schedules, health monitoring, veterinary supervision, hygienic
-      milking, quality testing, and rapid cooling to preserve freshness.
-    </p>
-
-    <p>
-      From farm to home, every step is carefully managed so your family receives fresh, nutritious
-      dairy products every day.
-    </p>
-  </div>
-</section>
-
-<!-- DAILY FARM ACTIVITIES -->
-
-<section>
-  <div class="container">
-    <h2>A Day At Our Farm</h2>
-
-    <div class="activities-grid">
-      <div class="activity-card">
-        <h3>🌾 Morning Feeding</h3>
-
-        <p>Balanced nutrition plans prepared daily to support cattle health.</p>
-      </div>
-
-      <div class="activity-card">
-        <h3>🩺 Health Monitoring</h3>
-
-        <p>Daily observation and veterinary care help maintain animal wellbeing.</p>
-      </div>
-
-      <div class="activity-card">
-        <h3>🥛 Hygienic Milking</h3>
-
-        <p>Milk is collected using clean equipment and safe handling practices.</p>
-      </div>
-
-      <div class="activity-card">
-        <h3>❄️ Rapid Cooling</h3>
-
-        <p>Fresh milk is cooled immediately to preserve quality and freshness.</p>
-      </div>
-
-      <div class="activity-card">
-        <h3>🔬 Quality Testing</h3>
-
-        <p>Every batch is inspected before packaging and delivery.</p>
-      </div>
-
-      <div class="activity-card">
-        <h3>🚚 Delivery</h3>
-
-        <p>Fresh products delivered directly to customers every morning.</p>
-      </div>
+    <div class="section-heading">
+      <span>OUR PROCESS</span>
+      <h2>From Farm To Home</h2>
     </div>
-  </div>
-</section>
-
-<!-- FARM TO HOME -->
-
-<section class="about">
-  <div class="container">
-    <h2>Farm To Home Journey</h2>
 
     <div class="timeline">
-      <div>🐄 Healthy Cattle</div>
+      <div class="step">
+        <div class="emoji-circle">🐄</div>
+        <h4>Farm Care</h4>
+        <p>Healthy cattle produce quality milk.</p>
+      </div>
 
-      <div>🌾 Balanced Nutrition</div>
+      <div class="line"></div>
 
-      <div>🥛 Milking</div>
+      <div class="step">
+        <div class="circle">2</div>
+        <div class="emoji">🥛</div>
+        <h4>Collection</h4>
+        <p>Freshly collected every morning.</p>
+      </div>
 
-      <div>🔬 Quality Testing</div>
+      <div class="line"></div>
 
-      <div>❄️ Cooling</div>
+      <div class="step">
+        <div class="circle">3</div>
+        <div class="emoji">🧪</div>
+        <h4>Quality Test</h4>
+        <p>Every batch is quality checked.</p>
+      </div>
 
-      <div>🚚 Delivery</div>
+      <div class="line"></div>
+
+      <div class="step">
+        <div class="circle">4</div>
+        <div class="emoji">🚚</div>
+        <h4>Delivery</h4>
+        <p>Delivered before 7 AM.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- PRODUCTS -->
-
-<!-- FEATURED PRODUCTS -->
-
-<section>
+<section class="plans" id="plans">
   <div class="container">
-    <h2>Featured Products</h2>
+    <div class="section-heading">
+      <span>DELIVERY PLANS</span>
+      <h2>Choose A Plan</h2>
+      <p>Pause, resume or change quantity anytime.</p>
+    </div>
+
+    <div class="plans-grid">
+      <div class="plan-card">
+        <h3>Weekly</h3>
+
+        <div class="price">
+          ₹399
+          <span>₹57 / day</span>
+        </div>
+
+        <ul>
+          <li>✔ Fresh Daily Delivery</li>
+          <li>✔ Flexible Quantity</li>
+          <li>✔ Pause Anytime</li>
+          <li>✔ Doorstep Delivery</li>
+        </ul>
+
+        <button class="btn-outline">Start Weekly</button>
+      </div>
+
+      <div class="plan-card featured">
+        <div class="badge-popular">MOST POPULAR</div>
+
+        <h3>Monthly</h3>
+
+        <div class="price">
+          ₹1499
+          <span>₹49 / day</span>
+        </div>
+
+        <ul>
+          <li>✔ Morning Delivery</li>
+          <li>✔ Lower Daily Cost</li>
+          <li>✔ Priority Support</li>
+          <li>✔ Change Quantity Anytime</li>
+        </ul>
+
+        <button class="btn-primary">Start Monthly</button>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==========================================================
+PRODUCTS
+========================================================== -->
+
+<section class="products" id="products">
+  <div class="container">
+
+    <h2>Products ({{ products.length }})</h2>
 
     <div class="products-grid">
+
       @for (product of products; track product.id) {
-        <div class="product-card">
-          <img [src]="product.imageUrl" [alt]="product.name" />
 
-          <div class="product-body">
-            <h3>
-              {{ product.name }}
-            </h3>
+        <article class="product-card">
 
-            <p>
-              {{ product.description }}
-            </p>
+          <h3>{{ product.name }}</h3>
 
-            <div class="product-price">
-              ₹{{ product.price }}
+          <p>{{ product.description }}</p>
 
-              <span> / {{ product.unit }} </span>
-            </div>
+          <p>₹{{ product.price }}</p>
 
-            <button class="primary-btn">View Product</button>
-          </div>
-        </div>
+          <p>{{ product.unit }}</p>
+
+        </article>
+
       }
+
     </div>
 
-    <div class="products-footer">
-      <button class="secondary-btn" (click)="navigateToProducts()">View All Products</button>
+  </div>
+</section>
+
+<!-- ==========================================================
+STATS
+========================================================== -->
+
+<section class="stats">
+  <div class="container stats-grid">
+    <div class="stat-card">
+      <h2>500+</h2>
+      <p>Happy Families</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>200+</h2>
+      <p>Healthy Cattle</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>50+</h2>
+      <p>Fresh Products</p>
+    </div>
+
+    <div class="stat-card">
+      <h2>100%</h2>
+      <p>Morning Delivery</p>
     </div>
   </div>
 </section>
 
-<!-- WHY CHOOSE US -->
+<!-- ==========================================================
+TESTIMONIALS
+========================================================== -->
 
-<section class="about">
+<section class="testimonials" id="testimonials">
   <div class="container">
-    <h2>Why Families Trust Us</h2>
+    <div class="section-heading">
+      <span>TESTIMONIALS</span>
 
-    <div class="activities-grid">
-      <div class="activity-card">
-        <h3>500+</h3>
+      <h2>Loved By Families</h2>
 
-        <p>Families Served</p>
-      </div>
+      <p>Thousands of happy customers trust Fresh Farm every morning.</p>
+    </div>
 
-      <div class="activity-card">
-        <h3>50+</h3>
+    <div class="testimonial-grid">
+      <article class="testimonial">
+        <div class="quote">❝</div>
 
-        <p>Healthy Dairy Cattle</p>
-      </div>
+        <p>
+          Fresh milk every single morning. The quality is outstanding and delivery is always on
+          time.
+        </p>
 
-      <div class="activity-card">
-        <h3>365</h3>
+        <strong>— Lakshmi</strong>
+      </article>
 
-        <p>Days Delivery</p>
-      </div>
+      <article class="testimonial">
+        <div class="quote">❝</div>
 
-      <div class="activity-card">
-        <h3>100%</h3>
+        <p>We switched from packaged milk and the difference in taste is amazing.</p>
 
-        <p>Quality Checked</p>
-      </div>
+        <strong>— Ramesh</strong>
+      </article>
+
+      <article class="testimonial">
+        <div class="quote">❝</div>
+
+        <p>Reliable service, healthy milk and an excellent subscription experience.</p>
+
+        <strong>— Suresh</strong>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- TESTIMONIALS -->
+<!-- ==========================================================
+FAQ
+========================================================== -->
 
-<section>
+<section class="faq">
   <div class="container">
-    <h2>Customer Testimonials</h2>
+    <div class="section-heading">
+      <span>FAQ</span>
 
-    <div class="activities-grid">
-      <div class="activity-card">
-        <p>"Excellent milk quality and always delivered on time."</p>
+      <h2>Frequently Asked Questions</h2>
+    </div>
 
-        <strong> — Lakshmi </strong>
-      </div>
+    <div class="faq-grid">
+      <article class="faq-card">
+        <h3>Can I pause my subscription?</h3>
 
-      <div class="activity-card">
-        <p>"Fresh products and reliable service every single day."</p>
+        <p>Yes. Pause or resume deliveries anytime from your dashboard.</p>
+      </article>
 
-        <strong> — Ramesh </strong>
-      </div>
+      <article class="faq-card">
+        <h3>What time do you deliver?</h3>
 
-      <div class="activity-card">
-        <p>"The transparency of the farm process gives us confidence."</p>
+        <p>Every morning before 7:00 AM.</p>
+      </article>
 
-        <strong> — Suresh </strong>
+      <article class="faq-card">
+        <h3>Can I change my quantity?</h3>
+
+        <p>Absolutely. Increase or decrease your quantity whenever needed.</p>
+      </article>
+
+      <article class="faq-card">
+        <h3>Is the milk preservative free?</h3>
+
+        <p>Yes. Fresh Farm milk contains no preservatives or artificial additives.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ==========================================================
+CTA
+========================================================== -->
+
+<section class="cta" #contactSection id="contact">
+  <div class="container cta-card">
+    <div class="cta-content">
+      <h2>Ready For Farm Fresh Milk Every Morning?</h2>
+
+      <p>Join hundreds of happy families enjoying fresh dairy delivered daily.</p>
+    </div>
+
+    <div class="cta-actions">
+      <button class="btn-primary" (click)="navigateToProducts()">Shop Now</button>
+
+      <div class="contact-mini">
+        <p>📞 +91 9949082930</p>
+
+        <p>✉️ support@freshfarmmilk.com</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- ==========================================================
+FOOTER
+========================================================== -->
 
-<section class="about" #contactSection>
-  <div class="container contact-info">
-    <h2>Contact Us</h2>
+<footer class="footer">
+  <div class="container footer-content">
+    <div class="footer-brand">
+      <h3>🥛 Fresh Farm</h3>
 
-    <p>📍 Hyderabad, Telangana</p>
+      <p>Pure • Natural • Healthy</p>
+    </div>
 
-    <p>📞 +91 98765 43210</p>
+    <div class="footer-links">
+      <a href="#home"> Home </a>
 
-    <p>✉️ support@freshfarmmilk.com</p>
+      <a href="#features"> Why Us </a>
+
+      <a href="#process"> Process </a>
+
+      <a href="#products"> Products </a>
+
+      <a href="#plans"> Plans </a>
+
+      <a href="#contact" (click)="scrollToContact(); $event.preventDefault()"> Contact </a>
+    </div>
   </div>
-</section>
+</footer>

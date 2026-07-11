@@ -49,6 +49,10 @@ export const DASHBOARD_ROUTES: Routes = [
 
         loadComponent: () => import('./pages/addresses/addresses').then((m) => m.Addresses),
       },
+      {
+        path: 'subscriptions',
+        loadComponent: () => import('./pages/subscriptions/subscriptions').then((m) => m.Subscriptions),
+      }
     ],
   },
 ];

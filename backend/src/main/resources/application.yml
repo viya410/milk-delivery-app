@@ -3,9 +3,9 @@ spring:
     name: milk-delivery-backend
 
   datasource:
-    url: xxxxxxxx
-    username: xxxxxxxxx
-    password: xxxxxxxxx
+    url: jdbc:postgresql://localhost:5433/milk_delivery
+    username: milkadmin
+    password: milkadmin123
 
   jpa:
     hibernate:
@@ -17,8 +17,8 @@ server:
   port: 8080
 
 razorpay:
-  key-id: xxxxxxxxxx
-  key-secret: xxxxxxxxxx
+  key-id: rzp_test_T6IRRyrRu4wcjn
+  key-secret: kyVQ5BJklzZuYUMeFjSQBAeS
 
 jwt:
   secret: your-super-secret-key-which-should-be-at-least-32-characters-long

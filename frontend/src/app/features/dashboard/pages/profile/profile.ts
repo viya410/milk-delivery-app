@@ -8,11 +8,11 @@ import { AuthService } from '../../../../core/services/auth';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 
 import { EditProfileDialog } from '../../components/edit-profile-dialog/edit-profile-dialog';
-
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatDialogModule, MatIconModule],
   templateUrl: './profile.html',
   styleUrl: './profile.scss',
 })

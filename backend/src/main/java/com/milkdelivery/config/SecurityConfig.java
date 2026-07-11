@@ -1,15 +1,12 @@
 package com.milkdelivery.config;
 
 import com.milkdelivery.security.JwtAuthenticationFilter;
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-
 import org.springframework.security.config.http.SessionCreationPolicy;
-
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -21,80 +18,47 @@ public class SecurityConfig {
     public SecurityConfig(
             JwtAuthenticationFilter jwtAuthenticationFilter
     ) {
-
-        this.jwtAuthenticationFilter =
-                jwtAuthenticationFilter;
-
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
 
     @Bean
-    SecurityFilterChain securityFilterChain(
+    public SecurityFilterChain securityFilterChain(
             HttpSecurity http
     ) throws Exception {
 
         http
+                .csrf(AbstractHttpConfigurer::disable)
 
-                .csrf(
-                        AbstractHttpConfigurer::disable
-                )
+                .cors(Customizer.withDefaults())
 
-                .formLogin(
-                        AbstractHttpConfigurer::disable
-                )
+                .formLogin(AbstractHttpConfigurer::disable)
 
-                .httpBasic(
-                        AbstractHttpConfigurer::disable
-                )
-                .sessionManagement(
+                .httpBasic(AbstractHttpConfigurer::disable)
 
-                        session ->
-
-                                session.sessionCreationPolicy(
-
-                                        SessionCreationPolicy.STATELESS
-
-                                )
-
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
 
                 .authorizeHttpRequests(auth -> auth
 
-                        .requestMatchers(
-
-                                "/api/auth/**",
-
-                                "/api/products/**",
-
-                                "/api/cart/**",
-
-                                "/api/orders/**",
-
-                                "/api/address/**",
-
-                                "/api/payment/**"
-
-                        )
-
+                        .requestMatchers("/api/auth/**")
                         .permitAll()
+
+                        .requestMatchers("/api/products/**")
+                        .permitAll()
+
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
-
+                        
                         .anyRequest()
-
                         .authenticated()
-
                 )
 
                 .addFilterBefore(
-
                         jwtAuthenticationFilter,
-
                         UsernamePasswordAuthenticationFilter.class
-
                 );
 
         return http.build();
-
     }
-
 }

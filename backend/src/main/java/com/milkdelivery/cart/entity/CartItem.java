@@ -1,9 +1,10 @@
 package com.milkdelivery.cart.entity;
 
-import com.milkdelivery.product.entity.Product;
-import jakarta.persistence.*;
-import com.milkdelivery.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.milkdelivery.product.entity.Product;
+import com.milkdelivery.product.entity.ProductSize;
+import com.milkdelivery.user.entity.User;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "cart_items")
@@ -15,6 +16,10 @@ public class CartItem {
 
     @ManyToOne
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "product_size_id")
+    private ProductSize productSize;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -38,21 +43,27 @@ public class CartItem {
         this.product = product;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public ProductSize getProductSize() {
+        return productSize;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setProductSize(ProductSize productSize) {
+        this.productSize = productSize;
     }
 
     public User getUser() {
         return user;
     }
 
-    public void setUser(
-            User user
-    ) {
+    public void setUser(User user) {
         this.user = user;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

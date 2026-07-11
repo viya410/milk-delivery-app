@@ -1,4 +1,15 @@
+export interface ProductSize {
+
+  id?: number;
+
+  size: string;
+
+  price: number;
+
+}
+
 export interface AdminProduct {
+
   id: number;
 
   name: string;
@@ -14,4 +25,9 @@ export interface AdminProduct {
   imageUrl: string;
 
   available: boolean;
+
+  hasSizeSelection?: boolean;
+
+  sizes: ProductSize[];
+
 }
