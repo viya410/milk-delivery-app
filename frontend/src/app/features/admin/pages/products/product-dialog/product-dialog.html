@@ -1,0 +1,111 @@
+<h2 class="dialog-title">
+  {{ data ? '✏️ Edit Product' : '📦 Add Product' }}
+</h2>
+
+<div class="dialog-content">
+  <form [formGroup]="form">
+    <!-- Product Information -->
+    <section class="card-section">
+      <h3>Product Information</h3>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Product Name</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea rows="3" matInput formControlName="description"> </textarea>
+      </mat-form-field>
+
+      <div class="two-column">
+        <mat-form-field appearance="outline">
+          <mat-label>Maximum Order Quantity</mat-label>
+          <input type="number" step="0.1" min="0.1" matInput formControlName="maxOrderQuantity" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Unit</mat-label>
+          <mat-select formControlName="unit">
+            <mat-option value="L">Litre</mat-option>
+            <mat-option value="ML">Milli Litre</mat-option>
+            <mat-option value="GM">Gram</mat-option>
+            <mat-option value="KG">Kilogram</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <mat-checkbox formControlName="available"> Available </mat-checkbox>
+    </section>
+
+    <!-- Product Image -->
+    <section class="card-section">
+      <h3>Product Image</h3>
+      <mat-form-field appearance="outline">
+        <mat-label>Select Image</mat-label>
+        <mat-select formControlName="imageUrl">
+          @for (image of productImages; track image) {
+            <mat-option [value]="image">
+              {{ image }}
+            </mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      @if (form.value.imageUrl) {
+        <div class="image-preview">
+          <img [src]="'assets/images/products/' + form.value.imageUrl" alt="Product Image" />
+        </div>
+      }
+    </section>
+
+    <!-- Sizes -->
+    <section class="card-section">
+      <div class="sizes-header">
+        <div>
+          <h3>Available Sizes</h3>
+          <span> Configure product sizes & prices </span>
+        </div>
+
+        <button mat-stroked-button color="primary" type="button" (click)="addSize()">
+          <mat-icon>add_circle</mat-icon>
+          Add Size
+        </button>
+      </div>
+
+      @for (size of sizes; track $index) {
+        <div class="size-card">
+          <mat-form-field appearance="outline">
+            <mat-label>Size</mat-label>
+            <mat-select [(value)]="size.size">
+              @for (option of availableSizes; track option) {
+                <mat-option [value]="option">
+                  {{ option }}
+                </mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Price</mat-label>
+            <input
+              matInput
+              type="number"
+              [(ngModel)]="size.price"
+              [ngModelOptions]="{ standalone: true }"
+            />
+          </mat-form-field>
+
+          <button mat-icon-button color="warn" type="button" (click)="removeSize($index)">
+            <mat-icon>delete_outline</mat-icon>
+          </button>
+        </div>
+      }
+    </section>
+  </form>
+</div>
+
+<div class="actions">
+  <button mat-button (click)="dialogRef.close()">Cancel</button>
+  <button mat-raised-button color="primary" (click)="save()">Save Product</button>
+</div>

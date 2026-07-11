@@ -1,0 +1,65 @@
+.sheet{
+
+    padding:24px;
+
+}
+
+h2{
+
+    margin:0;
+
+}
+
+p{
+
+    color:#777;
+
+    margin-bottom:24px;
+
+}
+
+.size-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px;
+
+    margin-bottom:14px;
+
+    border-radius:16px;
+
+    border:2px solid #ececec;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.size-card:hover{
+
+    border-color:#2e7d32;
+
+}
+
+.size-card.selected{
+
+    border-color:#2e7d32;
+
+    background:#eef8ee;
+
+}
+
+.add-btn{
+
+    width:100%;
+
+    margin-top:18px;
+
+    height:48px;
+
+}

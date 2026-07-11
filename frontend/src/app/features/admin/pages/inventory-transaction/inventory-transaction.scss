@@ -1,0 +1,675 @@
+:host {
+  display: block;
+
+  width: 100%;
+  min-width: 0;
+
+  box-sizing: border-box;
+}
+
+/* ==========================================================
+   PAGE
+========================================================== */
+
+.transactions-page {
+  width: 100%;
+  min-width: 0;
+
+  padding: 24px;
+
+  box-sizing: border-box;
+}
+
+/* ==========================================================
+   MAIN CARD
+========================================================== */
+
+.transactions-card {
+  width: 100%;
+  min-width: 0;
+
+  padding: 24px;
+
+  border-radius: 24px;
+
+  box-sizing: border-box;
+
+  /*
+    Keep the page itself from overflowing.
+    The table will handle its own horizontal scrolling.
+  */
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 35px rgba(15, 23, 42, 0.08),
+    0 3px 10px rgba(15, 23, 42, 0.03);
+}
+
+/* ==========================================================
+   HEADER
+========================================================== */
+
+.page-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 20px;
+
+  width: 100%;
+  min-width: 0;
+
+  margin-bottom: 24px;
+}
+
+.page-header > div {
+  min-width: 0;
+}
+
+.page-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  color: #1f2937;
+}
+
+.page-header p {
+  margin: 6px 0 0;
+
+  font-size: 15px;
+  line-height: 1.5;
+
+  color: #6b7280;
+}
+
+/* ==========================================================
+   TOOLBAR
+========================================================== */
+
+.toolbar {
+  display: flex;
+
+  align-items: center;
+
+  width: 100%;
+
+  margin-bottom: 20px;
+}
+
+/* ==========================================================
+   SEARCH
+========================================================== */
+
+.search-box {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+
+  padding: 11px 16px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 14px;
+
+  background: #f8fafc;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.search-box:focus-within {
+  border-color: #86aaf7;
+
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.search-box mat-icon {
+  flex-shrink: 0;
+
+  color: #64748b;
+}
+
+.search-box input {
+  flex: 1;
+
+  width: 100%;
+  min-width: 0;
+
+  border: none;
+
+  outline: none;
+
+  background: transparent;
+
+  font-size: 15px;
+
+  color: #1f2937;
+}
+
+.search-box input::placeholder {
+  color: #9ca3af;
+}
+
+/* ==========================================================
+   TABLE
+========================================================== */
+
+/*
+  Only the table scrolls horizontally.
+
+  The header and search bar remain fitted to the screen.
+*/
+
+.transactions-table {
+  display: block;
+
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  -webkit-overflow-scrolling: touch;
+
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 #f1f5f9;
+}
+
+/*
+  The table has 6 columns, so it needs a minimum width.
+  On smaller screens the user can swipe the table horizontally.
+*/
+
+.transactions-table .mat-mdc-header-row,
+.transactions-table .mat-mdc-row {
+  min-width: 900px;
+}
+
+/* ==========================================================
+   TABLE HEADER
+========================================================== */
+
+.transactions-table .mat-mdc-header-row {
+  background: #f8fafc;
+}
+
+.transactions-table .mat-mdc-header-cell {
+  padding: 16px;
+
+  color: #475569;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #e5e7eb;
+}
+
+/* ==========================================================
+   TABLE CELLS
+========================================================== */
+
+.transactions-table .mat-mdc-cell {
+  padding: 16px;
+
+  color: #475569;
+
+  font-size: 14px;
+
+  vertical-align: middle;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Keep important columns on one line */
+
+.transactions-table .mat-column-date,
+.transactions-table .mat-column-type,
+.transactions-table .mat-column-quantity,
+.transactions-table .mat-column-reference {
+  white-space: nowrap;
+}
+
+/* Allow remarks to have a reasonable width */
+
+.transactions-table .mat-column-remarks {
+  min-width: 180px;
+}
+
+/* ==========================================================
+   ROW
+========================================================== */
+
+.transactions-table .mat-mdc-row {
+  transition: background 0.2s ease;
+}
+
+.transactions-table .mat-mdc-row:hover {
+  background: #f8fbff;
+}
+
+/* ==========================================================
+   PRODUCT
+========================================================== */
+
+.product-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 170px;
+}
+
+.product-info strong {
+  color: #1f2937;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* ==========================================================
+   PRODUCT AVATAR
+========================================================== */
+
+.product-avatar {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eef4ff;
+
+  font-size: 21px;
+}
+
+/* ==========================================================
+   TRANSACTION BADGE
+========================================================== */
+
+.transaction-type {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-transform: uppercase;
+
+  white-space: nowrap;
+}
+
+/* ================= ADD ================= */
+
+.transaction-type.add {
+  background: #dcfce7;
+
+  color: #166534;
+}
+
+/* ================= REMOVE ================= */
+
+.transaction-type.remove {
+  background: #fee2e2;
+
+  color: #991b1b;
+}
+
+/* ================= ADJUST ================= */
+
+.transaction-type.adjust {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+}
+
+/* ================= ORDER ================= */
+
+.transaction-type.order {
+  background: #ede9fe;
+
+  color: #6d28d9;
+}
+
+/* ================= RETURN ================= */
+
+.transaction-type.return {
+  background: #fef3c7;
+
+  color: #92400e;
+}
+
+/* ================= DAY RESET ================= */
+
+.transaction-type.day_reset {
+  background: #e5e7eb;
+
+  color: #374151;
+}
+
+/* ==========================================================
+   LOADING
+========================================================== */
+
+.loading {
+  padding: 60px 20px;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 16px;
+}
+
+/* ==========================================================
+   EMPTY STATE
+========================================================== */
+
+.empty {
+  padding: 70px 20px;
+
+  text-align: center;
+
+  color: #64748b;
+}
+
+.empty mat-icon {
+  width: 64px;
+  height: 64px;
+
+  font-size: 64px;
+
+  color: #cbd5e1;
+}
+
+.empty h3 {
+  margin: 18px 0 8px;
+
+  font-size: 22px;
+
+  color: #374151;
+}
+
+.empty p {
+  margin: 0;
+
+  font-size: 14px;
+
+  color: #6b7280;
+}
+
+/* ==========================================================
+   TABLE SCROLLBAR
+========================================================== */
+
+.transactions-table::-webkit-scrollbar {
+  height: 7px;
+}
+
+.transactions-table::-webkit-scrollbar-track {
+  background: #f1f5f9;
+
+  border-radius: 999px;
+}
+
+.transactions-table::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 999px;
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 992px) {
+  .transactions-page {
+    padding: 18px;
+  }
+
+  .transactions-card {
+    padding: 20px;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 768px) {
+  .transactions-page {
+    padding: 12px;
+  }
+
+  /* ================= CARD ================= */
+
+  .transactions-card {
+    padding: 14px;
+
+    border-radius: 18px;
+  }
+
+  /* ================= HEADER ================= */
+
+  .page-header {
+    margin-bottom: 18px;
+  }
+
+  .page-header h1 {
+    font-size: 24px;
+    line-height: 1.25;
+  }
+
+  .page-header p {
+    margin-top: 5px;
+
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  /* ================= SEARCH ================= */
+
+  .toolbar {
+    margin-bottom: 16px;
+  }
+
+  .search-box {
+    width: 100%;
+    max-width: none;
+
+    padding: 10px 13px;
+
+    border-radius: 12px;
+  }
+
+  .search-box mat-icon {
+    width: 20px;
+    height: 20px;
+
+    font-size: 20px;
+  }
+
+  .search-box input {
+    font-size: 13px;
+  }
+
+  /* ================= TABLE ================= */
+
+  .transactions-table .mat-mdc-header-row,
+  .transactions-table .mat-mdc-row {
+    min-width: 760px;
+  }
+
+  .transactions-table .mat-mdc-header-cell {
+    padding: 12px;
+
+    font-size: 10px;
+  }
+
+  .transactions-table .mat-mdc-cell {
+    padding: 12px;
+
+    font-size: 12px;
+  }
+
+  /* ================= PRODUCT ================= */
+
+  .product-info {
+    min-width: 135px;
+
+    gap: 8px;
+  }
+
+  .product-avatar {
+    width: 36px;
+    height: 36px;
+
+    flex-basis: 36px;
+
+    font-size: 17px;
+  }
+
+  .product-info strong {
+    font-size: 12px;
+  }
+
+  /* ================= TRANSACTION TYPE ================= */
+
+  .transaction-type {
+    padding: 6px 9px;
+
+    font-size: 9px;
+  }
+
+  /* ================= REMARKS ================= */
+
+  .transactions-table .mat-column-remarks {
+    min-width: 140px;
+  }
+
+  /* ================= STATES ================= */
+
+  .loading {
+    padding: 45px 16px;
+
+    font-size: 14px;
+  }
+
+  .empty {
+    padding: 50px 16px;
+  }
+
+  .empty mat-icon {
+    width: 52px;
+    height: 52px;
+
+    font-size: 52px;
+  }
+
+  .empty h3 {
+    font-size: 19px;
+  }
+
+  .empty p {
+    font-size: 12px;
+  }
+}
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 480px) {
+  .transactions-page {
+    padding: 8px;
+  }
+
+  .transactions-card {
+    padding: 10px;
+
+    border-radius: 15px;
+  }
+
+  /* ================= HEADER ================= */
+
+  .page-header h1 {
+    font-size: 21px;
+  }
+
+  .page-header p {
+    font-size: 11px;
+  }
+
+  /* ================= SEARCH ================= */
+
+  .search-box {
+    padding: 9px 11px;
+  }
+
+  /* ================= TABLE ================= */
+
+  .transactions-table .mat-mdc-header-row,
+  .transactions-table .mat-mdc-row {
+    min-width: 720px;
+  }
+}
+
+/* ==========================================================
+   VERY SMALL MOBILE
+========================================================== */
+
+@media (max-width: 360px) {
+  .transactions-page {
+    padding: 6px;
+  }
+
+  .transactions-card {
+    padding: 8px;
+  }
+
+  .page-header h1 {
+    font-size: 19px;
+  }
+
+  .page-header p {
+    font-size: 10px;
+  }
+}

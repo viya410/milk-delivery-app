@@ -1,0 +1,35 @@
+@if (loading()) {
+  <div class="loading">Loading Product...</div>
+} @else if (errorMessage()) {
+  <div class="error">
+    {{ errorMessage() }}
+  </div>
+} @else if (product()) {
+  <div class="details-page">
+    <div class="details-grid">
+      <div class="image-section">
+        <img
+          [src]="'assets/images/products/' + product()?.imageUrl"
+          [alt]="product()?.name"
+        />
+      </div>
+
+      <div class="info-section">
+        <h1>
+          {{ product()?.name }}
+        </h1>
+
+        <p>
+          {{ product()?.description }}
+        </p>
+
+        <div class="price">
+₹{{ getDisplayPrice() }}
+          <span> / {{ product()?.unit }} </span>
+        </div>
+
+        <button class="cart-btn" (click)="addToCart()">Add To Cart</button>
+      </div>
+    </div>
+  </div>
+}

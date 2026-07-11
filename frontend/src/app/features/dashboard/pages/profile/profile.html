@@ -1,0 +1,106 @@
+<div class="profile-page">
+  <!-- PROFILE HEADER -->
+
+  <mat-card class="profile-header">
+    <div class="avatar">
+      {{ user()?.fullName?.charAt(0) }}
+    </div>
+
+    <div class="header-info">
+      <h2>{{ user()?.fullName }}</h2>
+
+      <p>{{ accountInfo.subscriptionPlan }}</p>
+
+      <span class="status">
+        {{ accountInfo.status }}
+      </span>
+    </div>
+  </mat-card>
+
+  <!-- PROFILE CARDS -->
+
+  <div class="profile-grid">
+    <!-- PERSONAL INFORMATION -->
+
+    <mat-card class="profile-card">
+      <div class="card-title">
+        <div class="title-icon">
+          <mat-icon>person</mat-icon>
+        </div>
+
+        <h2>Personal Information</h2>
+      </div>
+
+      <div class="info-list">
+        <div class="info-row">
+          <strong>Full Name</strong>
+
+          <span>{{ user()?.fullName }}</span>
+        </div>
+
+        <div class="info-row">
+          <strong>Mobile Number</strong>
+
+          <span>
+            {{ user()?.phoneNumber || 'Not Provided' }}
+          </span>
+        </div>
+
+        <div class="info-row">
+          <strong>Email</strong>
+
+          <span>
+            {{ user()?.email || 'Not Provided' }}
+          </span>
+        </div>
+      </div>
+
+      <div class="edit-button-wrapper">
+        <button
+          mat-raised-button
+          color="primary"
+          class="edit-profile-btn"
+          (click)="openEditProfile()"
+        >
+          <mat-icon>edit</mat-icon>
+
+          Edit Profile
+        </button>
+      </div>
+    </mat-card>
+
+    <!-- ACCOUNT INFORMATION -->
+
+    <mat-card class="profile-card">
+      <div class="card-title">
+        <div class="title-icon">
+          <mat-icon>account_circle</mat-icon>
+        </div>
+
+        <h2>Account Information</h2>
+      </div>
+
+      <div class="info-list">
+        <div class="info-row">
+          <strong>Customer Since</strong>
+
+          <span>{{ accountInfo.joinedDate }}</span>
+        </div>
+
+        <div class="info-row">
+          <strong>Subscription Plan</strong>
+
+          <span>{{ accountInfo.subscriptionPlan }}</span>
+        </div>
+
+        <div class="info-row">
+          <strong>Status</strong>
+
+          <span class="account-status">
+            {{ accountInfo.status }}
+          </span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>

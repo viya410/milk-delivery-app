@@ -1,0 +1,154 @@
+@if (!loading()) {
+  <section class="dashboard-home">
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-content">
+        <span class="hero-badge"> 🌿 Fresh From Our Farm </span>
+
+        <h1>
+          Welcome,
+
+          <span>{{ userName }}</span>
+
+          👋
+        </h1>
+
+        <p>Fresh milk and dairy products delivered to your doorstep every morning.</p>
+
+        <button class="hero-btn" routerLink="/products">🛒 Shop Fresh Products</button>
+      </div>
+
+      <div class="hero-image">🥛</div>
+    </section>
+
+    <!-- Statistics -->
+
+    <section class="stats-grid">
+      @for (stat of stats(); track stat.title) {
+        <div class="stat-card" (click)="navigateToCard(stat)">
+          <div class="stat-icon">
+            @switch (stat.title) {
+              @case ('Orders') {
+                📦
+              }
+
+              @case ('Active Plans') {
+                🥛
+              }
+
+              @default {
+                📍
+              }
+            }
+          </div>
+
+          <div class="stat-info">
+            <h2>
+              {{ stat.value }}
+            </h2>
+
+            <p>
+              {{ stat.title }}
+            </p>
+          </div>
+        </div>
+      }
+    </section>
+
+    <!-- Quick Actions -->
+
+    <section class="quick-actions">
+      <div class="section-title">
+        <h2>⚡ Quick Actions</h2>
+      </div>
+
+      <div class="action-grid">
+        <div class="action-card" routerLink="/products">
+          <div class="action-icon">🛒</div>
+
+          <h3>Order Milk</h3>
+
+          <p>Browse fresh dairy products.</p>
+        </div>
+
+        <div class="action-card" routerLink="/subscriptions">
+          <div class="action-icon">📅</div>
+
+          <h3>Manage Plans</h3>
+
+          <p>View and update subscriptions.</p>
+        </div>
+
+        <div class="action-card" routerLink="/dashboard/addresses">
+          <div class="action-icon">📍</div>
+
+          <h3>Addresses</h3>
+
+          <p>Manage delivery locations.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recent Orders -->
+
+    <section class="recent-orders">
+      <div class="section-title">
+        <h2>🧾 Recent Orders</h2>
+
+        <button class="view-all-btn" routerLink="/dashboard/orders">View All →</button>
+      </div>
+
+      @if (recentOrders().length > 0) {
+        <div class="orders-grid">
+          @for (order of recentOrders(); track order.id) {
+            <div class="order-card">
+              <div class="order-header">
+                <div>
+                  <h3>Order #{{ order.id }}</h3>
+
+                  <small>
+                    {{ order.orderDate | date: 'dd MMM yyyy, hh:mm a' }}
+                  </small>
+                </div>
+
+                <span class="status">
+                  {{ order.status }}
+                </span>
+              </div>
+
+              <div class="products">
+                @for (item of order.items; track item.id) {
+                  <div class="product-row">
+                    <span> 🥛 {{ item.productName }} </span>
+
+                    <span> × {{ item.quantity }} </span>
+                  </div>
+                }
+              </div>
+
+              <div class="order-footer">
+                <h2>₹{{ order.totalAmount }}</h2>
+              </div>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="empty-orders">
+          <div class="empty-icon">🥛</div>
+
+          <h2>No Orders Yet</h2>
+
+          <p>Start shopping and enjoy fresh farm dairy products delivered to your doorstep.</p>
+
+          <button class="hero-btn" routerLink="/products">Browse Products</button>
+        </div>
+      }
+    </section>
+  </section>
+} @else {
+  <div class="dashboard-loading">
+    <div class="loader">🥛</div>
+
+    <h2>Loading your dashboard...</h2>
+  </div>
+}

@@ -1,0 +1,387 @@
+@use '../../../../../styles/variables' as *;
+
+:host {
+  display: block;
+
+  background: $background;
+
+  min-height: 100vh;
+}
+
+.products-page {
+  max-width: 1400px;
+
+  margin: auto;
+
+  padding: 40px 24px;
+}
+
+.hero {
+  background: linear-gradient(135deg, #2e7d32, #4caf50);
+
+  border-radius: 28px;
+
+  padding: 48px;
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  color: white;
+
+  margin-bottom: 40px;
+
+  overflow: hidden;
+}
+
+.hero-left {
+  max-width: 600px;
+}
+
+.hero-tag {
+  display: inline-block;
+
+  background: rgba(255, 255, 255, 0.2);
+
+  padding: 8px 16px;
+
+  border-radius: 50px;
+
+  font-size: 14px;
+
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: 48px;
+
+  margin: 0;
+
+  font-weight: 700;
+
+  line-height: 1.2;
+}
+
+.hero p {
+  margin-top: 16px;
+
+  font-size: 18px;
+
+  opacity: 0.95;
+
+  line-height: 1.7;
+}
+
+.hero-right {
+  font-size: 140px;
+}
+
+.search-section {
+  margin: 35px 0;
+}
+
+.search-box {
+  background: white;
+
+  border-radius: 16px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 18px 24px;
+
+  box-shadow: $shadow-sm;
+}
+
+.search-box i {
+  margin-right: 16px;
+
+  font-size: 18px;
+
+  color: $text-light;
+}
+
+.search-box input {
+  flex: 1;
+
+  border: none;
+
+  outline: none;
+
+  font-size: 16px;
+
+  background: none;
+}
+
+.category-list {
+  display: flex;
+
+  gap: 14px;
+
+  overflow: auto;
+
+  padding-bottom: 12px;
+
+  margin-bottom: 40px;
+}
+
+.category-list button {
+  border: none;
+
+  background: white;
+
+  padding: 12px 22px;
+
+  border-radius: 40px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  box-shadow: $shadow-sm;
+
+  transition: $transition;
+
+  white-space: nowrap;
+}
+
+.category-list button:hover {
+  background: $primary;
+
+  color: white;
+}
+
+.category-list .active {
+  background: $primary;
+
+  color: white;
+}
+
+.products-grid {
+  display: grid;
+
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+
+  gap: 28px;
+}
+
+/* ======================================================
+   TABLET
+====================================================== */
+
+@media (max-width: 992px) {
+  .hero {
+    padding: 32px;
+  }
+
+  .hero h1 {
+    font-size: 36px;
+  }
+
+  .hero-right {
+    font-size: 100px;
+  }
+}
+
+/* ======================================================
+   MOBILE
+====================================================== */
+
+@media (max-width: 768px) {
+  /* ======================================================
+     PAGE
+  ====================================================== */
+
+  .products-page {
+    padding: 18px;
+  }
+
+  /* ======================================================
+     HERO
+  ====================================================== */
+
+  .hero {
+    flex-direction: column;
+    align-items: center;
+
+    padding: 24px 20px;
+    margin-bottom: 22px;
+
+    gap: 16px;
+
+    text-align: center;
+
+    border-radius: 22px;
+  }
+
+  .hero-left {
+    max-width: 100%;
+  }
+
+  .hero-tag {
+    padding: 6px 14px;
+    margin-bottom: 12px;
+
+    font-size: 12px;
+  }
+
+  .hero h1 {
+    font-size: 28px;
+    line-height: 1.2;
+  }
+
+  .hero p {
+    margin-top: 12px;
+
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .hero-right {
+    font-size: 65px;
+    line-height: 1;
+
+    margin-top: 4px;
+    margin-bottom: 12px;
+  }
+
+  /* ======================================================
+     SEARCH
+  ====================================================== */
+
+  .search-section {
+    margin: 0 0 18px;
+  }
+
+  .search-box {
+    padding: 14px 16px;
+
+    border-radius: 14px;
+  }
+
+  .search-box i {
+    margin-right: 12px;
+
+    font-size: 15px;
+  }
+
+  .search-box input {
+    min-width: 0;
+
+    font-size: 14px;
+  }
+
+  /* ======================================================
+     CATEGORIES
+  ====================================================== */
+
+  .category-list {
+    gap: 10px;
+
+    padding-bottom: 8px;
+    margin-bottom: 22px;
+  }
+
+  .category-list button {
+    padding: 9px 16px;
+
+    font-size: 13px;
+  }
+
+  /* ======================================================
+     PRODUCTS
+  ====================================================== */
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 12px;
+  }
+  
+}
+
+/* ======================================================
+   SMALL MOBILE
+====================================================== */
+
+@media (max-width: 480px) {
+  .products-page {
+    padding: 14px;
+  }
+
+  /* HERO */
+
+  .hero {
+    padding: 20px 16px;
+    margin-bottom: 18px;
+
+    border-radius: 20px;
+  }
+
+  .hero h1 {
+    font-size: 24px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .hero-right {
+    font-size: 60px;
+    margin-bottom: 16px;
+  }
+
+  /* SEARCH */
+
+  .search-section {
+    margin-bottom: 16px;
+  }
+
+  .search-box {
+    padding: 12px 14px;
+  }
+
+  .search-box input {
+    font-size: 13px;
+  }
+
+  /* CATEGORIES */
+
+  .category-list {
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .category-list button {
+    padding: 8px 14px;
+
+    font-size: 12px;
+  }
+
+  /* PRODUCTS */
+
+  .products-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+}
+
+.coming-soon {
+  pointer-events: none;
+
+  opacity: 0.9;
+
+  cursor: default;
+}
+
+.coming-soon:hover {
+  transform: none;
+
+  background: inherit;
+
+  box-shadow: none;
+}

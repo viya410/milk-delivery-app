@@ -1,0 +1,169 @@
+<section class="checkout-page">
+
+  <div class="container">
+
+    <h1>
+
+      Select Delivery Address
+
+    </h1>
+
+    @if (addresses().length > 0) {
+
+      <div class="address-grid">
+
+        @for (address of addresses(); track address.id) {
+
+          <div
+            class="address-card"
+            [class.selected]="selectedAddress()?.id === address.id"
+            (click)="selectAddress(address)">
+
+            <div class="card-header">
+
+              <h3>
+
+                {{ address.customerName }}
+
+              </h3>
+
+              @if (selectedAddress()?.id === address.id) {
+
+                <mat-icon class="selected-icon">
+
+                  check_circle
+
+                </mat-icon>
+
+              }
+
+            </div>
+
+            <p>
+
+              {{ address.houseNo }}, {{ address.street }}
+
+            </p>
+
+            <p>
+
+              {{ address.city }}, {{ address.state }}
+
+            </p>
+
+            <p>
+
+              {{ address.pincode }}
+
+            </p>
+
+            <p>
+
+              📞 {{ address.mobileNumber }}
+
+            </p>
+
+          </div>
+
+        }
+
+      </div>
+
+    } @else {
+
+      <div class="no-address">
+
+        <mat-icon>
+
+          location_off
+
+        </mat-icon>
+
+        <h3>
+
+          No Saved Addresses
+
+        </h3>
+
+        <p>
+
+          Add an address to continue.
+
+        </p>
+
+      </div>
+
+    }
+
+    <button
+      class="add-address-btn"
+      mat-stroked-button
+      color="primary"
+      (click)="addNewAddress()">
+
+      <mat-icon>
+
+        add
+
+      </mat-icon>
+
+      Add New Address
+
+    </button>
+
+    <div class="summary">
+
+      <h2>
+
+        Order Summary
+
+      </h2>
+
+      <div class="summary-row">
+
+        <span>
+
+          Items
+
+        </span>
+
+        <span>
+
+          {{ cartItems().length }}
+
+        </span>
+
+      </div>
+
+      <div class="summary-row total">
+
+        <span>
+
+          Total
+
+        </span>
+
+        <span>
+
+          ₹{{ getTotal() }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+    <button
+      class="place-order-btn"
+      mat-raised-button
+      color="primary"
+      (click)="placeOrder()"
+      [disabled]="!selectedAddress()">
+
+      Place Order
+
+    </button>
+
+  </div>
+
+</section>

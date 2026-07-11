@@ -1,0 +1,162 @@
+<div class="page-header">
+  <div>
+    <h1>Orders</h1>
+
+    <p>View and manage customer orders.</p>
+  </div>
+</div>
+
+<mat-card class="table-card">
+  <!-- ================= Toolbar ================= -->
+
+  <div class="toolbar">
+    <div class="search-box">
+      <mat-icon>search</mat-icon>
+
+      <input
+        type="text"
+        placeholder="Search customer..."
+        (input)="updateSearch($any($event.target).value)"
+      />
+    </div>
+  </div>
+
+  <!-- ================= Filters ================= -->
+
+  <div class="filters">
+    <button
+      class="filter-btn"
+      [class.active]="selectedStatus() === 'ALL'"
+      (click)="changeFilter('ALL')"
+    >
+      All ({{ totalOrders() }})
+    </button>
+
+    <button
+      class="filter-btn placed-filter"
+      [class.active]="selectedStatus() === 'PLACED'"
+      (click)="changeFilter('PLACED')"
+    >
+      Placed ({{ placedCount() }})
+    </button>
+
+    <button
+      class="filter-btn processing-filter"
+      [class.active]="selectedStatus() === 'PACKED'"
+      (click)="changeFilter('PACKED')"
+    >
+      Processing ({{ processingCount() }})
+    </button>
+
+    <button
+      class="filter-btn delivery-filter"
+      [class.active]="selectedStatus() === 'OUT_FOR_DELIVERY'"
+      (click)="changeFilter('OUT_FOR_DELIVERY')"
+    >
+      Out for Delivery ({{ deliveryCount() }})
+    </button>
+
+    <button
+      class="filter-btn delivered-filter"
+      [class.active]="selectedStatus() === 'DELIVERED'"
+      (click)="changeFilter('DELIVERED')"
+    >
+      Delivered ({{ deliveredCount() }})
+    </button>
+  </div>
+
+  @if (orderService.loading()) {
+    <div class="loading">Loading Orders...</div>
+
+  } @else if (filteredOrders().length === 0) {
+    <div class="empty">
+      <mat-icon> receipt_long </mat-icon>
+
+      <h2>No Orders Found</h2>
+    </div>
+
+  } @else {
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Customer</th>
+
+            <th>Amount</th>
+
+            <th>Date</th>
+
+            <th>Status</th>
+
+            <th>Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (order of filteredOrders(); track order.id) {
+            <tr>
+              <td>
+                <div class="customer">
+                  <div class="avatar">
+                    {{ getCustomerInitials(order.user?.fullName) }}
+                  </div>
+
+                  <div>
+                    <strong>
+                      {{ order.user?.fullName ?? 'Unknown User' }}
+                    </strong>
+
+                    <small>
+                      {{ order.user?.phoneNumber ?? '-' }}
+                    </small>
+                  </div>
+                </div>
+              </td>
+
+              <td>
+                <span class="amount"> ₹{{ order.totalAmount }} </span>
+              </td>
+
+              <td>
+                {{ order.orderDate | date: 'mediumDate' }}
+
+                <br />
+
+                <small>
+                  {{ order.orderDate | date: 'shortTime' }}
+                </small>
+              </td>
+
+              <td>
+                <span
+                  class="status-chip"
+                  [class.placed]="order.status === 'PLACED'"
+                  [class.packed]="order.status === 'PACKED'"
+                  [class.delivery]="order.status === 'OUT_FOR_DELIVERY'"
+                  [class.delivered]="order.status === 'DELIVERED'"
+                >
+                  {{ getStatusLabel(order.status) }}
+                </span>
+              </td>
+
+              <td>
+                <mat-form-field appearance="outline">
+                  <mat-select
+                    [value]="order.status"
+                    (selectionChange)="updateStatus(order.id, $event.value)"
+                  >
+                    @for (status of statuses.slice(1); track status) {
+                      <mat-option [value]="status">
+                        {{ getStatusLabel(status) }}
+                      </mat-option>
+                    }
+                  </mat-select>
+                </mat-form-field>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</mat-card>

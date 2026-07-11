@@ -1,0 +1,35 @@
+.full-width {
+  width: 100%;
+}
+
+form {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 18px;
+
+  padding-top: 12px;
+}
+
+.dialog-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 24px;
+}
+
+.hint {
+  color: #6b7280;
+
+  margin-top: -10px;
+
+  margin-bottom: 8px;
+
+  display: block;
+
+  font-size: 13px;
+}

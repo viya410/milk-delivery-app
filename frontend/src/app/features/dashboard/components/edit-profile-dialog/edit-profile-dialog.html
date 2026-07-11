@@ -1,0 +1,71 @@
+<h2 mat-dialog-title>
+
+  Edit Profile
+
+</h2>
+
+<mat-dialog-content>
+
+  <form
+    [formGroup]="profileForm">
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>
+        Full Name
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="fullName">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>
+        Mobile Number
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="mobileNumber">
+
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+
+      <mat-label>
+        Email
+      </mat-label>
+
+      <input
+        matInput
+        formControlName="email">
+
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    (click)="cancel()">
+
+    Cancel
+
+  </button>
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="save()">
+
+    Save
+
+  </button>
+
+</mat-dialog-actions>

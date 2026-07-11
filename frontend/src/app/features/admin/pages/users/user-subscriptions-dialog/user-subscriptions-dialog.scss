@@ -1,0 +1,145 @@
+.loading {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding: 40px;
+
+  gap: 16px;
+
+}
+
+.subscription-list {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 16px;
+
+  padding-top: 8px;
+
+}
+
+.subscription-card {
+
+  border-radius: 18px;
+
+  padding: 16px;
+
+}
+
+.card-header {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 16px;
+
+}
+
+.card-header h3 {
+
+  margin: 0;
+
+  font-size: 18px;
+
+}
+
+.card-header p {
+
+  margin: 4px 0 0;
+
+  color: #666;
+
+}
+
+.details {
+
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 16px;
+
+}
+
+.details div {
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 4px;
+
+}
+
+.details strong {
+
+  font-size: 13px;
+
+  color: #777;
+
+}
+
+.status {
+
+  padding: 6px 14px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+}
+
+.status.active {
+
+  background: #dff6e5;
+
+  color: #188038;
+
+}
+
+.status.paused {
+
+  background: #fff4d6;
+
+  color: #b26a00;
+
+}
+
+.empty {
+
+  text-align: center;
+
+  padding: 48px 16px;
+
+}
+
+.empty mat-icon {
+
+  font-size: 48px;
+
+  width: 48px;
+
+  height: 48px;
+
+  color: #bbb;
+
+}
+
+.empty h3 {
+
+  margin-top: 16px;
+
+}

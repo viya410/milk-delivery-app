@@ -1,0 +1,272 @@
+<!-- <div class="subscriptions-page">
+  <mat-card class="subscriptions-card">
+    <div class="page-header">
+      <div>
+        <h1>My Subscriptions</h1>
+
+        <p>Manage your recurring milk deliveries</p>
+      </div>
+
+      <button mat-raised-button color="primary" (click)="createSubscription()">
+        <mat-icon>add</mat-icon>
+        New Subscription
+      </button>
+    </div>
+
+    @if (loading()) {
+      <div class="loading">Loading subscriptions...</div>
+    } @else {
+      @if (subscriptions().length > 0) {
+        <div class="subscription-grid">
+          @for (subscription of subscriptions(); track subscription.id) {
+            <mat-card class="subscription-card">
+              <div class="card-header">
+                <div>
+                  <h2>{{ subscription.productName }}</h2>
+
+                  <p>
+                    {{ subscription.quantity }}
+                    {{ subscription.unit }}
+                  </p>
+                </div>
+
+                <mat-chip [class]="subscription.status.toLowerCase()">
+                  {{ subscription.status }}
+                </mat-chip>
+              </div>
+
+              <div class="details">
+                <p>
+                  <strong>Frequency:</strong>
+
+                  {{ subscription.frequency.replace('_', ' ') }}
+                </p>
+
+                <p>
+                  <strong>Starts:</strong>
+
+                  {{ subscription.startDate | date: 'dd MMM yyyy' }}
+                </p>
+
+                @if (subscription.endDate) {
+                  <p>
+                    <strong>Ends:</strong>
+
+                    {{ subscription.endDate | date: 'dd MMM yyyy' }}
+                  </p>
+                }
+              </div>
+
+              <div class="actions">
+                @if (subscription.status === 'ACTIVE') {
+                  <button mat-stroked-button color="primary" (click)="pause(subscription.id)">
+                    Pause
+                  </button>
+                }
+
+                @if (subscription.status === 'PAUSED') {
+                  <button mat-stroked-button color="primary" (click)="resume(subscription.id)">
+                    Resume
+                  </button>
+                }
+
+                @if (subscription.status !== 'CANCELLED') {
+                  <button mat-raised-button color="warn" (click)="cancel(subscription.id)">
+                    Cancel
+                  </button>
+                }
+              </div>
+            </mat-card>
+          }
+        </div>
+      } @else {
+        <div class="empty">
+          <mat-icon>autorenew</mat-icon>
+
+          <h2>No Subscriptions Yet</h2>
+
+          <p>Create your first recurring milk subscription.</p>
+        </div>
+      }
+    }
+  </mat-card>
+</div> -->
+<div class="subscriptions-page">
+  <mat-card class="subscriptions-card">
+    <!-- PAGE HEADER -->
+
+    <div class="page-header">
+      <div class="header-content">
+        <h1>My Subscriptions</h1>
+
+        <p>Manage your recurring milk deliveries</p>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="new-subscription-btn"
+        (click)="createSubscription()"
+      >
+        <mat-icon>add</mat-icon>
+
+        New Subscription
+      </button>
+    </div>
+
+    <!-- LOADING -->
+
+    @if (loading()) {
+      <div class="loading">
+        Loading subscriptions...
+      </div>
+    } @else {
+      <!-- SUBSCRIPTIONS -->
+
+      @if (subscriptions().length > 0) {
+        <div class="subscription-grid">
+          @for (subscription of subscriptions(); track subscription.id) {
+            <mat-card class="subscription-card">
+              <!-- CARD HEADER -->
+
+              <div class="card-header">
+                <div class="product-info">
+                  <div class="product-icon">
+                    🥛
+                  </div>
+
+                  <div>
+                    <h2>
+                      {{ subscription.productName }}
+                    </h2>
+
+                    <p>
+                      {{ subscription.quantity }}
+                      {{ subscription.unit }}
+                    </p>
+                  </div>
+                </div>
+
+                <mat-chip
+                  class="status-chip"
+                  [class.active]="subscription.status === 'ACTIVE'"
+                  [class.paused]="subscription.status === 'PAUSED'"
+                  [class.cancelled]="subscription.status === 'CANCELLED'"
+                >
+                  {{ subscription.status }}
+                </mat-chip>
+              </div>
+
+              <!-- DETAILS -->
+
+              <div class="details">
+                <div class="detail-row">
+                  <div class="detail-label">
+                    <mat-icon>autorenew</mat-icon>
+
+                    <strong>Frequency</strong>
+                  </div>
+
+                  <span>
+                    {{ subscription.frequency.replace('_', ' ') }}
+                  </span>
+                </div>
+
+                <div class="detail-row">
+                  <div class="detail-label">
+                    <mat-icon>calendar_today</mat-icon>
+
+                    <strong>Starts</strong>
+                  </div>
+
+                  <span>
+                    {{ subscription.startDate | date: 'dd MMM yyyy' }}
+                  </span>
+                </div>
+
+                @if (subscription.endDate) {
+                  <div class="detail-row">
+                    <div class="detail-label">
+                      <mat-icon>event</mat-icon>
+
+                      <strong>Ends</strong>
+                    </div>
+
+                    <span>
+                      {{ subscription.endDate | date: 'dd MMM yyyy' }}
+                    </span>
+                  </div>
+                }
+              </div>
+
+              <!-- ACTIONS -->
+
+              <div class="actions">
+                @if (subscription.status === 'ACTIVE') {
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    class="action-btn"
+                    (click)="pause(subscription.id)"
+                  >
+                    <mat-icon>pause</mat-icon>
+
+                    Pause
+                  </button>
+                }
+
+                @if (subscription.status === 'PAUSED') {
+                  <button
+                    mat-stroked-button
+                    color="primary"
+                    class="action-btn"
+                    (click)="resume(subscription.id)"
+                  >
+                    <mat-icon>play_arrow</mat-icon>
+
+                    Resume
+                  </button>
+                }
+
+                @if (subscription.status !== 'CANCELLED') {
+                  <button
+                    mat-stroked-button
+                    class="action-btn cancel-btn"
+                    (click)="cancel(subscription.id)"
+                  >
+                    <mat-icon>close</mat-icon>
+
+                    Cancel
+                  </button>
+                }
+              </div>
+            </mat-card>
+          }
+        </div>
+      } @else {
+        <!-- EMPTY STATE -->
+
+        <div class="empty">
+          <div class="empty-icon">
+            <mat-icon>autorenew</mat-icon>
+          </div>
+
+          <h2>No Subscriptions Yet</h2>
+
+          <p>Create your first recurring milk subscription.</p>
+
+          <button
+            mat-raised-button
+            color="primary"
+            class="empty-create-btn"
+            (click)="createSubscription()"
+          >
+            <mat-icon>add</mat-icon>
+
+            Create Subscription
+          </button>
+        </div>
+      }
+    }
+  </mat-card>
+</div>

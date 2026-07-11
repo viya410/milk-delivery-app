@@ -1,0 +1,276 @@
+<div class="inventory-page">
+  <mat-card class="inventory-card">
+    <!-- ================= Header ================= -->
+    <div class="page-header">
+ <div class="page-title">
+  <h1>Inventory Management</h1>
+  <p>Manage daily stock and business operations</p>
+</div>
+
+      <mat-card class="business-day-card">
+        <div class="business-day-banner">
+          <div class="banner-content">
+            <div class="banner-icon">
+              <mat-icon>calendar_month</mat-icon>
+            </div>
+
+            <div class="banner-text">
+              <h2>Business Day</h2>
+
+              @if (businessDay()) {
+                <p>
+                  {{ businessDay()?.businessDate | date: 'fullDate' }}
+                </p>
+              } @else {
+                <p>Ready to start today's operations</p>
+              }
+            </div>
+          </div>
+
+          @if (isBusinessDayOpen()) {
+            <div class="status-pill open">
+              <span class="dot"></span>
+
+              OPEN
+            </div>
+          } @else {
+            <div class="status-pill closed">
+              <span class="dot"></span>
+
+              CLOSED
+            </div>
+          }
+        </div>
+
+        @if (businessDay()) {
+          <div class="business-details">
+            <div class="detail-card opened">
+              <div class="detail-icon">
+                <mat-icon>login</mat-icon>
+              </div>
+
+              <div>
+                <small>Opened At</small>
+
+                <h3>
+                  {{ businessDay()?.openedAt | date: 'shortTime' }}
+                </h3>
+              </div>
+            </div>
+
+            <div class="detail-card closed-card">
+              <div class="detail-icon">
+                <mat-icon>logout</mat-icon>
+              </div>
+
+              <div>
+                <small>Closed At</small>
+
+                <h3>
+                  @if (businessDay()?.closedAt) {
+                    {{ businessDay()?.closedAt | date: 'shortTime' }}
+                  } @else {
+                    --
+                  }
+                </h3>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div class="business-actions">
+          @if (!hasBusinessDay()) {
+            <button mat-raised-button class="action-btn start-btn" (click)="startBusinessDay()">
+              <mat-icon>play_circle</mat-icon>
+
+              <div>
+                <strong>Start Business Day</strong>
+                <span>Begin today's operations</span>
+              </div>
+            </button>
+          } @else if (isBusinessDayOpen()) {
+            <button
+              mat-raised-button
+              class="action-btn generate-btn"
+              (click)="generateTodayOrders()"
+            >
+              <mat-icon>assignment</mat-icon>
+
+              <div>
+                <strong>Generate Orders</strong>
+                <span>Create today's deliveries</span>
+              </div>
+            </button>
+
+            <button mat-raised-button class="action-btn close-btn" (click)="closeBusinessDay()">
+              <mat-icon>stop_circle</mat-icon>
+
+              <div>
+                <strong>Close Business Day</strong>
+                <span>Finish today's operations</span>
+              </div>
+            </button>
+          } @else {
+            <button
+              mat-raised-button
+              class="action-btn summary-btn"
+              (click)="viewBusinessSummary()"
+            >
+              <mat-icon>analytics</mat-icon>
+
+              <div>
+                <strong>View Summary</strong>
+                <span>Today's business report</span>
+              </div>
+            </button>
+
+            <button mat-raised-button class="action-btn start-btn" (click)="startBusinessDay()">
+              <mat-icon>restart_alt</mat-icon>
+
+              <div>
+                <strong>Start New Business Day</strong>
+                <span>Open next business day</span>
+              </div>
+            </button>
+          }
+        </div>
+      </mat-card>
+    </div>
+
+    <!-- ================= Summary Cards ================= -->
+
+    <div class="summary-grid">
+      <mat-card class="summary-card products">
+        <mat-icon>inventory_2</mat-icon>
+        <h2>{{ totalProducts() }}</h2>
+        <p>Products</p>
+      </mat-card>
+
+      <mat-card class="summary-card current">
+        <mat-icon>warehouse</mat-icon>
+        <h2>{{ totalCurrentStock() }}</h2>
+        <p>Current Stock</p>
+      </mat-card>
+
+      <mat-card class="summary-card reserved">
+        <mat-icon>lock</mat-icon>
+        <h2>{{ totalReservedStock() }}</h2>
+        <p>Reserved Stock</p>
+      </mat-card>
+
+      <mat-card class="summary-card available">
+        <mat-icon>check_circle</mat-icon>
+        <h2>{{ totalAvailableStock() }}</h2>
+        <p>Available Stock</p>
+      </mat-card>
+    </div>
+
+    <!-- ================= Search ================= -->
+
+    <div class="toolbar">
+      <div class="search-box">
+        <mat-icon>search</mat-icon>
+        <input
+          type="text"
+          placeholder="Search inventory..."
+          (input)="updateSearch($any($event.target).value)"
+        />
+      </div>
+
+      <button mat-raised-button color="primary" (click)="viewTransactions()">
+        <mat-icon>history</mat-icon>
+        Transaction History
+      </button>
+    </div>
+
+    @if (inventoryService.loading()) {
+      <div class="loading">Loading inventory...</div>
+    } @else {
+      <table mat-table [dataSource]="filteredInventory()" class="inventory-table">
+        <!-- Product -->
+        <ng-container matColumnDef="product">
+          <th mat-header-cell *matHeaderCellDef>Product</th>
+          <td mat-cell *matCellDef="let item">
+            <div class="product-info">
+              <div class="product-avatar">🥛</div>
+              <strong>
+                {{ item.productName }}
+              </strong>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Current -->
+        <ng-container matColumnDef="current">
+          <th mat-header-cell *matHeaderCellDef>Current Stock</th>
+          <td mat-cell *matCellDef="let item">
+            <strong class="stock-current">
+              {{ item.currentStock }}
+            </strong>
+          </td>
+        </ng-container>
+
+        <!-- Reserved -->
+        <ng-container matColumnDef="reserved">
+          <th mat-header-cell *matHeaderCellDef>Reserved</th>
+          <td mat-cell *matCellDef="let item">
+            <strong class="stock-reserved">
+              {{ item.reservedStock }}
+            </strong>
+          </td>
+        </ng-container>
+
+        <!-- Available -->
+        <ng-container matColumnDef="available">
+          <th mat-header-cell *matHeaderCellDef>Available</th>
+          <td mat-cell *matCellDef="let item">
+            <strong class="stock-available">
+              {{ item.availableStock }}
+            </strong>
+          </td>
+        </ng-container>
+
+        <!-- Actions -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let item">
+            <div class="actions">
+              <button mat-mini-fab color="primary" matTooltip="Add Stock" (click)="addStock(item)">
+                <mat-icon> add </mat-icon>
+              </button>
+
+              <button
+                mat-mini-fab
+                color="accent"
+                matTooltip="Adjust Stock"
+                (click)="adjustStock(item)"
+              >
+                <mat-icon> edit </mat-icon>
+              </button>
+
+              <button
+                mat-mini-fab
+                color="warn"
+                matTooltip="Remove Stock"
+                (click)="removeStock(item)"
+              >
+                <mat-icon> remove </mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+
+      @if (filteredInventory().length === 0) {
+        <div class="empty">
+          <mat-icon> inventory_2 </mat-icon>
+          <h3>No Inventory Found</h3>
+          <p>Products will appear here after inventory is created.</p>
+        </div>
+      }
+    }
+  </mat-card>
+</div>

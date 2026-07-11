@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: milk-delivery-backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/milk_delivery
+    username: milkadmin
+    password: milkadmin123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+server:
+  port: 8080
+
+razorpay:
+  key-id: rzp_test_T6IRRyrRu4wcjn
+  key-secret: kyVQ5BJklzZuYUMeFjSQBAeS
+
+jwt:
+  secret: your-super-secret-key-which-should-be-at-least-32-characters-long
+  expiration: 86400000
