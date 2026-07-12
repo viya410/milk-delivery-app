@@ -2,8 +2,8 @@ export const environment = {
   production: true,
 
   apiUrl: 'https://milk-delivery-app-flbi.onrender.com/api',
-  razorpayKey: 'rzp_test_T6IRRyrRu4wcjn',
+  razorpayKey: 'RAZORPAY_ID',
 
-  enablePayment: true,
+  enablePayment: false,
   appName: 'RK Dairy Farms'
 };
