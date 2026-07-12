@@ -3,22 +3,21 @@ spring:
     name: milk-delivery-backend
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/milk_delivery
-    username: milkadmin
-    password: milkadmin123
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/milk_delivery}
+    username: ${DB_USERNAME:milkadmin}
+    password: ${DB_PASSWORD:milkadmin123}
 
   jpa:
     hibernate:
-      ddl-auto: update
-
-    show-sql: true
+      ddl-auto: ${DDL_AUTO:update}
+    show-sql: ${SHOW_SQL:true}
 
 server:
-  port: 8080
+  port: ${PORT:8080}
 
 razorpay:
-  key-id: rzp_test_T6IRRyrRu4wcjn
-  key-secret: kyVQ5BJklzZuYUMeFjSQBAeS
+  key-id: RAZORPAY_ID
+  key-secret: RAZORPAY_SECRET
 
 jwt:
   secret: your-super-secret-key-which-should-be-at-least-32-characters-long
