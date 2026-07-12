@@ -16,7 +16,10 @@ public class CorsConfig {
                 new CorsConfiguration();
 
         configuration.setAllowedOrigins(
-                List.of("http://localhost:4200")
+                List.of(
+                        "http://localhost:4200",
+                        "https://milk-delivery-app.vishnu-nnv.workers.dev"
+                )
         );
 
         configuration.setAllowedMethods(
@@ -24,6 +27,7 @@ public class CorsConfig {
                         "GET",
                         "POST",
                         "PUT",
+                        "PATCH",
                         "DELETE",
                         "OPTIONS"
                 )
