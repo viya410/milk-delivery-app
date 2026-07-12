@@ -221,9 +221,10 @@ Replace your existing Features, Process and Plans sections
         <h3>Weekly</h3>
 
         <div class="price">
-          ₹399
-          <span>₹57 / day</span>
+          ₹525
+          <span>₹75 / day</span>
         </div>
+        <span class="discount">5% Discount</span>
 
         <ul>
           <li>✔ Fresh Daily Delivery</li>
@@ -241,9 +242,10 @@ Replace your existing Features, Process and Plans sections
         <h3>Monthly</h3>
 
         <div class="price">
-          ₹1499
-          <span>₹49 / day</span>
+          ₹2100
+          <span>₹70 / day</span>
         </div>
+        <span class="discount">10% Discount</span>
 
         <ul>
           <li>✔ Morning Delivery</li>
@@ -263,29 +265,45 @@ PRODUCTS
 
 <section class="products" id="products">
   <div class="container">
+    <div class="section-heading">
+      <span>OUR PRODUCTS</span>
 
-    <h2>Products ({{ products.length }})</h2>
+      <h2>Fresh From The Farm</h2>
 
-    <div class="products-grid">
-
-      @for (product of products; track product.id) {
-
-        <article class="product-card">
-
-          <h3>{{ product.name }}</h3>
-
-          <p>{{ product.description }}</p>
-
-          <p>₹{{ product.price }}</p>
-
-          <p>{{ product.unit }}</p>
-
-        </article>
-
-      }
-
+      <p>Fresh dairy products delivered directly from our farm.</p>
     </div>
 
+    <div class="products-grid">
+      @for (product of products(); track product.id) {
+        <article class="product-card">
+          @if (product.imageUrl) {
+            <div class="product-image">
+              <img [src]="getProductImage(product.imageUrl)" [alt]="product.name" />
+            </div>
+          }
+
+          <div class="product-content">
+            <h3>
+              {{ product.name }}
+            </h3>
+
+            <p class="description">
+              {{ product.description }}
+            </p>
+
+            <div class="price-row">
+              <div class="product-price">
+                Rs. {{ getPriceDisplay(product) }}
+              </div>
+            </div>
+
+            <button class="btn-primary" (click)="navigateToProducts()">View Product</button>
+          </div>
+        </article>
+      } @empty {
+        <p class="no-products">No products available right now.</p>
+      }
+    </div>
   </div>
 </section>
 

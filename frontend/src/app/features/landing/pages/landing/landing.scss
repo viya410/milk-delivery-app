@@ -384,21 +384,37 @@ Navbar + Hero + Features + Process + Plans
   font-weight: 700;
 }
 
-.price {
+/* Plan pricing only — kept separate from product pricing */
+.plan-card .price {
   display: flex;
-  align-items: flex-end;
-  gap: 12px;
-  margin: 24px 0;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  margin: 24px 0 8px;
+}
+
+.plan-card .price strong {
   font-size: 2.6rem;
+  line-height: 1.1;
   font-weight: 800;
   color: var(--primary);
 }
 
-.price span {
-  margin-bottom: 6px;
+.plan-card .price span {
+  margin: 0;
   font-size: 1rem;
+  line-height: 1.4;
   font-weight: 500;
   color: #6b7280;
+}
+
+.discount {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  font-weight: 700;
+  color: brown;
 }
 
 .plan-card ul {
@@ -489,13 +505,26 @@ Navbar + Hero + Features + Process + Plans
     padding: 22px;
   }
 
-  .price {
-    font-size: 2.2rem;
+  .plan-card .price {
+    margin: 18px 0 8px;
+    gap: 6px 10px;
+  }
+
+  .plan-card .price strong {
+    font-size: 1.8rem;
+  }
+
+  .plan-card .price span {
+    font-size: 0.85rem;
+  }
+
+  .discount {
+    font-size: 0.8rem;
   }
 }
-/*==================================================
-PRODUCTS
-==================================================*/
+/* ==========================================================
+   PRODUCTS
+========================================================== */
 
 .products {
   padding: 90px 0;
@@ -505,14 +534,21 @@ PRODUCTS
 .products-grid {
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  /* Cards stay a controlled width instead of stretching */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 320px));
 
   gap: 28px;
 
   margin-top: 48px;
+
+  /* Center cards when there are only 1 or 2 products */
+  justify-content: center;
 }
 
 .product-card {
+  width: 100%;
+  max-width: 320px;
+
   background: #fff;
 
   border-radius: 22px;
@@ -521,23 +557,31 @@ PRODUCTS
 
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
 
-  transition: 0.3s;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .product-card:hover {
   transform: translateY(-6px);
+
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.1);
 }
 
 .product-image {
+  width: 100%;
   height: 220px;
 
   background: #f3f7ef;
+
+  overflow: hidden;
 }
 
 .product-image img {
   width: 100%;
-
   height: 100%;
+
+  display: block;
 
   object-fit: cover;
 }
@@ -547,7 +591,7 @@ PRODUCTS
 }
 
 .product-content h3 {
-  margin-bottom: 10px;
+  margin: 0 0 10px;
 }
 
 .description {
@@ -570,16 +614,19 @@ PRODUCTS
   margin-bottom: 22px;
 }
 
-.price {
+.product-price {
   font-size: 2rem;
 
   font-weight: 700;
 
   color: var(--primary);
+  line-height: 1.4;
 }
 
-.price span {
+.product-price span {
   font-size: 1rem;
+
+  font-weight: 500;
 
   color: #6b7280;
 }
@@ -588,7 +635,7 @@ PRODUCTS
   width: 100%;
 }
 
-/*============== MOBILE ==============*/
+/* ================= MOBILE ================= */
 
 @media (max-width: 768px) {
   .products {
@@ -596,9 +643,17 @@ PRODUCTS
   }
 
   .products-grid {
-    grid-template-columns: 1fr;
+    /* Still don't stretch the card across the whole screen */
+    grid-template-columns: minmax(0, 320px);
 
     gap: 20px;
+
+    justify-content: center;
+  }
+
+  .product-card {
+    width: 100%;
+    max-width: 320px;
   }
 
   .product-image {
@@ -609,11 +664,14 @@ PRODUCTS
     padding: 18px;
   }
 
-  .price {
-    font-size: 1.8rem;
+  .product-price {
+    font-size: 1.25rem;
+    line-height: 1.5;
+  }
+  .product-price {
+    overflow-wrap: anywhere;
   }
 }
-
 /* ==========================================================
    STATS
 ========================================================== */

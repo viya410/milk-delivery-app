@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { signal } from '@angular/core';
 import { ProductService } from '../../../../core/services/product';
-import { ToasterService } from '../../../../core/services/toaster';
 import { MatIconModule } from '@angular/material/icon';
 import { environment } from '../../../../../environments/environment';
 
@@ -21,37 +20,36 @@ export class Landing implements OnInit {
   private readonly productService = inject(ProductService);
   private readonly router = inject(Router);
 
-  products: any[] = [];
-
+  readonly products = signal<any[]>([]);
   readonly currentYear = new Date().getFullYear();
   readonly mobileMenuOpen = signal(false);
   readonly imageBaseUrl = `${environment.apiUrl}/uploads/`;
 
-  constructor(private readonly toaster: ToasterService) {}
+  constructor() {}
 
   ngOnInit(): void {
     console.log('Landing ngOnInit');
     this.loadFeaturedProducts();
-    this.toaster.success('Hello from toaster!');
   }
 
   private loadFeaturedProducts(): void {
-  this.productService.getProducts().subscribe({
-    next: (products) => {
-      console.log('Received products', products);
+    this.productService.getProducts().subscribe({
+      next: (products) => {
+        console.log('Received products:', products);
 
-      this.products = products.slice(0, 4);
+        this.products.set(products.slice(0, 4));
 
-      console.log('Assigned products:', this.products);
-      console.log('Assigned length:', this.products.length);
-
-      setTimeout(() => {
-        console.log('Length after 2 seconds:', this.products.length);
-      }, 2000);
-    }
-  });
-}
-
+        console.log('Assigned products:', this.products());
+        console.log('Assigned length:', this.products().length);
+      },
+      error: (error) => {
+        console.error('Failed to load products:', error);
+      },
+      complete: () => {
+        console.log('Products request completed');
+      },
+    });
+  }
   navigateToProducts(): void {
     this.router.navigate(['/products']);
   }
@@ -84,13 +82,24 @@ export class Landing implements OnInit {
     this.mobileMenuOpen.set(false);
   }
   getProductImage(image: string): string {
-
-  if (!image) {
-    console.log('no image')
-    return '';
+    if (!image) {
+      console.log('no image');
+      return '';
+    }
+    console.log('image', image);
+    return `assets/images/products/${image}`;
   }
-console.log('image', image)
-  return `assets/images/products/${image}`;
+  getPriceDisplay(product: any): string {
+    if (!product?.sizes || product.sizes.length === 0) {
+      return `₹${product.price} / ${product.unit}`;
+    }
 
-}
+    return `${product.sizes[0].price}/${product.sizes[0].size}`;
+  }
+
+  private formatSize(size: any): string {
+    const unit = size.unit?.toLowerCase() ?? '';
+
+    return `${size.size} ${unit}`;
+  }
 }
