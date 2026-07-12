@@ -10,7 +10,7 @@ export class ProductService {
   private http = inject(HttpClient);
 
   private apiUrl =
-    `${environment.apiUrl}products`;
+    `${environment.apiUrl}/products`;
 
   getProducts() {
 
