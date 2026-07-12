@@ -1,13 +1,8 @@
-import { Component, signal } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { Component, inject, signal } from '@angular/core';
 
-import { inject } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 
@@ -17,8 +12,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+
 import { AuthService } from '../../../../core/services/auth';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
@@ -26,136 +21,109 @@ import { Router } from '@angular/router';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-
     RouterLink,
-
     MatCardModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './signup.html',
-  styleUrl: './signup.scss'
+  styleUrl: './signup.scss',
 })
 export class Signup {
+  private readonly router = inject(Router);
 
-  private router = inject(Router);
+  private readonly fb = inject(FormBuilder);
 
-  private fb = inject(FormBuilder);
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
+
+  loading = false;
 
   hidePassword = signal(true);
+
   hideConfirmPassword = signal(true);
 
   signupForm = this.fb.nonNullable.group({
+    fullName: ['', [Validators.required, Validators.minLength(3)]],
 
-    fullName: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(3)
-      ]
-    ],
+    mobileNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
 
-    mobileNumber: [
-      '',
-      [
-        Validators.required,
-        Validators.pattern(/^[0-9]{10}$/)
-      ]
-    ],
+    email: ['', [Validators.email]],
 
-    email: [
-      '',
-      [
-        Validators.email
-      ]
-    ],
+    password: ['', [Validators.required, Validators.minLength(6)]],
 
-    password: [
-      '',
-      [
-        Validators.required,
-        Validators.minLength(6)
-      ]
-    ],
+    confirmPassword: ['', Validators.required],
 
-    confirmPassword: [
-      '',
-      Validators.required
-    ],
-
-    termsAccepted: [
-      false,
-      Validators.requiredTrue
-    ]
+    termsAccepted: [false, Validators.requiredTrue],
   });
 
- submit(): void {
+  submit(): void {
+    /*
+     * Prevent duplicate requests
+     * from double-clicking the button.
+     */
+    if (this.loading) {
+      return;
+    }
 
-  if (this.signupForm.invalid) {
-    this.signupForm.markAllAsTouched();
-    return;
-  }
+    if (this.signupForm.invalid) {
+      this.signupForm.markAllAsTouched();
 
-  const formValue =
-    this.signupForm.getRawValue();
+      return;
+    }
 
-  if (
-    formValue.password !==
-    formValue.confirmPassword
-  ) {
+    const formValue = this.signupForm.getRawValue();
 
-    alert(
-      'Passwords do not match'
-    );
+    if (formValue.password !== formValue.confirmPassword) {
+      alert('Passwords do not match');
 
-    return;
-  }
+      return;
+    }
 
-  const payload = {
+    const payload = {
+      fullName: formValue.fullName,
 
-    fullName:
-      formValue.fullName,
+      phoneNumber: formValue.mobileNumber,
 
-    phoneNumber:
-      formValue.mobileNumber,
+      email: formValue.email,
 
-    email:
-      formValue.email,
+      password: formValue.password,
+    };
 
-    password:
-      formValue.password
-  };
+    /*
+     * Disable button immediately
+     * before starting HTTP request.
+     */
+    this.loading = true;
 
-  this.authService
-    .register(payload)
-    .subscribe({
-
+    this.authService.register(payload).subscribe({
       next: (response) => {
+        /*
+         * HTTP request completed
+         */
+        this.loading = false;
 
         console.log(response);
 
-        alert(
-          'Account created successfully'
-        );
+        alert('Account created successfully');
 
-        this.router.navigate([
-          '/auth/login'
-        ]);
+        this.router.navigate(['/auth/login']);
       },
 
       error: (error) => {
+        /*
+         * HTTP request failed.
+         * Enable button again so
+         * the user can retry.
+         */
+        this.loading = false;
 
         console.error(error);
 
-        alert(
-          error?.error ??
-          'Signup failed'
-        );
-      }
+        alert(error?.error?.message ?? error?.error ?? 'Signup failed');
+      },
     });
-}
+  }
 }

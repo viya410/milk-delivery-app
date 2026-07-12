@@ -108,6 +108,16 @@
           }
         </div>
       </a>
+
+      <a mat-list-item routerLink="/admin/reviews" routerLinkActive="active-link">
+        <div class="menu-item">
+          <mat-icon>reviews</mat-icon>
+
+          @if (layoutService.sidebarExpanded()) {
+            <span>Reviews</span>
+          }
+        </div>
+      </a>
     }
 
     <!-- ================= CUSTOMER ================= -->

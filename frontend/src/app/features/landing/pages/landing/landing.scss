@@ -71,9 +71,42 @@ Navbar + Hero + Features + Process + Plans
   gap: 28px;
 }
 .desktop-nav a {
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 600;
+  position: relative;
+
+  padding-bottom: 7px;
+
+  cursor: pointer;
+
+  transition: color 0.25s ease;
+}
+
+.desktop-nav a::after {
+  content: '';
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 0;
+
+  width: 0;
+  height: 3px;
+
+  border-radius: 999px;
+
+  background: #5e9f45;
+
+  transform: translateX(-50%);
+
+  transition: width 0.3s ease;
+}
+
+.desktop-nav a:hover,
+.desktop-nav a.active {
+  color: #5e9f45;
+}
+
+.desktop-nav a.active::after {
+  width: 100%;
 }
 
 .nav-actions {
@@ -183,17 +216,36 @@ Navbar + Hero + Features + Process + Plans
 .mobile-overlay {
   position: fixed;
   inset: 0;
+
+  z-index: 9999;
+
   background: rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(8px);
-  z-index: 1000;
+
+  overflow: hidden;
+
+  overscroll-behavior: contain;
 }
 
 .mobile-menu {
-  width: 100%;
-  height: 100%;
-  background: #fff;
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  width: min(85%, 360px);
+  height: 100dvh;
+
   display: flex;
   flex-direction: column;
+
+  background: #fff;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  overscroll-behavior-y: contain;
+
+  -webkit-overflow-scrolling: touch;
 }
 
 .mobile-header {
@@ -710,38 +762,491 @@ Navbar + Hero + Features + Process + Plans
 ========================================================== */
 
 .testimonials {
+  position: relative;
+
   padding: 90px 0;
-  background: #f8fcf6;
+
+  background:
+    radial-gradient(circle at 10% 20%, rgba(126, 187, 99, 0.12), transparent 28%),
+    radial-gradient(circle at 90% 80%, rgba(244, 180, 0, 0.08), transparent 25%), #f8fcf6;
+
+  overflow: hidden;
 }
+
+/* Soft decorative background glow */
+
+.testimonials::before {
+  content: '';
+
+  position: absolute;
+  top: 60px;
+  left: -80px;
+
+  width: 220px;
+  height: 220px;
+
+  border-radius: 50%;
+
+  background: rgba(94, 159, 69, 0.07);
+
+  filter: blur(10px);
+
+  pointer-events: none;
+}
+
+.testimonials::after {
+  content: '';
+
+  position: absolute;
+  right: -60px;
+  bottom: 40px;
+
+  width: 180px;
+  height: 180px;
+
+  border-radius: 50%;
+
+  background: rgba(244, 180, 0, 0.06);
+
+  filter: blur(10px);
+
+  pointer-events: none;
+}
+
+.testimonials .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================================
+   TESTIMONIAL GRID
+========================================================== */
 
 .testimonial-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
   gap: 28px;
+
   margin-top: 50px;
 }
 
+/* ==========================================================
+   TESTIMONIAL CARD
+========================================================== */
+
 .testimonial {
-  background: #fff;
-  border-radius: 20px;
-  padding: 28px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+  min-height: 260px;
+
+  padding: 30px;
+
+  background: linear-gradient(145deg, #ffffff 0%, #fbfff8 55%, #f2faed 100%);
+
+  border: 1px solid rgba(94, 159, 69, 0.18);
+
+  border-radius: 24px;
+
+  box-shadow:
+    0 12px 30px rgba(49, 91, 38, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  overflow: hidden;
+
+  transition:
+    transform 0.5s ease,
+    opacity 0.5s ease,
+    box-shadow 0.5s ease,
+    border-color 0.5s ease;
 }
+
+/* Decorative green glow */
+
+.testimonial::before {
+  content: '';
+
+  position: absolute;
+
+  top: -60px;
+  right: -60px;
+
+  width: 150px;
+  height: 150px;
+
+  border-radius: 50%;
+
+  background: radial-gradient(circle, rgba(126, 187, 99, 0.2), rgba(126, 187, 99, 0));
+
+  pointer-events: none;
+}
+
+/* Green accent at bottom */
+
+.testimonial::after {
+  content: '';
+
+  position: absolute;
+
+  left: 24px;
+  right: 24px;
+  bottom: 0;
+
+  height: 4px;
+
+  border-radius: 999px 999px 0 0;
+
+  background: linear-gradient(90deg, #5e9f45, #8bc66f, #f4b400);
+
+  opacity: 0.8;
+}
+
+.testimonial:hover {
+  transform: translateY(-6px);
+
+  border-color: rgba(94, 159, 69, 0.35);
+
+  box-shadow: 0 20px 42px rgba(49, 91, 38, 0.14);
+}
+
+/* ==========================================================
+   QUOTE ICON
+========================================================== */
 
 .quote {
-  font-size: 2rem;
+  position: relative;
+  z-index: 1;
+
+  width: 46px;
+  height: 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 10px;
+
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, rgba(94, 159, 69, 0.14), rgba(126, 187, 99, 0.06));
+
   color: var(--primary);
-  margin-bottom: 12px;
+
+  font-size: 2.2rem;
+  font-weight: 800;
+
+  line-height: 1;
 }
+
+/* ==========================================================
+   STARS — BIGGER + SHINIER
+========================================================== */
+
+.testimonial-stars {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+
+  margin: 8px 0 18px;
+}
+
+.testimonial-stars span {
+  display: inline-block;
+
+  color: #d9dfd5;
+
+  font-size: 1.55rem;
+
+  line-height: 1;
+
+  transition:
+    transform 0.3s ease,
+    color 0.3s ease,
+    filter 0.3s ease;
+}
+
+.testimonial-stars span.active {
+  color: #ffc107;
+
+  text-shadow:
+    0 0 6px rgba(255, 193, 7, 0.55),
+    0 0 12px rgba(255, 193, 7, 0.25);
+
+  filter: drop-shadow(0 2px 2px rgba(180, 120, 0, 0.18));
+}
+
+.testimonial:hover .testimonial-stars span.active {
+  transform: scale(1.08);
+}
+
+/* ==========================================================
+   REVIEW TEXT
+========================================================== */
 
 .testimonial p {
-  color: #6b7280;
+  position: relative;
+  z-index: 1;
+
+  flex: 1;
+
+  margin: 0 0 22px;
+
+  color: #596657;
+
+  font-size: 0.98rem;
+
   line-height: 1.8;
-  margin-bottom: 20px;
+
+  overflow-wrap: anywhere;
 }
 
+/* ==========================================================
+   CUSTOMER NAME
+========================================================== */
+
 .testimonial strong {
-  color: var(--text);
+  position: relative;
+  z-index: 1;
+
+  display: inline-flex;
+  align-items: center;
+
+  color: #355b2c;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 900px) and (min-width: 769px) {
+  .testimonial-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+  }
+}
+
+/* ==========================================================
+   MOBILE — AUTOMATIC FOCUS CAROUSEL
+========================================================== */
+
+@media (max-width: 768px) {
+  .testimonial-author strong {
+    font-size: 0.88rem;
+  }
+
+  .review-time {
+    font-size: 0.72rem;
+  }
+
+  .testimonials {
+    padding: 60px 0;
+  }
+
+  .testimonial-grid {
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+    margin-top: 34px;
+
+    padding: 16px calc((100vw - 285px) / 2) 32px;
+
+    overflow-x: hidden;
+
+    scroll-behavior: smooth;
+  }
+
+  .testimonial {
+    flex: 0 0 285px;
+
+    min-height: 250px;
+
+    padding: 24px;
+
+    border-radius: 22px;
+
+    /*
+      Cards waiting on either side
+    */
+    transform: scale(0.88);
+
+    opacity: 0.42;
+
+    filter: saturate(0.75);
+  }
+
+  /* ========================================================
+     ACTIVE / FOCUSED CARD
+  ======================================================== */
+
+  .testimonial.in-focus {
+    transform: scale(1);
+
+    opacity: 1;
+
+    filter: saturate(1.1);
+
+    border-color: rgba(94, 159, 69, 0.42);
+
+    box-shadow:
+      0 20px 45px rgba(49, 91, 38, 0.18),
+      0 0 0 3px rgba(94, 159, 69, 0.06);
+  }
+
+  /*
+    Active card gets a slightly
+    stronger decorative glow
+  */
+
+  .testimonial.in-focus::before {
+    background: radial-gradient(circle, rgba(126, 187, 99, 0.28), rgba(126, 187, 99, 0));
+  }
+
+  /* Quote */
+
+  .quote {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 13px;
+
+    font-size: 2rem;
+  }
+
+  /* Bigger attention-grabbing stars */
+
+  .testimonial-stars {
+    gap: 5px;
+
+    margin: 8px 0 16px;
+  }
+
+  .testimonial-stars span {
+    font-size: 1.5rem;
+  }
+
+  /*
+    Only the focused card's stars
+    get the strongest glow
+  */
+
+  .testimonial.in-focus .testimonial-stars span.active {
+    color: #ffc107;
+
+    text-shadow:
+      0 0 7px rgba(255, 193, 7, 0.75),
+      0 0 15px rgba(255, 193, 7, 0.4);
+
+    animation: starGlow 1.8s ease-in-out infinite alternate;
+  }
+
+  .testimonial p {
+    margin-bottom: 18px;
+
+    font-size: 0.9rem;
+
+    line-height: 1.7;
+  }
+
+  .testimonial strong {
+    font-size: 0.88rem;
+  }
+}
+
+/* ==========================================================
+   STAR GLOW ANIMATION
+========================================================== */
+
+@keyframes starGlow {
+  from {
+    transform: scale(1);
+
+    filter: brightness(1);
+  }
+
+  to {
+    transform: scale(1.08);
+
+    filter: brightness(1.15);
+  }
+}
+
+/* ==========================================================
+   SMALL MOBILE
+========================================================== */
+
+@media (max-width: 380px) {
+  .testimonial-grid {
+    padding-left: calc((100vw - 255px) / 2);
+
+    padding-right: calc((100vw - 255px) / 2);
+  }
+
+  .testimonial {
+    flex-basis: 255px;
+
+    min-height: 235px;
+
+    padding: 20px;
+  }
+
+  .testimonial-stars span {
+    font-size: 1.35rem;
+  }
+}
+
+/* ==========================================================
+   REDUCED MOTION
+========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonial,
+  .testimonial-stars span {
+    transition: none;
+  }
+
+  .testimonial.in-focus .testimonial-stars span.active {
+    animation: none;
+  }
+}
+
+.testimonial-author {
+  position: relative;
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.testimonial-author strong {
+  color: #355b2c;
+
+  font-size: 0.95rem;
+  font-weight: 800;
+}
+
+.review-time {
+  color: #8a9388;
+
+  font-size: 0.78rem;
+  font-weight: 500;
 }
 
 /* ==========================================================
@@ -1007,4 +1512,8 @@ Navbar + Hero + Features + Process + Plans
     justify-content: center;
     gap: 16px;
   }
+}
+.desktop-nav a,
+.mobile-nav a {
+  cursor: pointer;
 }

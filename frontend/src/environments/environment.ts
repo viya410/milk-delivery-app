@@ -4,8 +4,8 @@ export const environment = {
 
   apiUrl: 'http://localhost:8080/api',
 
-  razorpayKey: 'RAZORPAY_KEY',
+  razorpayKey: 'rzp_test_T6IRRyrRu4wcjn',
 
-  enablePayment: true
+  enablePayment: false
 
 };

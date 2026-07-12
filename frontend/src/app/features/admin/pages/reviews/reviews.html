@@ -1,0 +1,161 @@
+<section class="reviews-page">
+
+  <div class="page-header">
+    <div>
+      <span class="eyebrow">
+        CUSTOMER FEEDBACK
+      </span>
+
+      <h1>Customer Reviews</h1>
+
+      <p>
+        Review and approve customer feedback
+        before it appears publicly.
+      </p>
+    </div>
+
+    <div class="review-count">
+      {{ reviews().length }}
+      <span>Total Reviews</span>
+    </div>
+  </div>
+
+
+  @if (loading()) {
+
+    <div class="state-card">
+      Loading reviews...
+    </div>
+
+  } @else {
+
+    <div class="reviews-grid">
+
+      @for (
+        review of reviews();
+        track review.id
+      ) {
+
+        <article
+          class="review-card"
+          [class.approved]="review.approved"
+        >
+
+          <div class="card-header">
+
+            <div class="customer">
+
+              <div class="avatar">
+                {{ review.customerName.charAt(0) }}
+              </div>
+
+              <div>
+                <h3>
+                  {{ review.customerName }}
+                </h3>
+
+                <span class="date">
+                  {{ review.createdAt | date:'mediumDate' }}
+                </span>
+              </div>
+
+            </div>
+
+            @if (review.approved) {
+
+              <span class="status approved-status">
+                Approved
+              </span>
+
+            } @else {
+
+              <span class="status pending-status">
+                Pending
+              </span>
+
+            }
+
+          </div>
+
+
+          <div class="stars">
+
+            @for (
+              star of [1, 2, 3, 4, 5];
+              track star
+            ) {
+
+              <mat-icon
+                [class.active]="star <= review.rating"
+              >
+                star
+              </mat-icon>
+
+            }
+
+          </div>
+
+
+          <p class="comment">
+            "{{ review.comment }}"
+          </p>
+
+
+          <div class="actions">
+
+            @if (!review.approved) {
+
+              <button
+                type="button"
+                class="approve-btn"
+                [disabled]="
+                  processingId() === review.id
+                "
+                (click)="approveReview(review)"
+              >
+                <mat-icon>check</mat-icon>
+
+                Approve
+              </button>
+
+            }
+
+            <button
+              type="button"
+              class="reject-btn"
+              [disabled]="
+                processingId() === review.id
+              "
+              (click)="rejectReview(review)"
+            >
+              <mat-icon>close</mat-icon>
+
+              {{ review.approved ? 'Delete' : 'Reject' }}
+            </button>
+
+          </div>
+
+        </article>
+
+      } @empty {
+
+        <div class="state-card empty-state">
+
+          <mat-icon>rate_review</mat-icon>
+
+          <h3>No reviews yet</h3>
+
+          <p>
+            Customer reviews will appear here
+            after they are submitted.
+          </p>
+
+        </div>
+
+      }
+
+    </div>
+
+  }
+
+</section>

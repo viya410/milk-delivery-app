@@ -47,9 +47,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/products/**")
                         .permitAll()
 
+                        .requestMatchers(
+                                "/api/reviews/approved"
+                        )
+                        .permitAll()
+
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
-                        
+
                         .anyRequest()
                         .authenticated()
                 )

@@ -1,0 +1,87 @@
+<section class="review-section">
+  <div class="review-card">
+
+    <div class="review-heading">
+      <span>SHARE YOUR EXPERIENCE</span>
+
+      <h2>How was your experience with us?</h2>
+
+      <p>
+        Your feedback helps us improve our products
+        and delivery service.
+      </p>
+    </div>
+
+    <form
+      class="review-form"
+      (ngSubmit)="submitReview()"
+    >
+
+      <div class="rating-group">
+        <label>Your Rating</label>
+
+        <div
+          class="stars"
+          (mouseleave)="clearHover()"
+        >
+          @for (
+            star of [1, 2, 3, 4, 5];
+            track star
+          ) {
+            <button
+              type="button"
+              class="star"
+              [class.active]="isStarActive(star)"
+              (mouseenter)="setHoverRating(star)"
+              (click)="setRating(star)"
+              [attr.aria-label]="
+                'Give ' + star + ' star rating'
+              "
+            >
+              ★
+            </button>
+          }
+        </div>
+
+        @if (rating() > 0) {
+          <span class="rating-text">
+            {{ rating() }} out of 5
+          </span>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="reviewComment">
+          Your Review
+        </label>
+
+        <textarea
+          id="reviewComment"
+          name="reviewComment"
+          [(ngModel)]="comment"
+          rows="5"
+          maxlength="1000"
+          placeholder="Tell us about the product quality, delivery experience, or anything else..."
+        ></textarea>
+
+        <div class="character-count">
+          {{ comment.length }} / 1000
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="submit-review"
+        [disabled]="submitting()"
+      >
+        @if (submitting()) {
+          Submitting...
+        } @else {
+          Submit Review
+        }
+      </button>
+
+    </form>
+
+  </div>
+</section>

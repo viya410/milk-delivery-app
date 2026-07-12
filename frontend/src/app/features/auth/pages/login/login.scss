@@ -8,12 +8,7 @@
   padding: 32px;
 
   /* Matches Angular Material theme */
-  background:
-    linear-gradient(
-      180deg,
-      #f8fafc 0%,
-      #eef6ef 100%
-    );
+  background: linear-gradient(180deg, #f8fafc 0%, #eef6ef 100%);
 }
 
 .login-card {
@@ -24,8 +19,7 @@
 
   border-radius: 20px;
 
-  box-shadow:
-    0 12px 32px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
 .brand-section {
@@ -139,5 +133,35 @@ button[type='submit'] {
   .forgot-password,
   .signup-link {
     font-size: 0.9rem;
+  }
+
+  button[type='submit']:disabled {
+    cursor: not-allowed;
+    opacity: 0.75;
+  }
+
+  .button-loading {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+  }
+
+  .button-spinner {
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+
+    animation: buttonSpin 0.8s linear infinite;
+  }
+
+  @keyframes buttonSpin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 }

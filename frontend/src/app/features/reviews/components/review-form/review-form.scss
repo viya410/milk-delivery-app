@@ -1,0 +1,374 @@
+:host {
+  display: block;
+}
+
+/* ==========================================================
+   REVIEW SECTION
+========================================================== */
+
+.review-section {
+  padding: 90px 24px;
+  background: #f8fcf6;
+}
+
+/* ==========================================================
+   REVIEW CARD
+========================================================== */
+
+.review-card {
+  width: min(100%, 680px);
+  margin: 0 auto;
+  padding: 40px;
+
+  background: #fff;
+
+  border: 1px solid #e7f0e0;
+  border-radius: 24px;
+
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.06);
+}
+
+/* ==========================================================
+   HEADING
+========================================================== */
+
+.review-heading {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.review-heading > span {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: #5e9f45;
+
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+}
+
+.review-heading h2 {
+  margin: 0 0 12px;
+
+  color: #2f3a2f;
+
+  font-size: 2rem;
+  line-height: 1.25;
+}
+
+.review-heading p {
+  max-width: 520px;
+  margin: 0 auto;
+
+  color: #6e786c;
+
+  line-height: 1.7;
+}
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+
+  gap: 28px;
+}
+
+/* ==========================================================
+   RATING
+========================================================== */
+
+.rating-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  gap: 10px;
+}
+
+.rating-group label,
+.form-group label {
+  color: #2f3a2f;
+
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+
+  gap: 6px;
+}
+
+.star {
+  padding: 0;
+
+  border: none;
+
+  background: transparent;
+
+  color: #d7ddd4;
+
+  font-size: 2.7rem;
+  line-height: 1;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.star:hover {
+  transform: scale(1.12);
+}
+
+.star.active {
+  color: #f4b400;
+}
+
+.rating-text {
+  color: #6e786c;
+
+  font-size: 0.9rem;
+}
+
+/* ==========================================================
+   TEXTAREA
+========================================================== */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+textarea {
+  width: 100%;
+
+  padding: 16px;
+
+  border: 1px solid #dfe8da;
+  border-radius: 14px;
+
+  background: #fcfefa;
+
+  color: #2f3a2f;
+
+  font: inherit;
+  line-height: 1.6;
+
+  resize: vertical;
+
+  outline: none;
+
+  box-sizing: border-box;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+textarea:focus {
+  border-color: #5e9f45;
+
+  box-shadow: 0 0 0 4px rgba(94, 159, 69, 0.12);
+}
+
+.character-count {
+  text-align: right;
+
+  color: #8a9388;
+
+  font-size: 0.8rem;
+}
+
+/* ==========================================================
+   SUBMIT BUTTON
+========================================================== */
+
+.submit-review {
+  width: 100%;
+  min-height: 48px;
+
+  padding: 0 24px;
+
+  border: none;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    135deg,
+    #5e9f45,
+    #7dbb63
+  );
+
+  color: #fff;
+
+  font-size: 1rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.submit-review:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.submit-review:disabled {
+  opacity: 0.65;
+
+  cursor: not-allowed;
+}
+
+/* ==========================================================
+   TABLET
+========================================================== */
+
+@media (max-width: 900px) {
+  .review-card {
+    width: min(100%, 580px);
+
+    padding: 32px;
+  }
+}
+
+/* ==========================================================
+   MOBILE — COMPACT CARD
+========================================================== */
+
+@media (max-width: 768px) {
+  .review-section {
+    padding: 50px 12px;
+  }
+
+  .review-card {
+    /*
+      Compact card instead of taking the entire screen width.
+      Similar width to a two-card mobile layout.
+    */
+    width: 48%;
+    min-width: 165px;
+    max-width: 210px;
+
+    margin: 0 auto;
+
+    padding: 16px 12px;
+
+    border-radius: 16px;
+  }
+
+  .review-heading {
+    margin-bottom: 20px;
+  }
+
+  .review-heading > span {
+    margin-bottom: 6px;
+
+    font-size: 0.58rem;
+
+    letter-spacing: 0.08em;
+  }
+
+  .review-heading h2 {
+    margin-bottom: 8px;
+
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+
+  .review-heading p {
+    font-size: 0.72rem;
+    line-height: 1.5;
+  }
+
+  .review-form {
+    gap: 18px;
+  }
+
+  .rating-group {
+    gap: 7px;
+  }
+
+  .rating-group label,
+  .form-group label {
+    font-size: 0.75rem;
+  }
+
+  .stars {
+    gap: 2px;
+  }
+
+  .star {
+    font-size: 1.55rem;
+  }
+
+  .rating-text {
+    font-size: 0.7rem;
+  }
+
+  .form-group {
+    gap: 7px;
+  }
+
+  textarea {
+    min-height: 90px;
+
+    padding: 10px;
+
+    border-radius: 10px;
+
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .character-count {
+    font-size: 0.65rem;
+  }
+
+  .submit-review {
+    min-height: 38px;
+
+    padding: 0 10px;
+
+    font-size: 0.75rem;
+  }
+}
+
+/* ==========================================================
+   VERY SMALL MOBILE
+========================================================== */
+
+@media (max-width: 380px) {
+  .review-card {
+    width: 48%;
+    min-width: 155px;
+
+    padding: 14px 10px;
+  }
+
+  .review-heading h2 {
+    font-size: 0.9rem;
+  }
+
+  .review-heading p {
+    font-size: 0.68rem;
+  }
+
+  .star {
+    font-size: 1.35rem;
+  }
+
+  textarea {
+    font-size: 0.7rem;
+  }
+}

@@ -1,138 +1,83 @@
 <div class="signup-wrapper">
-
   <mat-card class="signup-card">
-
     <div class="brand-section">
-
       <h1>Create Account</h1>
 
-      <p>
-        Join Milk Delivery today
-      </p>
-
+      <p>Join Milk Delivery today</p>
     </div>
 
-    <form
-      [formGroup]="signupForm"
-      (ngSubmit)="submit()">
-
+    <form [formGroup]="signupForm" (ngSubmit)="submit()">
       <mat-form-field appearance="outline">
+        <mat-label> Full Name </mat-label>
 
-        <mat-label>
-          Full Name
-        </mat-label>
-
-        <input
-          matInput
-          formControlName="fullName">
-
+        <input matInput formControlName="fullName" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
+        <mat-label> Mobile Number </mat-label>
 
-        <mat-label>
-          Mobile Number
-        </mat-label>
-
-        <input
-          matInput
-          formControlName="mobileNumber">
-
+        <input matInput formControlName="mobileNumber" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
+        <mat-label> Email (Optional) </mat-label>
 
-        <mat-label>
-          Email (Optional)
-        </mat-label>
-
-        <input
-          matInput
-          type="email"
-          formControlName="email">
-
+        <input matInput type="email" formControlName="email" />
       </mat-form-field>
 
       <mat-form-field appearance="outline">
+        <mat-label> Password </mat-label>
 
-        <mat-label>
-          Password
-        </mat-label>
+        <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" />
 
-        <input
-          matInput
-          [type]="hidePassword() ? 'password' : 'text'"
-          formControlName="password">
-
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="hidePassword.set(!hidePassword())">
-
+        <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
           <mat-icon>
             {{ hidePassword() ? 'visibility_off' : 'visibility' }}
           </mat-icon>
-
         </button>
-
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-
-        <mat-label>
-          Confirm Password
-        </mat-label>
+        <mat-label> Confirm Password </mat-label>
 
         <input
           matInput
           [type]="hideConfirmPassword() ? 'password' : 'text'"
-          formControlName="confirmPassword">
+          formControlName="confirmPassword"
+        />
 
         <button
           mat-icon-button
           matSuffix
           type="button"
-          (click)="hideConfirmPassword.set(!hideConfirmPassword())">
-
+          (click)="hideConfirmPassword.set(!hideConfirmPassword())"
+        >
           <mat-icon>
             {{ hideConfirmPassword() ? 'visibility_off' : 'visibility' }}
           </mat-icon>
-
         </button>
-
       </mat-form-field>
 
-      <mat-checkbox
-        formControlName="termsAccepted">
-
+      <mat-checkbox formControlName="termsAccepted">
         I agree to the Terms & Conditions
-
       </mat-checkbox>
 
-      <button
-        mat-raised-button
-        color="primary"
-        type="submit">
+      <button mat-raised-button color="primary" type="submit" [disabled]="loading">
+        @if (loading) {
+          <span class="button-loading">
+            <span class="button-spinner"></span>
 
-        Create Account
-
+            Creating Account...
+          </span>
+        } @else {
+          Create Account
+        }
       </button>
-
       <div class="login-link">
-
         Already have an account?
 
-        <a routerLink="/auth/login">
-
-          Login
-
-        </a>
-
+        <a routerLink="/auth/login"> Login </a>
       </div>
-
     </form>
-
   </mat-card>
-
 </div>

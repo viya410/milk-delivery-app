@@ -16,8 +16,8 @@ server:
   port: ${PORT:8080}
 
 razorpay:
-  key-id: RAZORPAY_ID
-  key-secret: RAZORPAY_SECRET
+  key-id: rzp_test_T6IRRyrRu4wcjn
+  key-secret: kyVQ5BJklzZuYUMeFjSQBAeS
 
 jwt:
   secret: your-super-secret-key-which-should-be-at-least-32-characters-long

@@ -10,14 +10,57 @@
     </a>
 
     <nav class="desktop-nav">
-      <a href="#home">Home</a>
-      <a href="#features">Why Us</a>
-      <a href="#process">How It Works</a>
-      <a href="#products">Products</a>
-      <a href="#plans">Plans</a>
-      <a href="#testimonials">Testimonials</a>
-      <a href="#contact" (click)="scrollToContact(); $event.preventDefault()">Contact</a>
-    </nav>
+
+  <a
+    [class.active]="activeSection() === 'home'"
+    (click)="scrollToSection('home')"
+  >
+    Home
+  </a>
+
+  <a
+    [class.active]="activeSection() === 'features'"
+    (click)="scrollToSection('features')"
+  >
+    Why Us
+  </a>
+
+  <a
+    [class.active]="activeSection() === 'process'"
+    (click)="scrollToSection('process')"
+  >
+    How It Works
+  </a>
+
+  <a
+    [class.active]="activeSection() === 'products'"
+    (click)="scrollToSection('products')"
+  >
+    Products
+  </a>
+
+  <a
+    [class.active]="activeSection() === 'plans'"
+    (click)="scrollToSection('plans')"
+  >
+    Plans
+  </a>
+
+  <a
+    [class.active]="activeSection() === 'testimonials'"
+    (click)="scrollToSection('testimonials')"
+  >
+    Testimonials
+  </a>
+
+  <a
+    [class.active]="activeSection() === 'contact'"
+    (click)="scrollToSection('contact')"
+  >
+    Contact
+  </a>
+
+</nav>
 
     <div class="nav-actions">
       <button class="btn-outline" routerLink="/auth/login">Login</button>
@@ -48,20 +91,46 @@
       </div>
 
       <nav class="mobile-nav">
-        <a href="#home" (click)="closeMobileMenu()"><mat-icon>home</mat-icon>Home</a>
-        <a href="#features" (click)="closeMobileMenu()"><mat-icon>eco</mat-icon>Why Us</a>
-        <a href="#process" (click)="closeMobileMenu()"
-          ><mat-icon>local_shipping</mat-icon>How It Works</a
-        >
-        <a href="#products" (click)="closeMobileMenu()"
-          ><mat-icon>shopping_bag</mat-icon>Products</a
-        >
-        <a href="#plans" (click)="closeMobileMenu()"><mat-icon>event_repeat</mat-icon>Plans</a>
-        <a href="#testimonials" (click)="closeMobileMenu()"
-          ><mat-icon>reviews</mat-icon>Testimonials</a
-        >
-        <a href="#contact" (click)="scrollToContact(); closeMobileMenu(); $event.preventDefault()">
-          <mat-icon>call</mat-icon>Contact
+        <a (click)="navigateToSection('home')">
+          <mat-icon>home</mat-icon>
+
+          Home
+        </a>
+
+        <a (click)="navigateToSection('features')">
+          <mat-icon>eco</mat-icon>
+
+          Why Us
+        </a>
+
+        <a (click)="navigateToSection('process')">
+          <mat-icon>local_shipping</mat-icon>
+
+          How It Works
+        </a>
+
+        <a (click)="navigateToSection('products')">
+          <mat-icon>shopping_bag</mat-icon>
+
+          Products
+        </a>
+
+        <a (click)="navigateToSection('plans')">
+          <mat-icon>event_repeat</mat-icon>
+
+          Plans
+        </a>
+
+        <a (click)="navigateToSection('testimonials')">
+          <mat-icon>reviews</mat-icon>
+
+          Testimonials
+        </a>
+
+        <a (click)="navigateToSection('contact')">
+          <mat-icon>call</mat-icon>
+
+          Contact
         </a>
       </nav>
 
@@ -292,9 +361,7 @@ PRODUCTS
             </p>
 
             <div class="price-row">
-              <div class="product-price">
-                Rs. {{ getPriceDisplay(product) }}
-              </div>
+              <div class="product-price">Rs. {{ getPriceDisplay(product) }}</div>
             </div>
 
             <button class="btn-primary" (click)="navigateToProducts()">View Product</button>
@@ -339,44 +406,49 @@ STATS
 TESTIMONIALS
 ========================================================== -->
 
-<section class="testimonials" id="testimonials">
+<section #testimonialSection class="testimonials" id="testimonials">
   <div class="container">
     <div class="section-heading">
       <span>TESTIMONIALS</span>
 
       <h2>Loved By Families</h2>
 
-      <p>Thousands of happy customers trust Fresh Farm every morning.</p>
+      <p>See what our customers have to say about their Fresh Farm experience.</p>
     </div>
 
-    <div class="testimonial-grid">
-      <article class="testimonial">
+    @if (approvedReviews().length > 0) {
+      <div #testimonialGrid class="testimonial-grid">
+        @for (review of approvedReviews(); track review.id; let i = $index) {
+          <article class="testimonial" [class.in-focus]="i === activeTestimonial()">
+            <div class="quote">❝</div>
+
+            <div class="testimonial-stars" [attr.aria-label]="review.rating + ' out of 5 stars'">
+              @for (star of [1, 2, 3, 4, 5]; track star) {
+                <span [class.active]="star <= review.rating"> ★ </span>
+              }
+            </div>
+
+            <p>
+              {{ review.comment }}
+            </p>
+
+            <div class="testimonial-author">
+              <strong> — {{ review.customerName }} </strong>
+
+              <span class="review-time">
+                {{ getRelativeTime(review.createdAt) }}
+              </span>
+            </div>
+          </article>
+        }
+      </div>
+    } @else {
+      <div class="no-testimonials">
         <div class="quote">❝</div>
 
-        <p>
-          Fresh milk every single morning. The quality is outstanding and delivery is always on
-          time.
-        </p>
-
-        <strong>— Lakshmi</strong>
-      </article>
-
-      <article class="testimonial">
-        <div class="quote">❝</div>
-
-        <p>We switched from packaged milk and the difference in taste is amazing.</p>
-
-        <strong>— Ramesh</strong>
-      </article>
-
-      <article class="testimonial">
-        <div class="quote">❝</div>
-
-        <p>Reliable service, healthy milk and an excellent subscription experience.</p>
-
-        <strong>— Suresh</strong>
-      </article>
-    </div>
+        <p>Customer stories are coming soon.</p>
+      </div>
+    }
   </div>
 </section>
 
@@ -468,6 +540,14 @@ FOOTER
       <a href="#plans"> Plans </a>
 
       <a href="#contact" (click)="scrollToContact(); $event.preventDefault()"> Contact </a>
+
+      <a
+        href="https://www.instagram.com/_rakshak._?igsh=MWdtbXk5eHl6ZG00YQ=="
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Developed By: Rakshak, Vishnu
+      </a>
     </div>
   </div>
 </footer>

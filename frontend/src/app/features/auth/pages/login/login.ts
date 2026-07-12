@@ -1,9 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
-import {
-  FormBuilder,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { Router, RouterLink } from '@angular/router';
 
@@ -30,13 +26,12 @@ import { AuthService } from '../../../../core/services/auth';
     MatInputModule,
     MatCheckboxModule,
     MatIconModule,
-    RouterLink
+    RouterLink,
   ],
   templateUrl: './login.html',
-  styleUrl: './login.scss'
+  styleUrl: './login.scss',
 })
 export class Login {
-
   private fb = inject(FormBuilder);
 
   private authService = inject(AuthService);
@@ -50,89 +45,45 @@ export class Login {
   hidePassword = signal(true);
 
   loginForm = this.fb.nonNullable.group({
+    username: ['', Validators.required],
 
-    username: [
-
-      '',
-
-      Validators.required
-
-    ],
-
-    password: [
-
-      '',
-
-      [
-
-        Validators.required,
-
-        Validators.minLength(6)
-
-      ]
-
-    ]
-
+    password: ['', [Validators.required, Validators.minLength(6)]],
   });
 
   submit(): void {
+    // Prevent double-click / duplicate HTTP requests
+    if (this.loading) {
+      return;
+    }
 
     if (this.loginForm.invalid) {
-
       this.loginForm.markAllAsTouched();
 
       return;
-
     }
 
     this.loading = true;
 
     this.errorMessage = '';
 
-    this.authService.login(
-
-      this.loginForm.getRawValue()
-
-    ).subscribe({
-
+    this.authService.login(this.loginForm.getRawValue()).subscribe({
       next: () => {
-
-  this.loading = false;
-
-  const role = this.authService.user()?.role;
-
-  if (role === 'ROLE_ADMIN') {
-
-    this.router.navigateByUrl(
-
-      '/admin/dashboard'
-
-    );
-
-  } else {
-
-    this.router.navigateByUrl(
-
-      '/dashboard/home'
-
-    );
-
-  }
-
-},
-
-      error: () => {
-
         this.loading = false;
 
-        this.errorMessage =
+        const role = this.authService.user()?.role;
 
-          'Invalid username or password';
+        if (role === 'ROLE_ADMIN') {
+          this.router.navigateByUrl('/admin/dashboard');
+        } else {
+          this.router.navigateByUrl('/dashboard/home');
+        }
+      },
 
-      }
+      error: () => {
+        this.loading = false;
 
+        this.errorMessage = 'Invalid username or password';
+      },
     });
-
   }
-
 }

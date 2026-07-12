@@ -511,8 +511,8 @@
 
 .empty-icon {
   font-size: 80px;
-
-  margin-bottom: 20px;
+  line-height: 1;
+  margin-bottom: 35px;
 }
 
 .empty-orders h2 {
@@ -520,7 +520,7 @@
 
   color: #222;
 
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .empty-orders p {
@@ -555,6 +555,7 @@
   font-size: 90px;
 
   animation: bounceMilk 1.6s infinite;
+  margin-bottom: 28px;
 }
 
 .dashboard-loading h2 {
@@ -565,7 +566,7 @@
 
 @keyframes bounceMilk {
   0% {
-    transform: translateY(0);
+    transform: translateY(-10px);
   }
 
   25% {
@@ -573,7 +574,7 @@
   }
 
   50% {
-    transform: translateY(0);
+    transform: translateY(-10px);
   }
 
   75% {
@@ -581,7 +582,7 @@
   }
 
   100% {
-    transform: translateY(0);
+    transform: translateY(-10px);
   }
 }
 

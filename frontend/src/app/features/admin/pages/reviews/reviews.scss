@@ -1,0 +1,383 @@
+:host {
+  display: block;
+}
+
+.reviews-page {
+  padding: 32px;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 32px;
+}
+
+.eyebrow {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #5e9f45;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+}
+
+.page-header h1 {
+  margin: 0 0 8px;
+
+  color: #263326;
+
+  font-size: 2rem;
+}
+
+.page-header p {
+  margin: 0;
+
+  color: #6b7280;
+}
+
+.review-count {
+  min-width: 130px;
+
+  padding: 16px 20px;
+
+  text-align: center;
+
+  background: #fff;
+
+  border: 1px solid #e4eadf;
+  border-radius: 16px;
+
+  color: #477b36;
+
+  font-size: 1.8rem;
+  font-weight: 800;
+}
+
+.review-count span {
+  display: block;
+
+  margin-top: 3px;
+
+  color: #7b8378;
+
+  font-size: 0.72rem;
+  font-weight: 500;
+}
+
+.reviews-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fill, minmax(300px, 1fr));
+
+  gap: 20px;
+}
+
+.review-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  padding: 22px;
+
+  background: #fff;
+
+  border: 1px solid #e5e9e2;
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 24px
+    rgba(0, 0, 0, 0.05);
+}
+
+.review-card.approved {
+  border-color: #cce4c3;
+}
+
+.card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 12px;
+}
+
+.customer {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+
+  gap: 10px;
+}
+
+.avatar {
+  display: grid;
+  place-items: center;
+
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #edf6e9;
+
+  color: #4f883d;
+
+  font-weight: 800;
+}
+
+.customer h3 {
+  margin: 0 0 3px;
+
+  color: #2d382c;
+
+  font-size: 1rem;
+}
+
+.date {
+  color: #8a9188;
+
+  font-size: 0.75rem;
+}
+
+.status {
+  flex-shrink: 0;
+
+  padding: 5px 9px;
+
+  border-radius: 999px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.pending-status {
+  background: #fff4d8;
+
+  color: #9a6900;
+}
+
+.approved-status {
+  background: #e8f6e3;
+
+  color: #3f7c2f;
+}
+
+.stars {
+  display: flex;
+
+  margin: 18px 0 12px;
+
+  gap: 2px;
+}
+
+.stars mat-icon {
+  width: 20px;
+  height: 20px;
+
+  color: #d8ddd5;
+
+  font-size: 20px;
+}
+
+.stars mat-icon.active {
+  color: #f4b400;
+}
+
+.comment {
+  flex: 1;
+
+  margin: 0 0 22px;
+
+  color: #596057;
+
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+}
+
+.actions {
+  display: flex;
+
+  gap: 10px;
+}
+
+.actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  flex: 1;
+
+  gap: 5px;
+
+  border-radius: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.actions mat-icon {
+  width: 18px;
+  height: 18px;
+
+  font-size: 18px;
+}
+
+.approve-btn {
+  border: none;
+
+  background: #5e9f45;
+
+  color: #fff;
+}
+
+.reject-btn {
+  border: 1px solid #e2b8b8;
+
+  background: #fff;
+
+  color: #b33d3d;
+}
+
+.actions button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+.state-card {
+  padding: 40px;
+
+  text-align: center;
+
+  background: #fff;
+
+  border: 1px solid #e5e9e2;
+  border-radius: 18px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+}
+
+.empty-state mat-icon {
+  width: 48px;
+  height: 48px;
+
+  color: #9aaa94;
+
+  font-size: 48px;
+}
+
+@media (max-width: 768px) {
+
+  .reviews-page {
+    padding: 18px 12px;
+  }
+
+  .page-header {
+    align-items: stretch;
+
+    margin-bottom: 22px;
+  }
+
+  .page-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .page-header p {
+    font-size: 0.85rem;
+  }
+
+  .review-count {
+    min-width: 90px;
+
+    padding: 12px;
+
+    font-size: 1.4rem;
+  }
+
+  .reviews-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 10px;
+  }
+
+  .review-card {
+    padding: 12px;
+
+    border-radius: 14px;
+  }
+
+  .card-header {
+    flex-direction: column;
+  }
+
+  .avatar {
+    width: 32px;
+    height: 32px;
+
+    font-size: 0.8rem;
+  }
+
+  .customer h3 {
+    font-size: 0.82rem;
+  }
+
+  .date {
+    font-size: 0.65rem;
+  }
+
+  .status {
+    padding: 4px 7px;
+
+    font-size: 0.6rem;
+  }
+
+  .stars {
+    margin: 12px 0 8px;
+  }
+
+  .stars mat-icon {
+    width: 15px;
+    height: 15px;
+
+    font-size: 15px;
+  }
+
+  .comment {
+    margin-bottom: 14px;
+
+    font-size: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .actions {
+    flex-direction: column;
+
+    gap: 7px;
+  }
+
+  .actions button {
+    min-height: 34px;
+
+    font-size: 0.7rem;
+  }
+}
