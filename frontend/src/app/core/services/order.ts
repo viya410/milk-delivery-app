@@ -3,6 +3,7 @@ import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,7 @@ import { tap } from 'rxjs/operators';
 export class OrderService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8080/api/orders';
+  private apiUrl = `${environment.apiUrl}/orders`;
 
   readonly orders = signal<any[]>([]);
 

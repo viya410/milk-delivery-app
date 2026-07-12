@@ -1,7 +1,7 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
-
+import { environment } from '../../../environments/environment';
 import { Subscription } from '../models/subscription.model';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { Subscription } from '../models/subscription.model';
 export class SubscriptionService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8080/api/subscriptions';
+  private apiUrl = `${environment.apiUrl}subscriptions`;
 
   readonly subscriptions = signal<Subscription[]>([]);
 

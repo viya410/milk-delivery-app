@@ -5,6 +5,7 @@ import { signal } from '@angular/core';
 import { ProductService } from '../../../../core/services/product';
 import { ToasterService } from '../../../../core/services/toaster';
 import { MatIconModule } from '@angular/material/icon';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-landing',
@@ -24,7 +25,7 @@ export class Landing implements OnInit {
 
   readonly currentYear = new Date().getFullYear();
   readonly mobileMenuOpen = signal(false);
-  readonly imageBaseUrl = 'http://localhost:8080/uploads/';
+  readonly imageBaseUrl = `${environment.apiUrl}/uploads/`;
 
   constructor(private readonly toaster: ToasterService) {}
 

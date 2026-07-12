@@ -1,6 +1,7 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 export interface CartItem {
   id: number;
@@ -19,7 +20,7 @@ export interface CartItem {
 export class CartService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8080/api/cart';
+  private apiUrl = `${environment.apiUrl}/cart`;
 
   readonly cartItems = signal<CartItem[]>([]);
 

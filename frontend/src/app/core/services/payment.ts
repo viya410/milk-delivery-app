@@ -1,6 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 export class PaymentService {
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:8080/api/payment';
+  private apiUrl = `${environment.apiUrl}/payment`;
 
   createOrder(amount: number) {
     return this.http.post<any>(`${this.apiUrl}/create-order`, {

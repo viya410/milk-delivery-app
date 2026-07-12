@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 
 import { Address } from '../models/address.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class AddressService {
 
   private http = inject(HttpClient);
 
-  private readonly apiUrl = 'http://localhost:8080/api/address';
+  private readonly apiUrl = `${environment.apiUrl}/address`;
 
   readonly addresses = signal<Address[]>([]);
 
