@@ -10,7 +10,7 @@ import { Subscription } from '../models/subscription.model';
 export class SubscriptionService {
   private http = inject(HttpClient);
 
-  private apiUrl = `${environment.apiUrl}subscriptions`;
+  private apiUrl = `${environment.apiUrl}/subscriptions`;
 
   readonly subscriptions = signal<Subscription[]>([]);
 
