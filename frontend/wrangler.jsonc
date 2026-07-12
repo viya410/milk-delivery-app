@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+
+  "name": "milk-delivery-app",
+
+  "compatibility_date": "2026-07-12",
+
+  "assets": {
+    "directory": "./dist/milk-delivery-app/browser",
+    "not_found_handling": "single-page-application"
+  }
+}
