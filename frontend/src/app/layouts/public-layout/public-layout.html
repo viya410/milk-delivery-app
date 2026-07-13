@@ -1,18 +1,20 @@
-<app-header></app-header>
+<div class="public-layout">
 
-<div class="app-layout">
+  <app-header></app-header>
 
-  <app-sidebar
-    [class.expanded]="layoutService.sidebarExpanded()"
-    [class.collapsed]="!layoutService.sidebarExpanded()">
-  </app-sidebar>
+  <div class="app-layout">
 
-  <main class="page-content">
+    <app-sidebar
+      [class.expanded]="layoutService.sidebarExpanded()"
+      [class.collapsed]="!layoutService.sidebarExpanded()">
+    </app-sidebar>
 
-    <router-outlet></router-outlet>
+    <main class="page-content">
+      <router-outlet></router-outlet>
+    </main>
 
-  </main>
+  </div>
+
+  <app-footer></app-footer>
 
 </div>
-
-<app-footer></app-footer>

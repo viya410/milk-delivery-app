@@ -32,8 +32,10 @@ public class OrderMapper {
                         .map(item -> new OrderItemResponse(
                                 item.getProduct().getId(),
                                 item.getProduct().getName(),
-                                item.getProduct().getPrice(),
-                                item.getProduct().getUnit(),
+                                item.getPrice(),
+                                item.getProductSize() != null
+                                        ? item.getProductSize().getSize()
+                                        : item.getProduct().getUnit(),
                                 item.getQuantity()
                         ))
                         .toList()

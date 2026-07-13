@@ -1,11 +1,7 @@
 <div class="product-card">
-
   <div class="image-wrapper" (click)="viewProduct()">
-<img
-  #productImage
-  [src]="'assets/images/products/' + product.imageUrl"
-  [alt]="product.name"
-   /> </div>
+    <img #productImage [src]="'assets/images/products/' + product.imageUrl" [alt]="product.name" />
+  </div>
 
   <div class="card-content">
     <span class="farm-badge"> 🌿 Farm Fresh </span>
@@ -15,12 +11,11 @@
     </h3>
 
     <p class="product-unit">
-      {{ product.unit }}
+      <b class="price">₹{{ getDisplayPrice() }}</b
+      >/{{ getDisplayUnit() }}
     </p>
 
     <div class="bottom-section">
-      <div class="price">₹{{ getDisplayPrice() }}</div>
-
       @if (quantity === 0) {
         <button type="button" class="add-btn" (click)="addToCart($event)">ADD</button>
       } @else {

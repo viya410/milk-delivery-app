@@ -101,7 +101,6 @@ public class OrderService {
                                 + cartItem.getProduct().getUnit()
                                 + " per order."
                 );
-
             }
 
             inventoryService.reserveStock(
@@ -109,15 +108,25 @@ public class OrderService {
                     cartItem.getQuantity()
             );
 
+            double unitPrice;
+
+            if (cartItem.getProductSize() != null) {
+                unitPrice = cartItem.getProductSize().getPrice();
+            } else {
+                unitPrice = cartItem.getProduct().getPrice();
+            }
+
             OrderItem item = new OrderItem();
+
             item.setOrder(order);
             item.setProduct(cartItem.getProduct());
+            item.setProductSize(cartItem.getProductSize());
+            item.setPrice(unitPrice);
             item.setQuantity(cartItem.getQuantity());
 
             orderItems.add(item);
 
-            totalAmount += cartItem.getProduct().getPrice() * cartItem.getQuantity();
-
+            totalAmount += unitPrice * cartItem.getQuantity();
         }
 
         order.setItems(orderItems);

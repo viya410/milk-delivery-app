@@ -3,62 +3,101 @@
 </h2>
 
 <mat-dialog-content>
+  <div class="location-section">
+    <button
+      type="button"
+      class="location-btn"
+      mat-stroked-button
+      (click)="useCurrentLocation()"
+      [disabled]="locating()"
+    >
+      <mat-icon>
+        {{ locating() ? 'my_location' : 'location_on' }}
+      </mat-icon>
+
+      @if (locating()) {
+        Detecting Location...
+      } @else {
+        Use Current Location
+      }
+    </button>
+
+    @if (locationSuccess()) {
+      <div class="location-message success">
+        <mat-icon> check_circle </mat-icon>
+
+        Location detected. Please verify the address details.
+      </div>
+    }
+
+    @if (locationError()) {
+      <div class="location-message error">
+        <mat-icon> error_outline </mat-icon>
+
+        {{ locationError() }}
+      </div>
+    }
+  </div>
+
+  <div class="divider">
+    <span> OR ENTER ADDRESS MANUALLY </span>
+  </div>
 
   <form [formGroup]="addressForm" class="address-form">
-
     <mat-form-field appearance="outline">
-      <mat-label>Customer Name</mat-label>
-      <input matInput formControlName="customerName">
+      <mat-label> Customer Name </mat-label>
+
+      <input matInput formControlName="customerName" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Mobile Number</mat-label>
-      <input matInput formControlName="mobileNumber">
+      <mat-label> Mobile Number </mat-label>
+
+      <input
+        matInput
+        type="tel"
+        inputmode="numeric"
+        maxlength="10"
+        formControlName="mobileNumber"
+      />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>House / Flat No.</mat-label>
-      <input matInput formControlName="houseNo">
+      <mat-label> House / Flat No. </mat-label>
+
+      <input matInput formControlName="houseNo" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Street / Area</mat-label>
-      <input matInput formControlName="street">
+      <mat-label> Street / Area </mat-label>
+
+      <input matInput formControlName="street" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>City</mat-label>
-      <input matInput formControlName="city">
+      <mat-label> City </mat-label>
+
+      <input matInput formControlName="city" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>State</mat-label>
-      <input matInput formControlName="state">
+      <mat-label> State </mat-label>
+
+      <input matInput formControlName="state" />
     </mat-form-field>
 
     <mat-form-field appearance="outline">
-      <mat-label>Pincode</mat-label>
-      <input matInput formControlName="pincode">
-    </mat-form-field>
+      <mat-label> Pincode </mat-label>
 
+      <input matInput inputmode="numeric" maxlength="6" formControlName="pincode" />
+    </mat-form-field>
   </form>
-
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancel</button>
 
-  <button mat-button (click)="cancel()">
-    Cancel
-  </button>
-
-  <button
-    mat-raised-button
-    color="primary"
-    (click)="save()"
-    [disabled]="addressForm.invalid">
-
+  <button mat-raised-button color="primary" (click)="save()" [disabled]="addressForm.invalid">
     Save
-
   </button>
-
 </mat-dialog-actions>

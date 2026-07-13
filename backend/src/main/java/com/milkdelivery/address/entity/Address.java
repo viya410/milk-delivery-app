@@ -1,12 +1,11 @@
 package com.milkdelivery.address.entity;
 
-import jakarta.persistence.*;
-import com.milkdelivery.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.milkdelivery.user.entity.User;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "addresses")
-
 public class Address {
 
     @Id
@@ -14,11 +13,9 @@ public class Address {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(
-            name = "user_id"
-    )
+    @JoinColumn(name = "user_id")
     @JsonIgnore
-    private User user;;
+    private User user;
 
     private String customerName;
 
@@ -34,6 +31,9 @@ public class Address {
 
     private String pincode;
 
+    @Column(nullable = false)
+    private boolean active = true;
+
     public Address() {
     }
 
@@ -45,7 +45,9 @@ public class Address {
         return customerName;
     }
 
-    public void setCustomerName(String customerName) {
+    public void setCustomerName(
+            String customerName
+    ) {
         this.customerName = customerName;
     }
 
@@ -53,7 +55,9 @@ public class Address {
         return mobileNumber;
     }
 
-    public void setMobileNumber(String mobileNumber) {
+    public void setMobileNumber(
+            String mobileNumber
+    ) {
         this.mobileNumber = mobileNumber;
     }
 
@@ -61,7 +65,9 @@ public class Address {
         return houseNo;
     }
 
-    public void setHouseNo(String houseNo) {
+    public void setHouseNo(
+            String houseNo
+    ) {
         this.houseNo = houseNo;
     }
 
@@ -69,7 +75,9 @@ public class Address {
         return street;
     }
 
-    public void setStreet(String street) {
+    public void setStreet(
+            String street
+    ) {
         this.street = street;
     }
 
@@ -77,7 +85,9 @@ public class Address {
         return city;
     }
 
-    public void setCity(String city) {
+    public void setCity(
+            String city
+    ) {
         this.city = city;
     }
 
@@ -85,7 +95,9 @@ public class Address {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(
+            String state
+    ) {
         this.state = state;
     }
 
@@ -93,7 +105,9 @@ public class Address {
         return pincode;
     }
 
-    public void setPincode(String pincode) {
+    public void setPincode(
+            String pincode
+    ) {
         this.pincode = pincode;
     }
 
@@ -105,5 +119,15 @@ public class Address {
             User user
     ) {
         this.user = user;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(
+            boolean active
+    ) {
+        this.active = active;
     }
 }

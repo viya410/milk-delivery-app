@@ -25,8 +25,8 @@ public class AddressController {
     ) {
 
         this.addressRepository = addressRepository;
-        this.userRepository = userRepository;
 
+        this.userRepository = userRepository;
     }
 
     private User getCurrentUser(
@@ -43,15 +43,12 @@ public class AddressController {
                 .or(() ->
 
                         userRepository.findByPhoneNumber(
-
                                 username
-
                         )
 
                 )
 
                 .orElseThrow();
-
     }
 
     @PostMapping
@@ -68,23 +65,40 @@ public class AddressController {
 
         address.setUser(user);
 
+        address.setActive(true);
+
         addressRepository.save(address);
 
         return ResponseEntity.ok().build();
-
     }
 
     @GetMapping("/{id}")
     public Address getAddress(
-            @PathVariable Long id
+
+            @PathVariable Long id,
+
+            Authentication authentication
+
     ) {
 
-        return addressRepository
+        User user =
+                getCurrentUser(authentication);
 
-                .findById(id)
+        Address address =
+                addressRepository
 
-                .orElseThrow();
+                        .findById(id)
 
+                        .orElseThrow();
+
+        if (!address.getUser().getId().equals(user.getId())) {
+
+            throw new RuntimeException(
+                    "Address does not belong to current user."
+            );
+        }
+
+        return address;
     }
 
     @GetMapping
@@ -97,17 +111,40 @@ public class AddressController {
         User user =
                 getCurrentUser(authentication);
 
-        return addressRepository.findByUser(user);
-
+        return addressRepository
+                .findByUserAndActiveTrue(user);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteAddress(
-            @PathVariable Long id
+    public ResponseEntity<Void> deleteAddress(
+
+            @PathVariable Long id,
+
+            Authentication authentication
+
     ) {
 
-        addressRepository.deleteById(id);
+        User user =
+                getCurrentUser(authentication);
 
+        Address address =
+                addressRepository
+
+                        .findById(id)
+
+                        .orElseThrow();
+
+        if (!address.getUser().getId().equals(user.getId())) {
+
+            throw new RuntimeException(
+                    "Address does not belong to current user."
+            );
+        }
+
+        address.setActive(false);
+
+        addressRepository.save(address);
+
+        return ResponseEntity.noContent().build();
     }
-
 }

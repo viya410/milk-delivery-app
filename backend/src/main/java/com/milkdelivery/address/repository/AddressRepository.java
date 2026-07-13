@@ -11,14 +11,38 @@ import java.util.Optional;
 public interface AddressRepository
         extends JpaRepository<Address, Long> {
 
-    List<Address> findByUser(
+    List<Address> findByUserAndActiveTrue(
             User user
     );
 
-    long countByUser(
+    long countByUserAndActiveTrue(
             User user
     );
 
-    Optional<Address> findFirstByUser(User user);
+    Optional<Address> findFirstByUserAndActiveTrueOrderByIdAsc(
+            User user
+    );
 
+    /*
+     * Keep existing methods temporarily
+     * so existing services continue to compile.
+     */
+
+    default List<Address> findByUser(
+            User user
+    ) {
+        return findByUserAndActiveTrue(user);
+    }
+
+    default long countByUser(
+            User user
+    ) {
+        return countByUserAndActiveTrue(user);
+    }
+
+    default Optional<Address> findFirstByUser(
+            User user
+    ) {
+        return findFirstByUserAndActiveTrueOrderByIdAsc(user);
+    }
 }
