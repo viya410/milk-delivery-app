@@ -1,209 +1,439 @@
+:host {
+  display: block;
+
+  min-height: 100%;
+}
+
 .checkout-page {
+  min-height: 100%;
 
-  min-height: 100vh;
+  padding: 32px 24px;
 
-  background: #f7faf7;
+  box-sizing: border-box;
 
-  padding: 3rem 1.5rem;
-
+  background:
+    linear-gradient(
+      145deg,
+      #f7faf7,
+      #f0f8ef
+    );
 }
 
 .container {
-
+  width: 100%;
   max-width: 900px;
 
-  margin: auto;
+  margin: 0 auto;
+
+  padding: 40px;
+
+  box-sizing: border-box;
 
   background: white;
 
-  padding: 2.5rem;
-
   border-radius: 20px;
 
-  box-shadow: 0 10px 30px rgba(0,0,0,.08);
-
+  box-shadow:
+    0 10px 30px
+    rgba(0, 0, 0, 0.08);
 }
 
+/* ================= Title ================= */
+
 h1 {
+  margin:
+    0 0
+    32px;
 
   text-align: center;
 
   color: #2e7d32;
 
-  margin-bottom: 2rem;
+  font-size:
+    clamp(
+      1.8rem,
+      4vw,
+      2.4rem
+    );
 
+  line-height: 1.2;
 }
 
-.address-grid {
+/* ================= Address Grid ================= */
 
+.address-grid {
   display: grid;
 
-  gap: 1rem;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
 
-  margin-bottom: 1.5rem;
+  gap: 16px;
 
+  margin-bottom: 24px;
 }
 
 .address-card {
+  position: relative;
 
-  border: 2px solid #e0e0e0;
+  min-width: 0;
+
+  padding: 20px;
+
+  box-sizing: border-box;
+
+  border:
+    2px solid
+    #e0e0e0;
 
   border-radius: 14px;
 
-  padding: 1.2rem;
-
   cursor: pointer;
-
-  transition: .25s;
 
   background: white;
 
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
 }
 
 .address-card:hover {
-
-  transform: translateY(-3px);
+  transform:
+    translateY(-3px);
 
   border-color: #81c784;
-
 }
 
 .address-card.selected {
-
   border-color: #2e7d32;
 
-  background: #edf8ed;
+  background:
+    linear-gradient(
+      145deg,
+      #f4fbf4,
+      #e8f5e9
+    );
 
-  box-shadow: 0 8px 18px rgba(46,125,50,.15);
-
+  box-shadow:
+    0 8px 18px
+    rgba(46, 125, 50, 0.15);
 }
 
-.card-header {
+/* ================= Address Header ================= */
 
+.card-header {
   display: flex;
 
   justify-content: space-between;
-
   align-items: center;
 
-  margin-bottom: .8rem;
+  gap: 12px;
 
+  margin-bottom: 12px;
 }
 
 .card-header h3 {
+  min-width: 0;
 
   margin: 0;
 
   color: #2e7d32;
 
+  font-size: 1.1rem;
+
+  overflow-wrap: anywhere;
 }
 
 .selected-icon {
+  flex-shrink: 0;
 
   color: #2e7d32;
 
   font-size: 30px;
-
 }
 
-.address-card p {
+/* ================= Address Text ================= */
 
-  margin: .3rem 0;
+.address-card p {
+  margin: 5px 0;
 
   color: #555;
 
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
 }
+
+/* ================= Add Address ================= */
 
 .add-address-btn {
-
   width: 100%;
 
-  margin: 1rem 0 2rem;
+  min-height: 48px;
 
-  height: 48px;
+  margin:
+    8px 0
+    32px;
 
+  border-radius: 12px;
 }
 
+/* ================= Order Summary ================= */
+
 .summary {
+  padding-top: 24px;
 
-  border-top: 1px solid #eee;
-
-  padding-top: 1.5rem;
-
+  border-top:
+    1px solid
+    #eee;
 }
 
 .summary h2 {
+  margin:
+    0 0
+    16px;
 
   color: #2e7d32;
 
-  margin-bottom: 1rem;
-
+  font-size: 1.4rem;
 }
 
 .summary-row {
-
   display: flex;
 
   justify-content: space-between;
+  align-items: center;
 
-  margin-bottom: .8rem;
+  gap: 16px;
+
+  margin-bottom: 12px;
 
   font-size: 1rem;
-
 }
 
 .summary-row.total {
+  margin-top: 16px;
 
-  font-size: 1.2rem;
+  padding-top: 16px;
 
-  font-weight: 700;
+  border-top:
+    1px dashed
+    #d7e6d7;
 
   color: #2e7d32;
 
+  font-size: 1.2rem;
+  font-weight: 700;
 }
+
+/* ================= Place Order ================= */
 
 .place-order-btn {
-
   width: 100%;
 
-  margin-top: 2rem;
+  min-height: 56px;
 
-  height: 56px;
+  margin-top: 28px;
+
+  border-radius: 14px;
 
   font-size: 1.1rem;
-
+  font-weight: 600;
 }
 
+/* ================= No Address ================= */
+
 .no-address {
+  padding:
+    48px
+    16px;
 
   text-align: center;
 
-  padding: 3rem 1rem;
-
   color: #666;
 
+  background: #fafcfa;
+
+  border:
+    1px dashed
+    #c8d8c8;
+
+  border-radius: 16px;
 }
 
 .no-address mat-icon {
-
-  font-size: 56px;
-
   width: 56px;
-
   height: 56px;
+
+  margin-bottom: 16px;
 
   color: #9e9e9e;
 
-  margin-bottom: 1rem;
-
+  font-size: 56px;
 }
+
+.no-address h3 {
+  margin:
+    0 0
+    8px;
+
+  color: #2e7d32;
+}
+
+.no-address p {
+  margin: 0;
+}
+
+/* ================= Tablet ================= */
 
 @media (max-width: 768px) {
 
+  .checkout-page {
+    padding:
+      20px
+      16px;
+  }
+
   .container {
+    padding:
+      28px
+      22px;
 
-    padding: 1.5rem;
+    border-radius: 18px;
+  }
 
+  h1 {
+    margin-bottom: 24px;
+
+    font-size: 1.8rem;
+  }
+
+  .address-grid {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .address-card {
+    padding: 18px;
+  }
+
+}
+
+/* ================= Mobile ================= */
+
+@media (max-width: 480px) {
+
+  .checkout-page {
+    padding:
+      12px
+      10px
+      20px;
+  }
+
+  .container {
+    padding:
+      22px
+      16px;
+
+    border-radius: 16px;
+
+    box-shadow:
+      0 6px 20px
+      rgba(0, 0, 0, 0.06);
+  }
+
+  h1 {
+    margin-bottom: 20px;
+
+    font-size: 1.55rem;
+  }
+
+  .address-grid {
+    gap: 12px;
+
+    margin-bottom: 16px;
+  }
+
+  .address-card {
+    padding:
+      16px
+      14px;
+
+    border-radius: 12px;
+  }
+
+  .address-card:hover {
+    transform: none;
+  }
+
+  .card-header {
+    margin-bottom: 10px;
+  }
+
+  .card-header h3 {
+    font-size: 1rem;
+  }
+
+  .selected-icon {
+    font-size: 26px;
+  }
+
+  .address-card p {
+    margin: 4px 0;
+
+    font-size: 0.9rem;
+
+    line-height: 1.45;
+  }
+
+  .add-address-btn {
+    min-height: 46px;
+
+    margin:
+      6px 0
+      24px;
+  }
+
+  .summary {
+    padding-top: 20px;
+  }
+
+  .summary h2 {
+    font-size: 1.25rem;
+  }
+
+  .summary-row {
+    font-size: 0.95rem;
+  }
+
+  .summary-row.total {
+    font-size: 1.1rem;
+  }
+
+  .place-order-btn {
+    min-height: 52px;
+
+    margin-top: 22px;
+
+    font-size: 1rem;
+  }
+
+  .no-address {
+    padding:
+      36px
+      14px;
+  }
+
+  .no-address mat-icon {
+    width: 48px;
+    height: 48px;
+
+    font-size: 48px;
   }
 
 }

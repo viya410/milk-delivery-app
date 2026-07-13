@@ -21,7 +21,12 @@
 
   font-size: 34px;
 
-  background: linear-gradient(135deg, #2e7d32, #4caf50);
+  background:
+    linear-gradient(
+      135deg,
+      #2e7d32,
+      #4caf50
+    );
 
   display: flex;
 
@@ -31,13 +36,19 @@
 
   cursor: pointer;
 
-  box-shadow: 0 15px 35px rgba(46, 125, 50, 0.35);
+  box-shadow:
+    0 15px 35px
+    rgba(46, 125, 50, 0.35);
 
-  transition: all 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .floating-cart:hover {
-  transform: translateY(-4px) scale(1.05);
+  transform:
+    translateY(-4px)
+    scale(1.05);
 }
 
 .floating-cart i {
@@ -49,7 +60,6 @@
 }
 
 .cart-badge {
-
   position: absolute;
 
   top: -6px;
@@ -78,9 +88,11 @@
 
   border: 3px solid white;
 
+  box-sizing: border-box;
 }
 
 @keyframes cartBounce {
+
   0% {
     transform: scale(1);
   }
@@ -96,8 +108,54 @@
   100% {
     transform: scale(1);
   }
+
 }
 
 .cart-bounce {
-  animation: cartBounce 0.45s ease;
+  animation:
+    cartBounce
+    0.45s
+    ease;
+}
+
+/* ================= Mobile ================= */
+
+@media (max-width: 768px) {
+
+  :host {
+    right: 16px;
+
+    bottom: 16px;
+  }
+
+  .floating-cart {
+    width: 54px;
+
+    height: 54px;
+
+    font-size: 25px;
+
+    box-shadow:
+      0 8px 22px
+      rgba(46, 125, 50, 0.3);
+  }
+
+  .floating-cart i {
+    font-size: 25px;
+  }
+
+  .cart-badge {
+    top: -5px;
+
+    right: -5px;
+
+    width: 22px;
+
+    height: 22px;
+
+    font-size: 11px;
+
+    border-width: 2px;
+  }
+
 }

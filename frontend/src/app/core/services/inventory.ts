@@ -34,6 +34,7 @@ export class InventoryService {
     return this.http.get<Inventory[]>(this.apiUrl).pipe(
       tap((response) => {
         this.inventory.set(response);
+        console.log('Inventory loaded:', response);
         this.loading.set(false);
       }),
     );

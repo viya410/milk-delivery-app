@@ -1,18 +1,48 @@
-import { AfterViewInit, Component, ViewChild, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {
+  Component,
+  signal
+} from '@angular/core';
 
-import { FloatingCartComponent } from './shared/ui/floating-cart/floating-cart';
-import { AnimationLayerComponent } from './shared/ui/animation-layer/animation-layer';
+import {
+  RouterOutlet
+} from '@angular/router';
 
-import { ToasterComponent } from './shared/components/toaster/toaster';
-import { ToasterService } from './core/services/toaster';
+import {
+  FloatingCartComponent
+} from './shared/ui/floating-cart/floating-cart';
+
+import {
+  AnimationLayerComponent
+} from './shared/ui/animation-layer/animation-layer';
+
+import {
+  ToasterComponent
+} from './shared/components/toaster/toaster';
+
+import {
+  AppLoader
+} from './shared/components/app-loader/app-loader';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, FloatingCartComponent, AnimationLayerComponent, ToasterComponent],
+
+  standalone: true,
+
+  imports: [
+    RouterOutlet,
+    FloatingCartComponent,
+    AnimationLayerComponent,
+    ToasterComponent,
+    AppLoader
+  ],
+
   templateUrl: './app.html',
-  styleUrl: './app.scss',
+
+  styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('milk-delivery-app');
+
+  protected readonly title =
+    signal('milk-delivery-app');
+
 }

@@ -60,12 +60,18 @@ export class ProductCardComponent {
   //   (event.target as HTMLImageElement).src = 'assets/images/products/no-image.png';
   // }
   getDisplayPrice(): number {
+    if (this.product.sizes?.length) {
+      return this.product.sizes[0].price;
+    }
 
-  if (this.product.sizes?.length) {
-    return this.product.sizes[0].price;
+    return this.product.price;
   }
 
-  return this.product.price;
+  getDisplayUnit(): string {
+    if (this.product.sizes?.length) {
+      return this.product.sizes[0].size;
+    }
 
-}
+    return this.product.unit;
+  }
 }
