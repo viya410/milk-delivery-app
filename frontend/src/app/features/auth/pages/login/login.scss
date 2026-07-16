@@ -1,12 +1,8 @@
 .login-wrapper {
   min-height: 100vh;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
-  padding: 32px;
-
   /* Matches Angular Material theme */
   background: linear-gradient(180deg, #f8fafc 0%, #eef6ef 100%);
 }
@@ -14,11 +10,8 @@
 .login-card {
   width: 100%;
   max-width: 450px;
-
   padding: 40px;
-
   border-radius: 20px;
-
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
 }
 
@@ -30,33 +23,26 @@
 .brand-logo {
   width: 96px;
   height: 96px;
-
   object-fit: contain;
-
   margin-bottom: 18px;
 }
 
 .brand-section h1 {
   margin: 0 0 8px;
-
   font-size: 2rem;
   font-weight: 700;
-
   color: #2e5d34;
 }
 
 .brand-section p {
   margin: 0;
-
   color: #6b7280;
-
   font-size: 0.95rem;
 }
 
 form {
   display: flex;
   flex-direction: column;
-
   gap: 18px;
 }
 
@@ -84,23 +70,18 @@ mat-form-field {
 
 button[type='submit'] {
   height: 50px;
-
   margin-top: 4px;
-
   border-radius: 10px;
 }
 
 .signup-link {
   margin-top: 12px;
-
   text-align: center;
-
   color: #555;
 }
 
 @media (max-width: 600px) {
   .login-wrapper {
-    padding: 16px;
     align-items: center;
   }
 
@@ -144,18 +125,15 @@ button[type='submit'] {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-
     gap: 10px;
   }
 
   .button-spinner {
     width: 18px;
     height: 18px;
-
     border: 2px solid rgba(255, 255, 255, 0.4);
     border-top-color: #fff;
     border-radius: 50%;
-
     animation: buttonSpin 0.8s linear infinite;
   }
 

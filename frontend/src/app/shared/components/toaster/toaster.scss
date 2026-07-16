@@ -110,3 +110,16 @@
 .info .toast-icon {
   color: #1976d2;
 }
+
+@media (max-width: 768px) {
+  :host {
+    right: 10px;
+    width: 70vw;
+    height: 15vh;
+    left: 10px;
+  }
+
+  .toast {
+    min-height: 0;
+  }
+}
