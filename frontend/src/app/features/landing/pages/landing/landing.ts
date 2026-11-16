@@ -200,7 +200,9 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
     this.sectionObserver?.disconnect();
     this.revealObserver?.disconnect();
-    document.body.classList.remove('landing-scroll-ready');
+    document.querySelectorAll('.scroll-reveal-pending').forEach((element) => {
+      element.classList.remove('scroll-reveal-pending');
+    });
     document.body.style.overflow = '';
   }
 
@@ -210,6 +212,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
         console.log('Received products:', products);
 
         this.products.set(products.slice(0, 4));
+        setTimeout(() => this.observeScrollReveal());
 
         console.log('Assigned products:', this.products());
         console.log('Assigned length:', this.products().length);
@@ -374,7 +377,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    document.body.classList.add('landing-scroll-ready');
+    revealElements.forEach((element) => element.classList.add('scroll-reveal-pending'));
 
     this.revealObserver = new IntersectionObserver(
       (entries, observer) => {
