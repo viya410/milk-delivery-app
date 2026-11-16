@@ -167,7 +167,7 @@ public class PurchaseService {
 
     public List<PurchaseResponse> getPurchases(Authentication authentication) {
         User user = currentUser(authentication);
-        return purchaseRepository.findByUserIdOrderByCreatedAtDesc(user.getId())
+        return purchaseRepository.findByUser_IdOrderByCreatedAtDesc(user.getId())
                 .stream().map(this::toResponse).toList();
     }
 
