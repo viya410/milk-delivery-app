@@ -119,11 +119,11 @@ public class Product {
     }
 
     public ProductCategory getCategory() {
-        return category == null ? ProductCategory.DAIRY : category;
+        return category;
     }
 
     public void setCategory(ProductCategory category) {
-        this.category = category == null ? ProductCategory.DAIRY : category;
+        this.category = category;
     }
 
     public List<ProductSize> getSizes() {
