@@ -39,6 +39,28 @@
         </div>
       </a>
 
+      <a mat-list-item [routerLink]="['/products']" [queryParams]="{ category: 'DAIRY' }" routerLinkActive="active-link">
+        <div class="menu-item"><mat-icon>water_drop</mat-icon>@if (layoutService.sidebarExpanded()) { <span>Dairy</span> }</div>
+      </a>
+      <a mat-list-item [routerLink]="['/products']" [queryParams]="{ category: 'POULTRY' }" routerLinkActive="active-link">
+        <div class="menu-item"><mat-icon>egg_alt</mat-icon>@if (layoutService.sidebarExpanded()) { <span>Poultry</span> }</div>
+      </a>
+      <a mat-list-item [routerLink]="['/products']" [queryParams]="{ category: 'VEGETABLES' }" routerLinkActive="active-link">
+        <div class="menu-item"><mat-icon>eco</mat-icon>@if (layoutService.sidebarExpanded()) { <span>Vegetables</span> }</div>
+      </a>
+
+
+      <a mat-list-item [routerLink]="['/products']" [queryParams]="{ category: 'DAIRY' }" routerLinkActive="active-link">
+        <div class="menu-item"><mat-icon>water_drop</mat-icon>@if (layoutService.sidebarExpanded()) { <span>Dairy</span> }</div>
+      </a>
+      <a mat-list-item [routerLink]="['/products']" [queryParams]="{ category: 'POULTRY' }" routerLinkActive="active-link">
+        <div class="menu-item"><mat-icon>egg_alt</mat-icon>@if (layoutService.sidebarExpanded()) { <span>Poultry</span> }</div>
+      </a>
+      <a mat-list-item [routerLink]="['/products']" [queryParams]="{ category: 'VEGETABLES' }" routerLinkActive="active-link">
+        <div class="menu-item"><mat-icon>eco</mat-icon>@if (layoutService.sidebarExpanded()) { <span>Vegetables</span> }</div>
+      </a>
+
+
       <a
         mat-list-item
         routerLink="/auth/login"
