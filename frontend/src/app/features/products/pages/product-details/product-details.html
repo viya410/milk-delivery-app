@@ -1,35 +1,71 @@
-@if (loading()) {
-  <div class="loading">Loading Product...</div>
-} @else if (errorMessage()) {
-  <div class="error">
-    {{ errorMessage() }}
-  </div>
-} @else if (product()) {
-  <div class="details-page">
+<section class="details-page">
+  <a class="back-link" routerLink="/products">← Back to products</a>
+
+  @if (loading()) {
+    <div class="details-state" role="status">
+      <span class="state-symbol">🥛</span>
+      <h2>Loading product</h2>
+      <p>Getting the details for you…</p>
+    </div>
+  } @else if (errorMessage()) {
+    <div class="details-state" role="alert">
+      <h2>Product unavailable</h2>
+      <p>{{ errorMessage() }}</p>
+      <button type="button" class="primary-action" (click)="loadProduct()">Try again</button>
+    </div>
+  } @else if (product(); as item) {
     <div class="details-grid">
-      <div class="image-section">
-        <img
-          [src]="'assets/images/products/' + product()?.imageUrl"
-          [alt]="product()?.name"
-        />
+      <div #detailImage class="image-section">
+        <img [src]="'assets/images/products/' + item.imageUrl" [alt]="item.name" />
+        <span class="fresh-tag">🌿 Farm fresh</span>
       </div>
 
-      <div class="info-section">
-        <h1>
-          {{ product()?.name }}
-        </h1>
+      <div #detailInfo class="info-section">
+        <p class="eyebrow">FRESH FROM OUR FARM</p>
+        <h1>{{ item.name }}</h1>
+        <p class="description">{{ item.description }}</p>
 
-        <p>
-          {{ product()?.description }}
-        </p>
+        @if (item.sizes?.length) {
+          <div class="size-section">
+            <h2>Choose your size</h2>
+            <div class="size-options" role="group" aria-label="Product size">
+              @for (size of item.sizes; track size.id ?? size.size) {
+                <button
+                  type="button"
+                  class="size-option"
+                  [class.selected]="selectedSize()?.id === size.id && selectedSize()?.size === size.size"
+                  [attr.aria-pressed]="selectedSize()?.size === size.size"
+                  (click)="selectSize(size)">
+                  <strong>{{ size.size }}</strong>
+                  <span>₹{{ size.price }}</span>
+                </button>
+              }
+            </div>
+          </div>
+        }
 
-        <div class="price">
-₹{{ getDisplayPrice() }}
-          <span> / {{ product()?.unit }} </span>
+        <div class="price-row">
+          <strong class="price">₹{{ getDisplayPrice() }}</strong>
+          <span>/ {{ getDisplayUnit() }}</span>
         </div>
 
-        <button class="cart-btn" (click)="addToCart()">Add To Cart</button>
+        @if (addError()) {
+          <p class="feedback error" role="alert">{{ addError() }}</p>
+        }
+        @if (successMessage()) {
+          <p class="feedback success" role="status">{{ successMessage() }}</p>
+        }
+
+        <div class="purchase-actions">
+          <button class="cart-btn" type="button" (click)="addToCart()" [disabled]="adding()">
+            @if (adding()) { Adding… } @else if (successMessage()) { Added ✓ } @else { Add to Cart }
+          </button>
+          @if (successMessage()) {
+            <button class="view-cart-btn" type="button" (click)="goToCart()">View Cart</button>
+          }
+        </div>
+        <p class="delivery-note">Freshly prepared and delivered with care.</p>
       </div>
     </div>
-  </div>
-}
+  }
+</section>
