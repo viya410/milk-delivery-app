@@ -27,12 +27,7 @@ public class Product {
 
     private String unit;
 
-    private String imageUrl;
-
-    @Column(name = "category")
-    private String category = "DAIRY";
-
-    @Column(nullable = false)
+    private String imageUrl;@Column(nullable = false)
     private Boolean available = true;
 
     private Boolean hasSizeSelection = false;
@@ -105,15 +100,7 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = (category == null || category.isBlank()) ? "DAIRY" : category.toUpperCase();
-    }
-
-    public Boolean getAvailable() {
+public Boolean getAvailable() {
         return available;
     }
 
