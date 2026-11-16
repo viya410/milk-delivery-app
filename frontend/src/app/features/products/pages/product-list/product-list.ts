@@ -28,9 +28,7 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
 
   readonly farmCategory = inject(FarmCategoryService);
 
-  private readonly categoryEffect = effect(() => {
-    this.loadProducts(this.farmCategory.selected());
-  });
+
 
   private readonly router = inject(Router);
 
@@ -57,6 +55,10 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
 
   readonly errorMessage = signal('');
 
+  constructor() {
+    effect(() => this.loadProducts(this.farmCategory.selected()));
+  }
+
   ngAfterViewInit(): void {
     this.tileChanges = this.productTiles.changes.subscribe((tiles: QueryList<ElementRef<HTMLElement>>) => {
       this.motion.animateEntrance(tiles.toArray().map((tile) => tile.nativeElement));
@@ -69,7 +71,6 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.cartService.loadCart();
-
   }
 
   loadProducts(category: ProductCategory = this.farmCategory.selected()): void {
