@@ -75,6 +75,7 @@ public class ProductService {
         product.setMaxOrderQuantity(updatedProduct.getMaxOrderQuantity());
         product.setUnit(updatedProduct.getUnit());
         product.setImageUrl(updatedProduct.getImageUrl());
+        product.setCategory(updatedProduct.getCategory());
         product.setAvailable(updatedProduct.getAvailable());
         product.setHasSizeSelection(updatedProduct.getHasSizeSelection());
 
