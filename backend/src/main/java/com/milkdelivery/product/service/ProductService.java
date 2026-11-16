@@ -92,11 +92,7 @@ public class ProductService {
         product.setCategory(updatedProduct.getCategory());
         product.setAvailable(updatedProduct.getAvailable());
         product.setHasSizeSelection(updatedProduct.getHasSizeSelection());
-        if (updatedProduct.getCategory() != null) {
-            product.setCategory(updatedProduct.getCategory());
-        }
-
-        product.getSizes().clear();
+product.getSizes().clear();
 
         if (updatedProduct.getSizes() != null) {
 
