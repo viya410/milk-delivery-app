@@ -29,6 +29,9 @@ public class Product {
 
     private String imageUrl;
 
+    @Column(name = "category")
+    private String category = "DAIRY";
+
     @Column(nullable = false)
     private Boolean available = true;
 
@@ -96,6 +99,14 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getCategory() {
+        return category == null ? "DAIRY" : category;
+    }
+
+    public void setCategory(String category) {
+        this.category = (category == null || category.isBlank()) ? "DAIRY" : category.toUpperCase();
     }
 
     public Boolean getAvailable() {
