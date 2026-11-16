@@ -27,6 +27,9 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('contactSection')
   contactSection!: ElementRef<HTMLElement>;
 
+  @ViewChild('heroVideo')
+  heroVideo?: ElementRef<HTMLVideoElement>;
+
   private readonly productService = inject(ProductService);
   private readonly router = inject(Router);
 
@@ -67,11 +70,28 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
+    this.playHeroVideo();
     this.observeTestimonialsSection();
 
     this.observeLandingSections();
 
     this.observeScrollReveal();
+  }
+
+  playHeroVideo(): void {
+    const video = this.heroVideo?.nativeElement;
+    if (!video) return;
+
+    // Muted inline playback is permitted by browsers more consistently than
+    // relying on the autoplay attribute alone during the first page load.
+    video.muted = true;
+    video.defaultMuted = true;
+    video.playsInline = true;
+
+    const playAttempt = video.play();
+    playAttempt?.catch(() => {
+      // Autoplay can still be deferred by browser policy; retry on canplay.
+    });
   }
 
   private observeTestimonialsSection(): void {

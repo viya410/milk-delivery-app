@@ -43,9 +43,7 @@ public class ProductService {
             com.milkdelivery.product.entity.ProductCategory category
     ) {
         return productRepository.findAll().stream()
-                .filter(product -> product.getCategory() == category
-                        || (category == com.milkdelivery.product.entity.ProductCategory.DAIRY
-                        && product.getCategory() == null))
+                .filter(product -> product.getCategory() == category)
                 .toList();
     }
 
@@ -89,12 +87,9 @@ public class ProductService {
         product.setMaxOrderQuantity(updatedProduct.getMaxOrderQuantity());
         product.setUnit(updatedProduct.getUnit());
         product.setImageUrl(updatedProduct.getImageUrl());
+        product.setCategory(updatedProduct.getCategory());
         product.setAvailable(updatedProduct.getAvailable());
         product.setHasSizeSelection(updatedProduct.getHasSizeSelection());
-        if (updatedProduct.getCategory() != null) {
-            product.setCategory(updatedProduct.getCategory());
-        }
-
         product.getSizes().clear();
 
         if (updatedProduct.getSizes() != null) {

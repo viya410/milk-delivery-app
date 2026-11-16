@@ -21,9 +21,9 @@ public class ProductController {
 
     @GetMapping
     public List<Product> getProducts(
-            @RequestParam(defaultValue = "DAIRY") ProductCategory category
+            @RequestParam(required = false) ProductCategory category
     ) {
-        return productService.getProductsByCategory(category);
+        return category == null ? productService.getAllProducts() : productService.getProductsByCategory(category);
     }
 
     @GetMapping("/{id}")

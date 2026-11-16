@@ -31,6 +31,9 @@
   >
     Products
   </a>
+  <a class="shop-category-link" [routerLink]="['/products']" [queryParams]="{ category: 'DAIRY' }">Dairy</a>
+  <a class="shop-category-link" [routerLink]="['/products']" [queryParams]="{ category: 'POULTRY' }">Poultry</a>
+  <a class="shop-category-link" [routerLink]="['/products']" [queryParams]="{ category: 'VEGETABLES' }">Vegetables</a>
 
   <a
     [class.active]="activeSection() === 'plans'"
@@ -98,8 +101,19 @@
 
 <a (click)="navigateToSection('products')">
           <mat-icon>shopping_bag</mat-icon>
-
           Products
+        </a>
+        <a [routerLink]="['/products']" [queryParams]="{ category: 'DAIRY' }" (click)="closeMobileMenu()">
+          <mat-icon>water_drop</mat-icon>
+          Dairy
+        </a>
+        <a [routerLink]="['/products']" [queryParams]="{ category: 'POULTRY' }" (click)="closeMobileMenu()">
+          <mat-icon>egg_alt</mat-icon>
+          Poultry
+        </a>
+        <a [routerLink]="['/products']" [queryParams]="{ category: 'VEGETABLES' }" (click)="closeMobileMenu()">
+          <mat-icon>eco</mat-icon>
+          Vegetables
         </a>
 
         <a (click)="navigateToSection('plans')">
@@ -131,12 +145,14 @@
 
 <section class="hero hero-video" id="home">
   <video
+    #heroVideo
     class="hero-video-media"
+    (canplay)="playHeroVideo()"
     autoplay
     muted
     loop
     playsinline
-    preload="metadata"
+    preload="auto"
     poster="assets/images/farm-hero.jpg"
     aria-label="A glimpse of our farm and fresh dairy delivery"
   >
@@ -148,13 +164,13 @@
     <div class="hero-copy" data-scroll-reveal>
       <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span> FARM FRESH. EVERY MORNING.</span>
       <h1>Good mornings<br /><em>start at the farm.</em></h1>
-      <p>Fresh from our farm, carefully selected and quality checked, then brought straight to your doorstep.</p>
+      <p>Fresh dairy, farm-raised poultry and seasonal vegetables, carefully selected and brought straight to your doorstep.</p>
       <div class="hero-actions">
         <button class="btn-primary hero-main-cta" routerLink="/products">Shop fresh products <span aria-hidden="true">→</span></button>
         <button class="btn-outline hero-secondary-cta" routerLink="/auth/signup">Create your account</button>
       </div>
       <div class="hero-proof">
-        <span>✓ Dairy, poultry & vegetables</span>
+        <span>✓ Farm-fresh produce</span>
         <span>✓ Quality checked</span>
         <span>✓ Doorstep delivery</span>
       </div>

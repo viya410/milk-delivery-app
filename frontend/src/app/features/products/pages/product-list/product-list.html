@@ -1,12 +1,44 @@
 <section class="products-page">
-  <div class="hero">
+  <div class="hero" [attr.data-category]="selectedCategory()">
     <div class="hero-left">
-      <span class="hero-tag">🌿 FRESH FROM OUR FARM</span>
-      <h1>{{ farmCategory.label() }} products, delivered fresh</h1>
-      <p>{{ categoryDescription() }}</p>
+      <span class="hero-tag"><span class="hero-tag-leaf">✳</span>{{ activeCategoryExperience.eyebrow }}</span>
+      <h1>{{ activeCategoryExperience.title }}</h1>
+      <p>{{ activeCategoryExperience.description }}</p>
+      <div class="hero-proof">
+        <span>✓ Farm fresh</span><span>✓ Carefully selected</span><span>✓ Delivered to your door</span>
+      </div>
     </div>
-    <div class="hero-right" aria-hidden="true">🥛</div>
+    @if (selectedCategory() === 'ALL') {
+      <div class="hero-visual hero-visual--all" role="img" aria-label="RK Farms milk, fresh vegetables and desi eggs">
+        <img
+          class="hero-farm-image"
+          src="/assets/images/rk-farms-all.jpeg"
+          alt="RK Farms fresh milk, farm vegetables and desi eggs"
+          fetchpriority="high"
+        />
+        <span class="hero-image-caption">FRESH FROM RK FARMS</span>
+      </div>
+    } @else {
+      <div class="hero-visual" role="img" [attr.aria-label]="activeCategoryExperience.visualLabel">
+        <span class="hero-visual-glow"></span>
+        <span class="hero-visual-emoji">{{ activeCategoryExperience.visual }}</span>
+        <span class="hero-visual-caption">FROM RK FARMS</span>
+      </div>
+    }
   </div>
+
+  <nav class="category-list" aria-label="Filter products by category">
+    @for (category of categories; track category.value) {
+      <button
+        type="button"
+        [class.active]="selectedCategory() === category.value"
+        [attr.aria-pressed]="selectedCategory() === category.value"
+        (click)="selectCategory(category.value)"
+      >
+        {{ category.label }}
+      </button>
+    }
+  </nav>
 
   <div class="search-section">
     <label class="search-box">
@@ -34,7 +66,7 @@
     <div class="catalog-state" role="status">
       <span class="state-symbol">🥛</span>
       <h2>Finding fresh products</h2>
-      <p>Loading today's {{ farmCategory.label().toLowerCase() }} selection…</p>
+      <p>Loading today's farm-fresh selection…</p>
     </div>
   } @else if (errorMessage()) {
     <div class="catalog-state" role="alert">
@@ -47,7 +79,7 @@
     <div class="catalog-state">
       <span class="state-symbol">⌕</span>
       <h2>No products found</h2>
-      <p>Try another search term or clear your search.</p>
+      <p>Try another search term, choose another category, or clear your search.</p>
       <button type="button" class="retry-button" (click)="clearSearch()">Clear search</button>
     </div>
   } @else {

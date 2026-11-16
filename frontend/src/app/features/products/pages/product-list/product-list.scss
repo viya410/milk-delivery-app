@@ -409,3 +409,103 @@
 @media (prefers-reduced-motion: reduce) {
   .product-tile { animation: none; }
 }
+
+
+/* Category-aware farm hero */
+.hero { position:relative; isolation:isolate; min-height:280px; padding:clamp(28px,4vw,54px); gap:28px; background:linear-gradient(118deg,#236b31 0%,#348a3d 58%,#55a94e 100%); box-shadow:0 18px 42px rgba(35,107,49,.16); }
+.hero::after { content:''; position:absolute; z-index:-1; width:320px; height:320px; right:7%; top:-175px; border:1px solid rgba(255,255,255,.16); border-radius:50%; box-shadow:0 0 0 34px rgba(255,255,255,.035),0 0 0 70px rgba(255,255,255,.025); }
+.hero h1 { max-width:13ch; font-size:clamp(2rem,4.2vw,3.25rem); letter-spacing:-.035em; text-wrap:balance; }
+.hero p { max-width:54ch; }
+.hero-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(255,255,255,.18); border:1px solid rgba(255,255,255,.2); letter-spacing:.08em; font-weight:750; }
+.hero-tag-leaf { font-size:1rem; }
+.hero-proof { display:flex; flex-wrap:wrap; gap:10px 18px; margin-top:22px; color:rgba(255,255,255,.92); font-size:.82rem; font-weight:650; }
+.hero-visual { position:relative; display:grid; flex:0 0 clamp(150px,23vw,260px); min-height:190px; place-items:center; isolation:isolate; }
+.hero-visual-glow { position:absolute; z-index:-1; width:190px; height:190px; border-radius:50%; background:radial-gradient(circle,rgba(255,255,255,.28),rgba(255,255,255,.04) 68%,transparent 70%); box-shadow:0 0 0 1px rgba(255,255,255,.16),0 0 0 18px rgba(255,255,255,.055); }
+.hero-visual-emoji { display:block; font-size:clamp(6rem,12vw,9.5rem); line-height:1; filter:drop-shadow(0 18px 14px rgba(14,50,18,.22)); animation:farm-hero-float 4.5s ease-in-out infinite; }
+.hero-visual-caption { position:absolute; bottom:2px; padding:7px 13px; border:1px solid rgba(255,255,255,.24); border-radius:999px; background:rgba(19,75,30,.24); color:rgba(255,255,255,.92); font-size:.62rem; font-weight:800; letter-spacing:.16em; }
+@keyframes farm-hero-float { 0%,100% { transform:translateY(0) rotate(-2deg); } 50% { transform:translateY(-9px) rotate(2deg); } }
+.hero[data-category="POULTRY"] { background:linear-gradient(118deg,#79502d,#a66b37 58%,#c58a4c); }
+.hero[data-category="VEGETABLES"] { background:linear-gradient(118deg,#286b3d,#3f914d 58%,#78ad48); }
+.hero[data-category="ALL"] { background:linear-gradient(118deg,#236b31,#348a3d 58%,#7ba94d); }
+.category-list button { min-height:48px; padding:12px 26px; border:1px solid #e1ebdf; font-size:.95rem; }
+.category-list button:focus-visible,.search-box:focus-within { outline:3px solid rgba(46,125,50,.25); outline-offset:3px; }
+@media(max-width:768px) {
+ .hero { min-height:0; flex-direction:column; align-items:center; gap:8px; padding:25px 20px 22px; }
+ .hero h1 { max-width:18ch; font-size:clamp(1.8rem,7vw,2.3rem); }
+ .hero p { max-width:38ch; margin-bottom:0; }
+ .hero-proof { justify-content:center; gap:7px 12px; margin-top:14px; font-size:.7rem; }
+ .hero-visual { flex-basis:auto; width:100%; min-height:132px; }
+ .hero-visual-glow { width:128px; height:128px; }
+ .hero-visual-emoji { font-size:6.2rem; }
+ .hero-visual-caption { bottom:0; }
+ .category-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); overflow:visible; }
+ .category-list button { min-width:0; padding:10px 6px; font-size:.82rem; }
+}
+@media(max-width:380px) { .hero-proof { font-size:.64rem; } }
+@media(prefers-reduced-motion:reduce) { .hero-visual-emoji { animation:none; } }
+
+
+/* All-categories RK Farms photo: cinematic, restrained motion */
+.hero-visual--all {
+  position: relative;
+  display: block;
+  flex: 0 0 min(52%, 620px);
+  width: min(52%, 620px);
+  min-height: 0;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.32);
+  border-radius: 22px;
+  background: rgba(255,255,255,.08);
+  box-shadow: 0 22px 48px rgba(12,48,18,.28), 0 0 0 8px rgba(255,255,255,.07);
+  animation: farm-image-enter .9s cubic-bezier(.2,.75,.25,1) both;
+}
+.hero-farm-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.035);
+  animation: farm-image-drift 18s ease-in-out 0.9s infinite alternate;
+}
+.hero-image-caption {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 9px 14px;
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 999px;
+  background: rgba(20,54,25,.62);
+  color: #fff;
+  font-size: .68rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+  backdrop-filter: blur(8px);
+}
+@keyframes farm-image-enter {
+  from { opacity: 0; transform: translateY(14px) scale(.975); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes farm-image-drift {
+  from { transform: scale(1.035) translate3d(0,0,0); }
+  to { transform: scale(1.11) translate3d(-.7%, -.5%, 0); }
+}
+@media (max-width: 768px) {
+  .hero-visual--all {
+    flex: none;
+    width: 100%;
+    max-width: 560px;
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+    margin-top: 14px;
+    border-radius: 16px;
+  }
+  .hero-image-caption { left: 10px; bottom: 10px; padding: 7px 10px; font-size: .58rem; }
+  .hero-farm-image { animation-duration: 24s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual--all, .hero-farm-image { animation: none; }
+  .hero-farm-image { transform: none; }
+}
