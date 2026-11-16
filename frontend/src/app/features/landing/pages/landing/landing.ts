@@ -435,7 +435,6 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     const sectionIds = [
       'home',
       'features',
-      'process',
       'products',
       'plans',
       'testimonials',
