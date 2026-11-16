@@ -73,3 +73,38 @@ h1 {
   gap: .5rem;
 
 }
+.orders-heading { margin-bottom: 26px; }
+.eyebrow { margin: 0 0 7px; color: #2e7d32; font-size: 11px; font-weight: 800; letter-spacing: 1.1px; }
+.orders-heading h1 { margin: 0 0 8px; font-size: clamp(25px,4vw,34px); }
+.orders-heading > p:last-child { margin: 0; color: #718096; font-size: 13px; }
+.order-list { display: grid; gap: 14px; }
+.order-card { padding: 22px; border: 1px solid #e8eee8; border-radius: 18px; background: #fff; box-shadow: 0 5px 20px rgba(15,23,42,.05); }
+.order-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid #edf1ed; }
+.order-label { color: #94a3b8; font-size: 10px; font-weight: 800; letter-spacing: 1px; }
+.order-top h2 { margin: 3px 0; color: #263442; font-size: 19px; }
+.order-top time { color: #718096; font-size: 12px; }
+.order-total { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+.order-total > strong { color: #2e7d32; font-size: 18px; }
+.status-pill { display: inline-flex; padding: 5px 10px; border-radius: 999px; background: #eef2f6; color: #475569; font-size: 11px; font-weight: 750; }
+.status-pill.delivered, .status-pill.completed { background: #e8f5e9; color: #247a3d; }
+.status-pill.cancelled, .status-pill.failed { background: #fff1f0; color: #b42318; }
+.status-pill.out-for-delivery, .status-pill.assigned, .status-pill.processing { background: #fff7e6; color: #9a6700; }
+.order-items { display: grid; gap: 9px; padding-top: 14px; }
+.order-item { display: flex; justify-content: space-between; gap: 12px; color: #64748b; font-size: 13px; }
+.order-item strong { color: #334155; white-space: nowrap; }
+.orders-state { display: flex; min-height: 250px; flex-direction: column; align-items: center; justify-content: center; padding: 28px 20px; border: 1px dashed #d5e0d5; border-radius: 18px; background: #fff; text-align: center; }
+.orders-state h2 { margin: 14px 0 6px; color: #263442; font-size: 19px; }
+.orders-state p { max-width: 390px; margin: 0 0 17px; color: #718096; font-size: 13px; line-height: 1.5; }
+.state-symbol { font-size: 38px; }
+.retry-button, .shop-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; padding: 0 20px; border: 0; border-radius: 999px; background: #2e7d32; color: #fff; font-weight: 700; text-decoration: none; cursor: pointer; }
+@media (max-width: 768px) {
+  .orders-page { padding: 22px 14px calc(100px + env(safe-area-inset-bottom)); }
+  .order-card { padding: 17px; border-radius: 15px; }
+  .header { align-items: flex-start; }
+}
+@media (max-width: 480px) {
+  .orders-page { padding: 16px 10px calc(100px + env(safe-area-inset-bottom)); }
+  .order-top h2 { font-size: 17px; }
+  .order-total > strong { font-size: 16px; }
+  .order-item { font-size: 12px; }
+}
