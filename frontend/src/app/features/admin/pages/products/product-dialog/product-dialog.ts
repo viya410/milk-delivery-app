@@ -71,8 +71,6 @@ export class ProductDialog {
 
     unit: [this.data?.unit ?? 'L', Validators.required],
 
-    category: [this.data?.category ?? 'DAIRY', Validators.required],
-
     imageUrl: [this.data?.imageUrl ?? ''],
 
     available: [this.data?.available ?? true],

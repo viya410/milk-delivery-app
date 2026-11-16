@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, effect, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductService } from '../../../../core/services/product';
-import { Product, ProductCategory } from '../../models/product';
-import { FarmCategoryService } from '../../../../core/services/farm-category';
+import { Product } from '../../models/product';
 
 import { ProductCardComponent } from '../../../../shared/ui/product-card/product-card';
 import { CartService } from '../../../../core/services/cart';
@@ -63,10 +62,6 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   readonly loading = signal(true);
   readonly errorMessage = signal('');
 
-  constructor() {
-    effect(() => this.loadProducts(this.farmCategory.selected()));
-  }
-
   ngAfterViewInit(): void {
     this.tileChanges = this.productTiles.changes.subscribe((tiles: QueryList<ElementRef<HTMLElement>>) => {
       this.motion.animateEntrance(tiles.toArray().map((tile) => tile.nativeElement));
@@ -89,11 +84,11 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
     this.loadProducts();
   }
 
-  loadProducts(category: ProductCategory = this.farmCategory.selected()): void {
+  loadProducts(): void {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.productService.getProducts(category).subscribe({
+    this.productService.getProducts().subscribe({
       next: (response: Product[]) => {
         this.allProducts.set(response);
         this.applyFilters();
@@ -121,13 +116,6 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   }
 
   search(event: Event): void {
-    this.searchText.set((event.target as HTMLInputElement).value.trim().toLowerCase());
-    this.applyFilters();
-  }
-
-  private applyFilters(): void {
-    const category = this.selectedCategory();
-    const search = this.searchText();
     this.searchText.set((event.target as HTMLInputElement).value.trim().toLowerCase());
     this.applyFilters();
   }
