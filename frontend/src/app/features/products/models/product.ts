@@ -18,6 +18,8 @@ export interface Product {
 
   unit: string;
 
+  category?: string;
+
   sizes: ProductSize[];
 
 }
