@@ -68,6 +68,11 @@ export class ProductList implements OnInit {
     });
   }
 
+  clearSearch(): void {
+    this.searchText.set('');
+    this.filteredProducts.set(this.allProducts());
+  }
+
   search(event: Event): void {
     const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
 
