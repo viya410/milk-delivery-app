@@ -41,17 +41,17 @@ export class Cart implements OnInit, AfterViewInit, OnDestroy {
     this.rowsSubscription?.unsubscribe();
   }
 
-  loadCart(): void {
-    this.loading.set(true);
+  loadCart(showLoading = true): void {
+    if (showLoading) this.loading.set(true);
     this.errorMessage.set('');
     this.cartService.getCart().subscribe({
       next: (response) => {
         this.cartItems.set([...response].sort((a, b) => a.id - b.id));
-        this.loading.set(false);
+        if (showLoading) this.loading.set(false);
       },
       error: () => {
         this.errorMessage.set('We could not load your cart. Please check your connection and try again.');
-        this.loading.set(false);
+        if (showLoading) this.loading.set(false);
       },
     });
   }
@@ -91,7 +91,7 @@ export class Cart implements OnInit, AfterViewInit, OnDestroy {
     request.subscribe({
       next: () => {
         this.setBusy(id, false);
-        this.loadCart();
+        this.loadCart(false);
       },
       error: () => {
         this.setBusy(id, false);
