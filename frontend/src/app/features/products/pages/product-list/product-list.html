@@ -19,7 +19,7 @@
         (input)="search($event)"
       />
       @if (searchText()) {
-        <button type="button" class="clear-search" aria-label="Clear search" (click)="searchText.set(''); searchText.set(''); filteredProducts.set(allProducts())">×</button>
+        <button type="button" class="clear-search" aria-label="Clear search" (click)="clearSearch()">×</button>
       }
     </label>
     <p class="results-count">
@@ -48,7 +48,7 @@
       <span class="state-symbol">⌕</span>
       <h2>No products found</h2>
       <p>Try another search term or clear your search.</p>
-      <button type="button" class="retry-button" (click)="searchText.set(''); filteredProducts.set(allProducts())">Clear search</button>
+      <button type="button" class="retry-button" (click)="clearSearch()">Clear search</button>
     </div>
   } @else {
     <div class="products-grid">
