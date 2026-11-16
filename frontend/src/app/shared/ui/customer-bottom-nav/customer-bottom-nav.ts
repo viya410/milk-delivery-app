@@ -1,6 +1,7 @@
-import { Component, inject, Input } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customer-bottom-nav',
@@ -13,23 +14,22 @@ export class CustomerBottomNavComponent {
   readonly auth = inject(AuthService);
   readonly router = inject(Router);
 
-  @Input() deliveryPartnerOnly = false;
+  private readonly routeChanges = this.router.events.pipe(
+    filter((event) => event instanceof NavigationEnd),
+  );
 
-  isDeliveryPartner(): boolean {
-    return this.auth.user()?.role === 'ROLE_DELIVERY_PARTNER';
-  }
+  navigationMode(): 'delivery-partner' | 'admin' | 'customer' | 'hidden' {
+    if (!this.auth.isLoggedIn()) return 'hidden';
 
-  isAdmin(): boolean {
-    return this.auth.user()?.role === 'ROLE_ADMIN';
-  }
-
-  visible(): boolean {
-    if (!this.auth.isLoggedIn()) return false;
-
-    if (this.deliveryPartnerOnly) return this.isDeliveryPartner();
+    // The route is the most reliable discriminator here: the delivery-partner
+    // area is nested inside the shared public/dashboard shell.
+    if (this.router.url.startsWith('/delivery-partner')) return 'delivery-partner';
+    if (this.router.url.startsWith('/admin')) return 'admin';
 
     const role = this.auth.user()?.role;
-    return this.isAdmin() || role === 'ROLE_CUSTOMER' || role === 'ROLE_USER';
+    if (role === 'ROLE_DELIVERY_PARTNER') return 'delivery-partner';
+    if (role === 'ROLE_ADMIN') return 'admin';
+    return 'customer';
   }
 
   isActive(path: string): boolean {
