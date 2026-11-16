@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
     Optional<Purchase> findByPaymentReference(String paymentReference);
-    List<Purchase> findByUserIdOrderByCreatedAtDesc(Long userId);
+    List<Purchase> findByUser_IdOrderByCreatedAtDesc(Long userId);
 }
