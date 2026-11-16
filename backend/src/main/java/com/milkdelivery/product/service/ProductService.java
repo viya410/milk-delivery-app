@@ -43,9 +43,7 @@ public class ProductService {
             com.milkdelivery.product.entity.ProductCategory category
     ) {
         return productRepository.findAll().stream()
-                .filter(product -> product.getCategory() == category
-                        || (category == com.milkdelivery.product.entity.ProductCategory.DAIRY
-                        && product.getCategory() == null))
+                .filter(product -> product.getCategory() == category)
                 .toList();
     }
 
