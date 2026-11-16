@@ -12,7 +12,7 @@ Customers keep one account, one saved-address book, one cart, one checkout and o
 
 ## Customer journey
 
-1. The public landing page introduces all three farm departments and links into each department.
+1. The public landing page introduces the farm's Dairy, Poultry and Vegetables services. Department selection is centralized in the authenticated customer navigation.
 2. After login, a persistent department switcher exposes Dairy, Poultry and Vegetables. The current department is visually clear and can be changed without logging out.
 3. The catalogue, search, category-specific content and product detail view follow the active department.
 4. Add-to-cart always writes to the same customer cart. Cart rows retain the product's department; switching departments must never clear or hide cart contents from the cart/checkout.
@@ -28,9 +28,9 @@ Add a required logical category:
 - `POULTRY`
 - `VEGETABLES`
 
-Existing products are treated as `DAIRY` for backward compatibility. New products must explicitly use a category in the admin experience. Category is server-owned product data; do not infer it from product names or image URLs.
+Existing products are treated as `DAIRY` for backward compatibility by the catalogue, cart and order services. New products must explicitly use a category in the admin experience. Category is server-owned product data; do not infer it from product names or image URLs.
 
-The first implementation commit adds the enum, product field, and category-filtered public catalogue endpoint. The field is initially nullable at the database column level so existing rows can be migrated safely; the entity getter treats a missing legacy value as Dairy. Before making the column non-null, ship a database migration that backfills existing products to `DAIRY`.
+The first implementation commit adds the enum, product field, and category-filtered public catalogue endpoint. The field is initially nullable at the database column level so existing rows can be migrated safely; service and response mappings treat a missing legacy value as Dairy. Before making the column non-null, ship a database migration that backfills existing products to `DAIRY`.
 
 ### Central cart
 Keep one cart per customer. Each cart item references a product, so its category is derived from the product's category. Do not create separate carts or duplicate cart APIs for each department. Cart responses should expose the category explicitly for grouping in the client.
