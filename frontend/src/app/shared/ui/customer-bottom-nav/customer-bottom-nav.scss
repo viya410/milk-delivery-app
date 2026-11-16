@@ -1,0 +1,38 @@
+:host { display: block; }
+
+.customer-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .customer-bottom-nav {
+    position: fixed;
+    z-index: 1000;
+    inset-inline: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.96);
+    border-top: 1px solid #e5e7eb;
+    box-shadow: 0 -6px 24px rgba(15, 23, 42, 0.08);
+    backdrop-filter: blur(16px);
+  }
+
+  a {
+    display: flex;
+    min-height: 48px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  a.active { color: #247a3d; }
+  .nav-icon { font-size: 22px; line-height: 1.1; }
+}
