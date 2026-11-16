@@ -82,6 +82,8 @@
           <tr>
             <th>Customer</th>
 
+            <th>Department</th>
+
             <th>Amount</th>
 
             <th>Date</th>
@@ -111,6 +113,12 @@
                     </small>
                   </div>
                 </div>
+              </td>
+
+              <td>
+                <span class="department-pill" [attr.data-category]="order.category || 'DAIRY'">
+                  {{ order.category || 'DAIRY' }}
+                </span>
               </td>
 
               <td>
