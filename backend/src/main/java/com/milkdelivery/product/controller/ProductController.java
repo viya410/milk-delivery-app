@@ -5,6 +5,7 @@ import com.milkdelivery.product.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import com.milkdelivery.product.entity.ProductCategory;
 
 @RestController
 @RequestMapping("/api/products")
