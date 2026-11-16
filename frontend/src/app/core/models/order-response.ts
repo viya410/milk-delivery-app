@@ -15,6 +15,7 @@ export interface OrderResponse {
   address: string;
   totalAmount: number;
   status: string;
+  category?: 'DAIRY' | 'POULTRY' | 'VEGETABLES';
   orderDate: string;
   items: OrderItemResponse[];
 }
