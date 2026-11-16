@@ -1,11 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-customer-bottom-nav',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, RouterLinkActive, MatIconModule],
   templateUrl: './customer-bottom-nav.html',
   styleUrl: './customer-bottom-nav.scss',
 })
