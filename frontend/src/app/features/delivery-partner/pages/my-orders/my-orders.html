@@ -66,7 +66,7 @@
 
             <div class="items-block">
               <h3>Order items</h3>
-              @for (item of order.items; track item.productId) {
+              @for (item of order.items; track $index) {
                 <div class="item-row">
                   <span>{{ item.productName }} <small>× {{ item.quantity }}{{ item.unit ? ' ' + item.unit : '' }}</small></span>
                   <strong>₹{{ item.price * item.quantity | number:'1.2-2' }}</strong>
