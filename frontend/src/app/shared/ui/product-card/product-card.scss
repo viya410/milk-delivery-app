@@ -29,6 +29,7 @@
 }
 
 .image-wrapper {
+  position: relative;
   height: 220px;
 
   background: #f8faf7;
@@ -371,3 +372,37 @@
 .add-btn:active { transform: scale(.94); }
 .add-btn:focus-visible, .quantity-controls button:focus-visible { outline: 3px solid rgba(46,125,50,.35); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .add-btn { transition: none; } }
+
+.cart-quantity-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 1;
+  display: inline-flex;
+  min-height: 30px;
+  align-items: center;
+  gap: 6px;
+  padding: 0 10px;
+  border: 1px solid rgba(46,125,50,.16);
+  border-radius: 999px;
+  background: rgba(255,255,255,.96);
+  color: #397b3d;
+  box-shadow: 0 3px 10px rgba(15,23,42,.1);
+  font-size: 11px;
+  font-weight: 650;
+  pointer-events: none;
+}
+.cart-quantity-badge strong {
+  display: inline-grid;
+  min-width: 20px;
+  height: 20px;
+  place-items: center;
+  border-radius: 50%;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 11px;
+}
+@media (max-width: 480px) {
+  .cart-quantity-badge { top: 7px; right: 7px; min-height: 26px; gap: 4px; padding: 0 7px; font-size: 10px; }
+  .cart-quantity-badge strong { min-width: 18px; height: 18px; font-size: 10px; }
+}
