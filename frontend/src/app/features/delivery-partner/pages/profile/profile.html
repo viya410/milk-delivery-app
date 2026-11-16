@@ -11,7 +11,7 @@
     </button>
   </header>
 
-  @if (loading()) {
+  @if (loading() && !profile()) {
     <div class="state-card" role="status">
       <mat-icon class="state-icon">hourglass_top</mat-icon>
       <h2>Loading profile</h2>
