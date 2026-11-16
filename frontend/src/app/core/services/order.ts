@@ -39,10 +39,6 @@ export class OrderService {
     return this.http.get<any[]>(this.purchasesUrl);
   }
 
-  getPurchases() {
-    return this.http.get<any[]>(this.purchasesUrl);
-  }
-
   getOrders() {
     this.loading.set(true);
 
