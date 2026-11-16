@@ -6,6 +6,8 @@ public class CartItemResponse {
 
     private Long productId;
 
+    private String category;
+
     private String productName;
 
     private Double price;
@@ -37,6 +39,7 @@ public class CartItemResponse {
 
         this.id = id;
         this.productId = productId;
+        this.category = category;
         this.productName = productName;
         this.price = price;
         this.imageUrl = imageUrl;
@@ -53,6 +56,10 @@ public class CartItemResponse {
 
     public Long getProductId() {
         return productId;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public String getProductName() {
