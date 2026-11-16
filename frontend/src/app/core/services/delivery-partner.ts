@@ -10,33 +10,23 @@ import { OrderResponse } from '../models/order-response';
   providedIn: 'root',
 })
 export class DeliveryPartnerService {
-
   private readonly http = inject(HttpClient);
-
-  private readonly apiUrl =
-    `${environment.apiUrl}/delivery-partner`;
+  private readonly apiUrl = `${environment.apiUrl}/delivery-partner`;
 
   getDashboard(): Observable<DeliveryPartnerDashboard> {
-    return this.http.get<DeliveryPartnerDashboard>(
-      `${this.apiUrl}/dashboard`
-    );
+    return this.http.get<DeliveryPartnerDashboard>(`${this.apiUrl}/dashboard`);
   }
+
   getAvailableOrders(): Observable<OrderResponse[]> {
-  return this.http.get<OrderResponse[]>(
-    `${this.apiUrl}/orders/available`
-  );
-}
+    return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders/available`);
+  }
 
-pickOrder(orderId: number): Observable<void> {
-  return this.http.post<void>(
-    `${this.apiUrl}/orders/${orderId}/pick`,
-    {}
-  );
-}
-
-}
   getMyOrders(): Observable<OrderResponse[]> {
     return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders/my`);
+  }
+
+  pickOrder(orderId: number): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(`${this.apiUrl}/orders/${orderId}/pick`, {});
   }
 
   verifyDeliveryOtp(orderId: number, otp: string): Observable<OrderResponse> {
@@ -45,3 +35,4 @@ pickOrder(orderId: number): Observable<void> {
       { otp }
     );
   }
+}
