@@ -14,8 +14,8 @@ export class ProductService {
   private apiUrl =
     `${environment.apiUrl}/products`;
 
-  getProducts(category: ProductCategory = 'DAIRY') {
-    const params = new HttpParams().set('category', category);
+  getProducts(category?: ProductCategory) {
+    const params = category ? new HttpParams().set('category', category) : new HttpParams();
     return this.http.get<any[]>(this.apiUrl, { params });
   }
 
