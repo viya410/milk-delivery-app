@@ -64,6 +64,21 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
         this.inventoryService = inventoryService;
     }
 
+
+    private User findAuthenticatedUser(Authentication authentication) {
+        if (authentication == null || authentication.getName() == null
+                || authentication.getName().isBlank()) {
+            throw new BusinessException("Authenticated user not found.");
+        }
+
+        String username = authentication.getName().trim();
+        return userRepository.findByEmail(username)
+                .or(() -> userRepository.findByPhoneNumber(username))
+                .orElseThrow(() -> new BusinessException(
+                        "No user account matches the authenticated login. Please sign in again."
+                ));
+    }
+
     @Override
     public DeliveryPartnerResponse createDeliveryPartner(
             CreateDeliveryPartnerRequest request
@@ -187,10 +202,7 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
             Authentication authentication
     ) {
 
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() ->
-                        new BusinessException("User not found.")
-                );
+        User user = findAuthenticatedUser(authentication);
 
         DeliveryPartner deliveryPartner = deliveryPartnerRepository
                 .findByUserId(user.getId())
@@ -213,10 +225,7 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
             Authentication authentication
     ) {
 
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() ->
-                        new BusinessException("User not found.")
-                );
+        User user = findAuthenticatedUser(authentication);
 
         DeliveryPartner deliveryPartner = deliveryPartnerRepository
                 .findByUserId(user.getId())
@@ -276,10 +285,7 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
             Authentication authentication
     ) {
 
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() ->
-                        new BusinessException("User not found.")
-                );
+        User user = findAuthenticatedUser(authentication);
 
         DeliveryPartner deliveryPartner = deliveryPartnerRepository
                 .findByUserId(user.getId())
@@ -346,10 +352,7 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
             Authentication authentication
     ) {
 
-        User user = userRepository.findByEmail(authentication.getName())
-                .orElseThrow(() ->
-                        new BusinessException("User not found.")
-                );
+        User user = findAuthenticatedUser(authentication);
 
         DeliveryPartner deliveryPartner = deliveryPartnerRepository
                 .findByUserId(user.getId())
