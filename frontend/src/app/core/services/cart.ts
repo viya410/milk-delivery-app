@@ -71,23 +71,11 @@ export class CartService {
   }
 
   increaseQuantity(cartId: number) {
-    return this.http
-      .put(
-        `${this.apiUrl}/${cartId}/increase`,
-
-        {},
-      )
-      ;
+    return this.http.put(`${this.apiUrl}/${cartId}/increase`, {});
   }
 
   decreaseQuantity(cartId: number) {
-    return this.http
-      .put(
-        `${this.apiUrl}/${cartId}/decrease`,
-
-        {},
-      )
-      ;
+    return this.http.put(`${this.apiUrl}/${cartId}/decrease`, {});
   }
 
   removeItem(cartId: number) {
