@@ -11,9 +11,9 @@
         <p class="account-type-label">I want to sign up as</p>
         <div class="account-type-options">
           <button type="button" [class.selected]="accountType() === 'customer'"
-            (click)="accountType.set('customer')">Customer</button>
+            (click)="setAccountType('customer')">Customer</button>
           <button type="button" [class.selected]="accountType() === 'delivery-partner'"
-            (click)="accountType.set('delivery-partner')">Delivery Partner</button>
+            (click)="setAccountType('delivery-partner')">Delivery Partner</button>
         </div>
         @if (accountType() === 'delivery-partner') {
           <p class="account-type-hint">Create a delivery partner account to pick up and deliver customer orders.</p>
