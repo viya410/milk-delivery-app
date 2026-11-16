@@ -63,6 +63,10 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   readonly loading = signal(true);
   readonly errorMessage = signal('');
 
+  constructor() {
+    effect(() => this.loadProducts(this.farmCategory.selected()));
+  }
+
   ngAfterViewInit(): void {
     this.tileChanges = this.productTiles.changes.subscribe((tiles: QueryList<ElementRef<HTMLElement>>) => {
       this.motion.animateEntrance(tiles.toArray().map((tile) => tile.nativeElement));
