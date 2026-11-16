@@ -1,8 +1,12 @@
+import { ProductCategory } from '../../features/products/models/product';
+
 export interface CartItem {
 
   id: number;
 
   productId: number;
+
+  category: ProductCategory;
 
   productSizeId?: number;
 
