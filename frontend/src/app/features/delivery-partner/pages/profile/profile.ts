@@ -24,6 +24,19 @@ export class Profile implements OnInit {
   readonly errorMessage = signal('');
 
   ngOnInit(): void {
+    const user = this.authService.user();
+    if (user) {
+      this.profile.set({
+        id: null,
+        fullName: user.fullName,
+        email: user.email || null,
+        phoneNumber: user.phoneNumber,
+        employeeCode: null,
+        routeId: null,
+        routeName: null,
+        status: 'UNKNOWN',
+      });
+    }
     this.loadProfile();
   }
 
@@ -40,7 +53,7 @@ export class Profile implements OnInit {
         this.errorMessage.set(
           typeof message === 'string' && message.trim()
             ? message
-            : 'Unable to load your profile. Please try again.'
+            : 'Partner details could not be loaded. Your basic account information is shown below.'
         );
         this.loading.set(false);
       },
