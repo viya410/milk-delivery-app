@@ -863,3 +863,6 @@ td {
     line-height: 18px;
   }
 }
+.department-pill { display: inline-flex; padding: 6px 10px; border-radius: 999px; background: #eef6eb; color: #35683a; font-size: 11px; font-weight: 800; white-space: nowrap; }
+.department-pill[data-category="POULTRY"] { background: #fff2df; color: #8a5a1e; }
+.department-pill[data-category="VEGETABLES"] { background: #e8f5e9; color: #2e7d32; }
