@@ -25,14 +25,7 @@
     Why Us
   </a>
 
-  <a
-    [class.active]="activeSection() === 'process'"
-    (click)="scrollToSection('process')"
-  >
-    How It Works
-  </a>
-
-  <a
+<a
     [class.active]="activeSection() === 'products'"
     (click)="scrollToSection('products')"
   >
@@ -103,13 +96,7 @@
           Why Us
         </a>
 
-        <a (click)="navigateToSection('process')">
-          <mat-icon>local_shipping</mat-icon>
-
-          How It Works
-        </a>
-
-        <a (click)="navigateToSection('products')">
+<a (click)="navigateToSection('products')">
           <mat-icon>shopping_bag</mat-icon>
 
           Products
@@ -218,7 +205,7 @@
 </section>
 
 <!-- ==========================================================
-PART 2 : FEATURES + PROCESS + PLANS
+PART 2 : FEATURES + PLANS
 Replace your existing Features, Process and Plans sections
 ========================================================== -->
 
@@ -254,50 +241,6 @@ Replace your existing Features, Process and Plans sections
         <h3>Doorstep Delivery</h3>
         <p>Fast delivery before your day begins.</p>
       </article>
-    </div>
-  </div>
-</section>
-
-<section class="process" id="process">
-  <div class="container">
-    <div class="section-heading" data-scroll-reveal>
-      <span>OUR PROCESS</span>
-      <h2>From Farm To Home</h2>
-    </div>
-
-    <div class="timeline">
-      <div class="step" data-scroll-reveal>
-        <div class="emoji-circle">🐄</div>
-        <h4>Farm Care</h4>
-        <p>Healthy cattle produce quality milk.</p>
-      </div>
-
-      <div class="line"></div>
-
-      <div class="step" data-scroll-reveal>
-        <div class="circle">2</div>
-        <div class="emoji">🥛</div>
-        <h4>Collection</h4>
-        <p>Freshly collected every morning.</p>
-      </div>
-
-      <div class="line"></div>
-
-      <div class="step" data-scroll-reveal>
-        <div class="circle">3</div>
-        <div class="emoji">🧪</div>
-        <h4>Quality Test</h4>
-        <p>Every batch is quality checked.</p>
-      </div>
-
-      <div class="line"></div>
-
-      <div class="step" data-scroll-reveal>
-        <div class="circle">4</div>
-        <div class="emoji">🚚</div>
-        <h4>Delivery</h4>
-        <p>Delivered before 7 AM.</p>
-      </div>
     </div>
   </div>
 </section>
