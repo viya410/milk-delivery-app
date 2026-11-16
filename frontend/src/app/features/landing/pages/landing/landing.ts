@@ -15,6 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { environment } from '../../../../../environments/environment';
 import { ReviewService } from '../../../../core/services/review';
 import { Review } from '../../../../core/models/review.model';
+import { FarmCategoryService } from '../../../../core/services/farm-category';
+import { ProductCategory } from '../../../products/models/product';
 
 @Component({
   selector: 'app-landing',
@@ -28,6 +30,11 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
   contactSection!: ElementRef<HTMLElement>;
 
   private readonly productService = inject(ProductService);
+  readonly farmCategory = inject(FarmCategoryService);
+
+  selectDepartment(category: ProductCategory): void {
+    this.farmCategory.select(category);
+  }
   private readonly router = inject(Router);
 
   readonly products = signal<any[]>([]);
