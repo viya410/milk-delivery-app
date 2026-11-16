@@ -108,3 +108,9 @@ h1 {
   .order-total > strong { font-size: 16px; }
   .order-item { font-size: 12px; }
 }
+
+.purchase-departments { display: grid; gap: 10px; padding-top: 14px; }
+.purchase-department { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 11px 12px; border: 1px solid #edf1ed; border-radius: 12px; }
+.purchase-department > div { display: flex; flex-wrap: wrap; align-items: center; gap: 9px; }
+.purchase-department > strong { color: #2e7d32; white-space: nowrap; }
+.status-pill-confirmed { background: #e8f5e9; color: #247a3d; }
