@@ -348,6 +348,25 @@ public class DeliveryPartnerServiceImpl implements DeliveryPartnerService {
     }
 
     @Override
+    public DeliveryPartnerResponse getProfile(Authentication authentication) {
+        User user = findAuthenticatedUser(authentication);
+
+        DeliveryPartner partner = deliveryPartnerRepository.findByUserId(user.getId())
+                .orElseThrow(() -> new BusinessException("Delivery partner profile not found."));
+
+        DeliveryPartnerResponse response = new DeliveryPartnerResponse();
+        response.setId(partner.getId());
+        response.setFullName(user.getFullName());
+        response.setEmail(user.getEmail());
+        response.setPhoneNumber(user.getPhoneNumber());
+        response.setEmployeeCode(partner.getEmployeeCode());
+        response.setRouteId(partner.getRoute() != null ? partner.getRoute().getId() : null);
+        response.setRouteName(partner.getRoute() != null ? partner.getRoute().getRouteName() : null);
+        response.setStatus(partner.getStatus());
+        return response;
+    }
+
+    @Override
     public DeliveryPartnerDashboardResponse getDashboard(
             Authentication authentication
     ) {
