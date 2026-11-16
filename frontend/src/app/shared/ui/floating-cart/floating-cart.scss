@@ -158,3 +158,12 @@
   }
 
 }
+.cart-bounce { animation: cartBounce .48s cubic-bezier(.2,.8,.2,1); }
+.cart-bounce::after {
+  content: ''; position: absolute; inset: -7px; border: 2px solid rgba(76,175,80,.65);
+  border-radius: 50%; animation: cartRing .48s ease-out forwards; pointer-events: none;
+}
+.cart-badge-pop { animation: badgePop .42s cubic-bezier(.2,.8,.2,1); }
+@keyframes cartRing { from { opacity: .85; transform: scale(.72); } to { opacity: 0; transform: scale(1.35); } }
+@keyframes badgePop { 0% { transform: scale(1); } 45% { transform: scale(1.35) rotate(-8deg); } 100% { transform: scale(1) rotate(0); } }
+@media (prefers-reduced-motion: reduce) { .cart-bounce, .cart-badge-pop, .cart-bounce::after { animation: none !important; } }
