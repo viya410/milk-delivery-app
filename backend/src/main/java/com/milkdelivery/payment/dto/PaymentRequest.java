@@ -8,6 +8,8 @@ public class PaymentRequest {
 
     private Double amount;
 
+    private String razorpaySignature;
+
     public String getRazorpayPaymentId() {
         return razorpayPaymentId;
     }
@@ -27,6 +29,10 @@ public class PaymentRequest {
     ) {
         this.razorpayOrderId = razorpayOrderId;
     }
+
+    public String getRazorpaySignature() { return razorpaySignature; }
+
+    public void setRazorpaySignature(String razorpaySignature) { this.razorpaySignature = razorpaySignature; }
 
     public Double getAmount() {
         return amount;
