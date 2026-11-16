@@ -41,6 +41,8 @@ export class Signup {
 
   loading = false;
 
+  accountType = signal<'customer' | 'delivery-partner'>('customer');
+
   hidePassword = signal(true);
 
   hideConfirmPassword = signal(true);
@@ -66,6 +68,10 @@ export class Signup {
      */
     if (this.loading) {
       return;
+    }
+
+    if (this.accountType() === 'delivery-partner' && !this.signupForm.controls.email.value.trim()) {
+      this.signupForm.controls.email.setErrors({ required: true });
     }
 
     if (this.signupForm.invalid) {
@@ -98,7 +104,11 @@ export class Signup {
      */
     this.loading = true;
 
-    this.authService.register(payload).subscribe({
+    const registration = this.accountType() === 'delivery-partner'
+      ? this.authService.registerDeliveryPartner(payload)
+      : this.authService.register(payload);
+
+    registration.subscribe({
       next: (response) => {
         /*
          * HTTP request completed
@@ -107,7 +117,9 @@ export class Signup {
 
         console.log(response);
 
-        alert('Account created successfully');
+        alert(this.accountType() === 'delivery-partner'
+          ? 'Delivery partner account created. Please log in to continue.'
+          : 'Account created successfully');
 
         this.router.navigate(['/auth/login']);
       },
