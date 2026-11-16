@@ -1,59 +1,78 @@
 <section class="cart-page">
   <div class="container">
-    <h1>Shopping Cart</h1>
+    <header class="cart-heading">
+      <a routerLink="/products" class="continue-link">← Continue shopping</a>
+      <h1>Your Cart <span>({{ getItemCount() }} items)</span></h1>
+      <p>Fresh picks, ready for your doorstep.</p>
+    </header>
 
-    @if (cartItems().length === 0) {
-  <div class="empty-cart">
-    <div class="empty-cart-icon">🛒</div>
-
-    <h2>Your Cart is Empty</h2>
-
-    <p>Add some fresh dairy products to your cart and they’ll appear here.</p>
-
-    <button class="shop-btn" routerLink="/products">
-      Browse Products
-    </button>
-  </div>
-} @else {
-      @for (item of cartItems(); track item.id) {
-        <div class="cart-item">
-          <div class="item-details">
-            <h3>
-              {{ item.productName }}
-            </h3>
-
-            <span class="product-size">
-              {{ item.unit }}
-            </span>
-
-            <p>₹{{ item.price }}</p>
-          </div>
-
-          <div class="quantity-controls">
-            <button (click)="decrease(item.id)">-</button>
-
-            <span>
-              {{ item.quantity }}
-            </span>
-
-            <button (click)="increase(item)" [disabled]="isMaxReached(item)">+</button>
-          </div>
-
-          @if (isMaxReached(item)) {
-            <div class="limit-message">
-              Maximum {{ item.maxOrderQuantity }} {{ item.unit }} per order
-            </div>
-          }
-
-          <button class="remove-btn" (click)="remove(item.id)">Remove</button>
-        </div>
-      }
-
-      <div class="cart-total">
-        <h2>Total ₹{{ getTotal() }}</h2>
+    @if (loading()) {
+      <div class="cart-state" role="status">
+        <span class="state-symbol">🛒</span>
+        <h2>Loading your cart</h2>
+        <p>Gathering your fresh picks…</p>
       </div>
+    } @else if (errorMessage() && !cartItems().length) {
+      <div class="cart-state" role="alert">
+        <h2>Cart unavailable</h2>
+        <p>{{ errorMessage() }}</p>
+        <button type="button" class="shop-btn" (click)="loadCart()">Try again</button>
+      </div>
+    } @else if (!cartItems().length) {
+      <div class="empty-cart">
+        <div class="empty-cart-icon">🛒</div>
+        <h2>Your cart is waiting</h2>
+        <p>Discover fresh milk, curd, paneer and more from our farm.</p>
+        <a class="shop-btn" routerLink="/products">Explore Products</a>
+      </div>
+    } @else {
+      <div class="cart-layout">
+        <div class="cart-items">
+          @for (item of cartItems(); track item.id) {
+            <article #cartRow class="cart-item" [class.item-busy]="isBusy(item.id)">
+              <div class="item-image">
+                @if (item.imageUrl) {
+                  <img [src]="'assets/images/products/' + item.imageUrl" [alt]="item.productName" />
+                } @else {
+                  <span>🥛</span>
+                }
+              </div>
 
-      <button class="checkout-btn" routerLink="/checkout">Proceed To Checkout</button>
+              <div class="item-details">
+                <h2>{{ item.productName }}</h2>
+                <span class="product-size">{{ item.unit }}</span>
+                <strong class="item-price">₹{{ item.price | number:'1.2-2' }}</strong>
+                @if (isMaxReached(item)) {
+                  <small class="limit-message">Maximum {{ item.maxOrderQuantity }} {{ item.unit }} per order</small>
+                }
+              </div>
+
+              <div class="item-actions">
+                <div class="quantity-controls" [attr.aria-label]="'Quantity for ' + item.productName">
+                  <button type="button" [attr.aria-label]="'Decrease ' + item.productName" (click)="decrease(item)" [disabled]="isBusy(item.id)">−</button>
+                  <span>{{ item.quantity }}</span>
+                  <button type="button" [attr.aria-label]="'Increase ' + item.productName" (click)="increase(item)" [disabled]="isBusy(item.id) || isMaxReached(item)">+</button>
+                </div>
+                <button type="button" class="remove-btn" (click)="remove(item.id)" [disabled]="isBusy(item.id)">Remove</button>
+              </div>
+              @if (isBusy(item.id)) {
+                <span class="item-updating" role="status">Updating…</span>
+              }
+            </article>
+          }
+        </div>
+
+        <aside class="cart-summary">
+          <h2>Order Summary</h2>
+          <div class="summary-row"><span>Items</span><strong>{{ getItemCount() }}</strong></div>
+          <div class="summary-row total"><span>Total</span><strong>₹{{ getTotal() | number:'1.2-2' }}</strong></div>
+          @if (errorMessage()) {
+            <p class="inline-error" role="alert">{{ errorMessage() }}</p>
+          }
+          <a class="checkout-btn" routerLink="/checkout">Proceed to Checkout <span>→</span></a>
+          <p class="summary-note">Freshly packed and delivered with care.</p>
+        </aside>
+      </div>
     }
   </div>
 </section>
