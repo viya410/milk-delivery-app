@@ -35,3 +35,13 @@ pickOrder(orderId: number): Observable<void> {
 }
 
 }
+  getMyOrders(): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders/my`);
+  }
+
+  verifyDeliveryOtp(orderId: number, otp: string): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(
+      `${this.apiUrl}/orders/${orderId}/verify-otp`,
+      { otp }
+    );
+  }
