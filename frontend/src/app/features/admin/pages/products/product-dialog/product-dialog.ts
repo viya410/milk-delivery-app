@@ -58,6 +58,8 @@ export class ProductDialog {
 
     name: [this.data?.name ?? '', Validators.required],
 
+    category: [this.data?.category ?? 'DAIRY', Validators.required],
+
     description: [this.data?.description ?? ''],
 
     price: [this.data?.price ?? 1, [Validators.required, Validators.min(1)]],
@@ -114,6 +116,9 @@ export class ProductDialog {
 
       case 'KG':
         return ['500GM', '1KG', '2KG'];
+
+      case 'PCS':
+        return ['1PC', '2PCS', '6PCS', '12PCS'];
 
       default:
         return [];
