@@ -43,6 +43,15 @@ export class Signup {
 
   accountType = signal<'customer' | 'delivery-partner'>('customer');
 
+  setAccountType(type: 'customer' | 'delivery-partner'): void {
+    this.accountType.set(type);
+    const emailControl = this.signupForm.controls.email;
+    emailControl.setValidators(type === 'delivery-partner'
+      ? [Validators.required, Validators.email]
+      : [Validators.email]);
+    emailControl.updateValueAndValidity();
+  }
+
   hidePassword = signal(true);
 
   hideConfirmPassword = signal(true);
@@ -70,10 +79,6 @@ export class Signup {
       return;
     }
 
-    if (this.accountType() === 'delivery-partner' && !this.signupForm.controls.email.value.trim()) {
-      this.signupForm.controls.email.setErrors({ required: true });
-    }
-
     if (this.signupForm.invalid) {
       this.signupForm.markAllAsTouched();
 
@@ -89,11 +94,11 @@ export class Signup {
     }
 
     const payload = {
-      fullName: formValue.fullName,
+      fullName: formValue.fullName.trim(),
 
-      phoneNumber: formValue.mobileNumber,
+      phoneNumber: formValue.mobileNumber.trim(),
 
-      email: formValue.email,
+      email: formValue.email.trim(),
 
       password: formValue.password,
     };
