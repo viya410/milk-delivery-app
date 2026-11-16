@@ -1,169 +1,115 @@
 <section class="checkout-page">
-
   <div class="container">
+    <div class="checkout-heading">
+      <p class="eyebrow">ALMOST THERE</p>
+      <h1>Complete Your Order</h1>
+      <p>Choose where you'd like your fresh dairy delivered.</p>
+    </div>
 
-    <h1>
+    <section class="checkout-section" aria-labelledby="address-heading">
+      <div class="section-heading">
+        <span class="step-number">1</span>
+        <div>
+          <h2 id="address-heading">Delivery address</h2>
+          <p>Select a saved address or add a new one.</p>
+        </div>
+      </div>
 
-      Select Delivery Address
+      @if (loadingAddresses()) {
+        <div class="checkout-state" role="status">Loading your saved addresses…</div>
+      } @else if (addresses().length > 0) {
+        <div class="address-grid">
+          @for (address of addresses(); track address.id) {
+            <button
+              type="button"
+              class="address-card"
+              [class.selected]="selectedAddress()?.id === address.id"
+              [attr.aria-pressed]="selectedAddress()?.id === address.id"
+              (click)="selectAddress(address)">
+              <span class="card-header">
+                <strong>{{ address.customerName }}</strong>
+                @if (selectedAddress()?.id === address.id) {
+                  <mat-icon class="selected-icon">check_circle</mat-icon>
+                }
+              </span>
+              <span>{{ address.houseNo }}, {{ address.street }}</span>
+              <span>{{ address.city }}, {{ address.state }} {{ address.pincode }}</span>
+              <span class="address-phone">📞 {{ address.mobileNumber }}</span>
+            </button>
+          }
+        </div>
+      } @else {
+        <div class="no-address">
+          <mat-icon>location_off</mat-icon>
+          <h3>No saved addresses</h3>
+          <p>Add a delivery address to continue.</p>
+        </div>
+      }
 
-    </h1>
+      @if (addressError()) {
+        <p class="inline-error" role="alert">{{ addressError() }}</p>
+      }
+      <button class="add-address-btn" mat-stroked-button color="primary" type="button" (click)="addNewAddress()">
+        <mat-icon>add</mat-icon>
+        Add New Address
+      </button>
+    </section>
 
-    @if (addresses().length > 0) {
+    <section class="checkout-section summary-section" aria-labelledby="summary-heading">
+      <div class="section-heading">
+        <span class="step-number">2</span>
+        <div>
+          <h2 id="summary-heading">Order summary</h2>
+          <p>Review your items before placing the order.</p>
+        </div>
+      </div>
 
-      <div class="address-grid">
-
-        @for (address of addresses(); track address.id) {
-
-          <div
-            class="address-card"
-            [class.selected]="selectedAddress()?.id === address.id"
-            (click)="selectAddress(address)">
-
-            <div class="card-header">
-
-              <h3>
-
-                {{ address.customerName }}
-
-              </h3>
-
-              @if (selectedAddress()?.id === address.id) {
-
-                <mat-icon class="selected-icon">
-
-                  check_circle
-
-                </mat-icon>
-
-              }
-
+      @if (cartItems().length) {
+        <div class="summary-items">
+          @for (item of cartItems(); track item.id) {
+            <div class="summary-item">
+              <div>
+                <strong>{{ item.productName }}</strong>
+                <small>{{ item.quantity }} × {{ item.unit }}</small>
+              </div>
+              <span>₹{{ item.price * item.quantity | number:'1.2-2' }}</span>
             </div>
-
-            <p>
-
-              {{ address.houseNo }}, {{ address.street }}
-
-            </p>
-
-            <p>
-
-              {{ address.city }}, {{ address.state }}
-
-            </p>
-
-            <p>
-
-              {{ address.pincode }}
-
-            </p>
-
-            <p>
-
-              📞 {{ address.mobileNumber }}
-
-            </p>
-
-          </div>
-
-        }
-
-      </div>
-
-    } @else {
-
-      <div class="no-address">
-
-        <mat-icon>
-
-          location_off
-
-        </mat-icon>
-
-        <h3>
-
-          No Saved Addresses
-
-        </h3>
-
-        <p>
-
-          Add an address to continue.
-
-        </p>
-
-      </div>
-
-    }
-
-    <button
-      class="add-address-btn"
-      mat-stroked-button
-      color="primary"
-      (click)="addNewAddress()">
-
-      <mat-icon>
-
-        add
-
-      </mat-icon>
-
-      Add New Address
-
-    </button>
-
-    <div class="summary">
-
-      <h2>
-
-        Order Summary
-
-      </h2>
+          }
+        </div>
+      } @else {
+        <div class="checkout-state">Your cart is empty. <a routerLink="/products">Browse products</a>.</div>
+      }
 
       <div class="summary-row">
-
-        <span>
-
-          Items
-
-        </span>
-
-        <span>
-
-          {{ cartItems().length }}
-
-        </span>
-
+        <span>Items</span>
+        <strong>{{ getItemCount() }}</strong>
       </div>
-
       <div class="summary-row total">
-
-        <span>
-
-          Total
-
-        </span>
-
-        <span>
-
-          ₹{{ getTotal() }}
-
-        </span>
-
+        <span>Total</span>
+        <strong>₹{{ getTotal() | number:'1.2-2' }}</strong>
       </div>
+    </section>
 
-    </div>
+    @if (errorMessage()) {
+      <div class="checkout-error" role="alert">
+        <mat-icon>error_outline</mat-icon>
+        <span>{{ errorMessage() }}</span>
+      </div>
+    }
 
     <button
       class="place-order-btn"
       mat-raised-button
       color="primary"
+      type="button"
       (click)="placeOrder()"
-      [disabled]="!selectedAddress()">
-
-      Place Order
-
+      [disabled]="isPlacingOrder() || !selectedAddress() || !cartItems().length">
+      @if (isPlacingOrder()) {
+        <span>Processing your order…</span>
+      } @else {
+        <span>Place Order · ₹{{ getTotal() | number:'1.2-2' }}</span>
+      }
     </button>
-
+    <p class="secure-note"><mat-icon>verified_user</mat-icon> Your order details are securely submitted.</p>
   </div>
-
 </section>
