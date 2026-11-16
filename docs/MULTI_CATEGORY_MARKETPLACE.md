@@ -75,9 +75,9 @@ Do not trust client-supplied prices, category totals or bill totals. Recalculate
 2. **Department navigation:** persistent category context and authenticated department switcher are implemented. The separate landing-page department selector has been removed so customers use the centralized switcher after login.
 3. **Catalog/admin:** category-aware browsing and admin product category assignment are implemented; category-specific search, product details, imagery and product metadata remain.
 4. **Central cart:** category is included in cart responses and the customer cart/checkout summaries are grouped by department while retaining one combined total.
-5. **Single bill checkout:** parent purchase, one payment, atomic category-order creation, combined receipt.
-6. **Operations:** category-aware inventory and separate department fulfilment workflows; admin and delivery partner screens.
-7. **Migration and QA:** backfill legacy products to Dairy, preserve old orders, integration tests for mixed-category carts and payment failures.
+5. **Single bill checkout:** implemented a parent Purchase aggregate, one payment reference, transactional category-order creation, and a combined bill history response. Customer checkout now submits to the purchase endpoint.
+6. **Operations:** each child Order stores its department and remains independently assignable/status-tracked. Admin and delivery partner order views display the department. Category-specific inventory rules and fulfilment policies remain.
+7. **Migration and QA:** legacy products/orders fall back to Dairy; validate JPA schema update or apply production migrations, and add integration tests for mixed-category carts, payment mismatch/failure and idempotent checkout.
 
 ## Acceptance criteria
 
@@ -88,3 +88,14 @@ Do not trust client-supplied prices, category totals or bill totals. Recalculate
 - Each department order can progress through its own operational status.
 - Legacy dairy products and historical dairy orders continue to work.
 - Server-side pricing, inventory reservation and order creation are transactional.
+
+
+## Current implementation notes
+
+- The authenticated customer shell owns department selection. The landing page introduces the farm generally and no longer duplicates the category picker.
+- The central cart and checkout show Dairy, Poultry and Vegetables subtotals while keeping a single grand total.
+- `POST /api/purchases` validates the customer's address, reads the central cart, recalculates prices server-side, reserves stock transactionally, creates one parent purchase and one child `Order` per non-empty department, then clears the cart.
+- `GET /api/purchases` returns parent bills with child order IDs, departments, totals and independent statuses.
+- Existing `/api/orders` remains available for older dairy orders and subscription workflows.
+- Razorpay order creation now derives the amount from the authenticated customer's server-side cart. Payment persistence re-verifies the gateway signature and records the server-calculated cart total. Purchase finalization checks that the recorded payment amount matches the final cart total.
+- The backend currently uses `spring.jpa.hibernate.ddl-auto=update` by default. Production deployments should apply and verify a controlled database migration for the new `purchases` table and `orders.purchase_id/category` columns before deploying with schema updates disabled.
