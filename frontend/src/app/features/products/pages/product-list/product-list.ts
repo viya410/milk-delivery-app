@@ -128,6 +128,13 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   private applyFilters(): void {
     const category = this.selectedCategory();
     const search = this.searchText();
+    this.searchText.set((event.target as HTMLInputElement).value.trim().toLowerCase());
+    this.applyFilters();
+  }
+
+  private applyFilters(): void {
+    const category = this.selectedCategory();
+    const search = this.searchText();
 
     const filtered = this.allProducts().filter((product) => {
       const productCategory = (product.category ?? '').trim().toUpperCase();
