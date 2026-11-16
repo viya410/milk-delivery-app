@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductService } from '../../../../core/services/product';
-import { Product } from '../../models/product';
+import { Product, ProductCategory } from '../../models/product';
+import { FarmCategoryService } from '../../../../core/services/farm-category';
 
 import { ProductCardComponent } from '../../../../shared/ui/product-card/product-card';
 import { CartService } from '../../../../core/services/cart';
@@ -84,11 +85,11 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
     this.loadProducts();
   }
 
-  loadProducts(): void {
+  loadProducts(category: ProductCategory = this.farmCategory.selected()): void {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.productService.getProducts().subscribe({
+    this.productService.getProducts(category).subscribe({
       next: (response: Product[]) => {
         this.allProducts.set(response);
         this.applyFilters();
