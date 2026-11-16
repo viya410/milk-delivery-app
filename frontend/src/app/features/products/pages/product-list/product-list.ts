@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, effect, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -68,10 +68,6 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   readonly loading = signal(true);
   readonly errorMessage = signal('');
 
-  constructor() {
-    effect(() => this.loadProducts(this.farmCategory.selected()));
-  }
-
   ngAfterViewInit(): void {
     this.tileChanges = this.productTiles.changes.subscribe((tiles: QueryList<ElementRef<HTMLElement>>) => {
       this.motion.animateEntrance(tiles.toArray().map((tile) => tile.nativeElement));
@@ -94,7 +90,7 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
     this.loadProducts();
   }
 
-  loadProducts(category: ProductCategory = this.farmCategory.selected()): void {
+  loadProducts(category?: ProductCategory): void {
     this.loading.set(true);
     this.errorMessage.set('');
 
@@ -109,6 +105,16 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
         this.errorMessage.set('Unable to load products. Please check your connection and try again.');
         this.loading.set(false);
       },
+    });
+  }
+
+  selectCategory(category: string): void {
+    const validCategory = this.categories.some((item) => item.value === category);
+    if (!validCategory) return;
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { category: category === 'ALL' ? null : category },
+      queryParamsHandling: 'merge',
     });
   }
 
