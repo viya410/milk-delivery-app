@@ -1,9 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductService } from '../../../../core/services/product';
-import { Product } from '../../models/product';
+import { Product, ProductCategory } from '../../models/product';
+import { FarmCategoryService } from '../../../../core/services/farm-category';
 
 import { ProductCardComponent } from '../../../../shared/ui/product-card/product-card';
 import { CartService } from '../../../../core/services/cart';
@@ -24,6 +25,11 @@ import { Subscription } from 'rxjs';
 })
 export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   private readonly productService = inject(ProductService);
+
+  readonly farmCategory = inject(FarmCategoryService);
+
+
+
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly bottomSheet = inject(MatBottomSheet);
@@ -62,6 +68,10 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   readonly loading = signal(true);
   readonly errorMessage = signal('');
 
+  constructor() {
+    effect(() => this.loadProducts(this.farmCategory.selected()));
+  }
+
   ngAfterViewInit(): void {
     this.tileChanges = this.productTiles.changes.subscribe((tiles: QueryList<ElementRef<HTMLElement>>) => {
       this.motion.animateEntrance(tiles.toArray().map((tile) => tile.nativeElement));
@@ -84,11 +94,11 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
     this.loadProducts();
   }
 
-  loadProducts(): void {
+  loadProducts(category: ProductCategory = this.farmCategory.selected()): void {
     this.loading.set(true);
     this.errorMessage.set('');
 
-    this.productService.getProducts().subscribe({
+    this.productService.getProducts(category).subscribe({
       next: (response: Product[]) => {
         this.allProducts.set(response);
         this.applyFilters();
@@ -102,12 +112,12 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  selectCategory(category: string): void {
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: { category: category === 'ALL' ? null : category },
-      queryParamsHandling: 'merge',
-    });
+  categoryDescription(): string {
+    switch (this.farmCategory.selected()) {
+      case 'POULTRY': return 'Farm-raised poultry products, selected with care and delivered to your doorstep.';
+      case 'VEGETABLES': return 'Fresh, seasonal vegetables grown on our farm and brought straight to your kitchen.';
+      default: return 'Milk, curd, butter, paneer and more, delivered fresh from our farm.';
+    }
   }
 
   clearSearch(): void {

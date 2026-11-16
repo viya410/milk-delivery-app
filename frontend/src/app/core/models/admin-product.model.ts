@@ -18,6 +18,8 @@ export interface AdminProduct {
 
   category: ProductCategory;
 
+  category: ProductCategory;
+
   description: string;
 
   price: number;
