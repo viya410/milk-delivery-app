@@ -89,7 +89,10 @@ export class Cart implements OnInit, AfterViewInit, OnDestroy {
     this.setBusy(id, true);
     this.errorMessage.set('');
     request.subscribe({
-      next: () => this.setBusy(id, false),
+      next: () => {
+        this.setBusy(id, false);
+        this.loadCart();
+      },
       error: () => {
         this.setBusy(id, false);
         this.errorMessage.set('That change could not be saved. Please try again.');
