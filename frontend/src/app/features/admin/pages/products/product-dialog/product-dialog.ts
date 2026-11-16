@@ -49,7 +49,7 @@ export class ProductDialog {
     optional: true,
   });
 
-  productImages = ['milk-1l.jpg', 'milk-500ml.jpg', 'curd-500g.jpg', 'ghee-1l.jpg'];
+  productImages = ['milk-1l.jpg', 'milk-500ml.jpg', 'curd-500g.jpg', 'ghee-1l.jpg', 'eggs-basket.avif', 'Tomatoes.jpg'];
 
   sizes: ProductSize[] = this.data?.sizes ? [...this.data.sizes] : [];
 
