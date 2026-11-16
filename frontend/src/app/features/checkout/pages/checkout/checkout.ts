@@ -179,6 +179,7 @@ export class Checkout implements OnInit {
         this.paymentService.savePayment({
           razorpayOrderId: response.razorpay_order_id,
           razorpayPaymentId: response.razorpay_payment_id,
+          razorpaySignature: response.razorpay_signature,
           amount
         }).subscribe({
           next: () => {
