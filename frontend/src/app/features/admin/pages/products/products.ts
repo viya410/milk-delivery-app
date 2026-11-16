@@ -39,7 +39,7 @@ export class Products implements OnInit {
 
   readonly productService = inject(AdminProductService);
 
-  readonly displayedColumns = ['name', 'price', 'unit', 'available', 'actions'];
+  readonly displayedColumns = ['name', 'category', 'price', 'unit', 'available', 'actions'];
 
   readonly searchText = signal('');
 
