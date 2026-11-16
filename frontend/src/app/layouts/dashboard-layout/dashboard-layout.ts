@@ -6,7 +6,6 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { CustomerBottomNavComponent } from '../../shared/ui/customer-bottom-nav/customer-bottom-nav';
 
 @Component({
   selector: 'app-dashboard-layout',
@@ -18,7 +17,6 @@ import { CustomerBottomNavComponent } from '../../shared/ui/customer-bottom-nav/
     MatListModule,
     MatIconModule,
     MatButtonModule,
-    CustomerBottomNavComponent,
   ],
   templateUrl: './dashboard-layout.html',
   styleUrl: './dashboard-layout.scss',
