@@ -43,9 +43,9 @@ public class ProductService {
             com.milkdelivery.product.entity.ProductCategory category
     ) {
         return productRepository.findAll().stream()
-                .filter(product -> category == com.milkdelivery.product.entity.ProductCategory.DAIRY
-                        ? product.getCategory() == com.milkdelivery.product.entity.ProductCategory.DAIRY
-                        : product.getCategory() == category)
+                .filter(product -> product.getCategory() == category
+                        || (category == com.milkdelivery.product.entity.ProductCategory.DAIRY
+                        && product.getCategory() == null))
                 .toList();
     }
 
@@ -92,7 +92,9 @@ public class ProductService {
         product.setCategory(updatedProduct.getCategory());
         product.setAvailable(updatedProduct.getAvailable());
         product.setHasSizeSelection(updatedProduct.getHasSizeSelection());
-        product.setCategory(updatedProduct.getCategory());
+        if (updatedProduct.getCategory() != null) {
+            product.setCategory(updatedProduct.getCategory());
+        }
 
         product.getSizes().clear();
 
