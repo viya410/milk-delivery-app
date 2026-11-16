@@ -1,15 +1,17 @@
-mat-sidenav-container {
-  height: calc(100vh - 64px);
+:host {
+  display: block;
+  min-height: 100%;
 }
 
-mat-sidenav {
-  width: 250px;
+.dashboard-content {
+  min-height: 100%;
+  box-sizing: border-box;
+  padding: clamp(12px, 2vw, 24px);
 }
 
-.content {
-  padding: 24px;
-}
-
-.spacer {
-  flex: 1;
+@media (max-width: 768px) {
+  .dashboard-content {
+    padding: 12px;
+    padding-bottom: calc(84px + env(safe-area-inset-bottom));
+  }
 }
