@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService, CartItem } from '../../../../core/services/cart';
+import { ProductCategory } from '../../../products/models/product';
 import { MotionService } from '../../../../core/services/motion';
 
 @Component({
@@ -25,6 +26,7 @@ export class Cart implements OnInit, AfterViewInit, OnDestroy {
   readonly loading = signal(true);
   readonly errorMessage = signal('');
   readonly busyItems = signal<Set<number>>(new Set());
+  readonly categoryOrder: ProductCategory[] = ['DAIRY', 'POULTRY', 'VEGETABLES'];
 
   ngOnInit(): void {
     this.loadCart();
@@ -102,6 +104,18 @@ export class Cart implements OnInit, AfterViewInit, OnDestroy {
 
   isMaxReached(item: CartItem): boolean {
     return item.quantity >= item.maxOrderQuantity;
+  }
+
+  categoryLabel(category: ProductCategory): string {
+    return category === 'POULTRY' ? 'Poultry' : category === 'VEGETABLES' ? 'Vegetables' : 'Dairy';
+  }
+
+  categoryItems(category: ProductCategory): CartItem[] {
+    return this.cartItems().filter((item) => (item.category || 'DAIRY') === category);
+  }
+
+  categoryTotal(category: ProductCategory): number {
+    return this.categoryItems(category).reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
   getTotal(): number {
