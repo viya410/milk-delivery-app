@@ -88,7 +88,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     video.defaultMuted = true;
     video.playsInline = true;
 
-const playAttempt = video.play();
+    const playAttempt = video.play();
     playAttempt?.catch(() => {
       // Autoplay can still be deferred by browser policy; retry on canplay.
     });
