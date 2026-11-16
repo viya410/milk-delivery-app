@@ -482,3 +482,12 @@ h1 {
   .section-heading h2 { font-size: 16px; }
   .summary-item { font-size: 12px; }
 }
+
+/* Category subtotals inside the single checkout bill */
+.checkout-category { margin-bottom: 14px; padding: 12px; border: 1px solid #e6eee2; border-radius: 13px; }
+.checkout-category-heading {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-bottom: 5px; padding-bottom: 10px; border-bottom: 1px solid #edf2ea;
+  color: #2f5d35; font-size: 13px;
+}
+.checkout-category .summary-item:last-child { border-bottom: 0; }
