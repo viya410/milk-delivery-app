@@ -41,6 +41,7 @@ export class Checkout implements OnInit {
   readonly errorMessage = signal('');
   readonly addressError = signal('');
   readonly categoryOrder: ProductCategory[] = ['DAIRY', 'POULTRY', 'VEGETABLES'];
+  private verifiedPaymentReference?: string;
 
   ngOnInit(): void {
     this.loadAddresses();
@@ -180,7 +181,10 @@ export class Checkout implements OnInit {
           razorpayPaymentId: response.razorpay_payment_id,
           amount
         }).subscribe({
-          next: () => this.placeActualOrder(),
+          next: () => {
+            this.verifiedPaymentReference = response.razorpay_order_id;
+            this.placeActualOrder(this.verifiedPaymentReference);
+          },
           error: () => {
             this.isPlacingOrder.set(false);
             this.errorMessage.set('Payment was verified, but we could not record it. Please contact support before trying again.');
@@ -194,8 +198,8 @@ export class Checkout implements OnInit {
     });
   }
 
-  private placeActualOrder(): void {
-    this.orderService.placeOrder(this.selectedAddress().id).subscribe({
+  private placeActualOrder(paymentReference?: string): void {
+    this.orderService.placePurchase(this.selectedAddress().id, paymentReference).subscribe({
       next: () => {
         this.dashboardService.refreshSummary();
         this.orderService.refreshOrders();
