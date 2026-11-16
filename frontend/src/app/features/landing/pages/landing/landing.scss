@@ -1704,3 +1704,44 @@ Navbar + Hero + Features + Process + Plans
 @media (prefers-reduced-motion: reduce) {
   .hero-main-cta span { transition: none; }
 }
+
+/* Tighter vertical rhythm: reduce oversized gaps without making sections feel cramped */
+.hero-video {
+  min-height: min(680px, calc(100svh - 78px));
+}
+.features,
+.process,
+.plans,
+.products,
+.stats,
+.testimonials,
+.faq {
+  padding-top: 64px;
+  padding-bottom: 64px;
+}
+.cta { padding-top: 60px; padding-bottom: 60px; }
+.feature-grid,
+.plans-grid,
+.products-grid { margin-top: 34px; }
+.timeline { margin-top: 36px; }
+.faq-grid { margin-top: 32px; }
+@media (max-width: 768px) {
+  .hero-video { min-height: min(650px, calc(100svh - 68px)); }
+  .hero-video-content { padding-top: 190px; padding-bottom: 76px; }
+  .features,
+  .process,
+  .plans,
+  .products,
+  .stats,
+  .testimonials,
+  .faq {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+  .cta { padding-top: 44px; padding-bottom: 44px; }
+  .feature-grid,
+  .plans-grid,
+  .products-grid { margin-top: 26px; gap: 18px; }
+  .timeline { margin-top: 28px; }
+  .faq-grid { margin-top: 24px; gap: 14px; }
+}
