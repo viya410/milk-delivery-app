@@ -402,3 +402,10 @@
   .clear-search { min-width: 40px; min-height: 40px; }
   .catalog-state { min-height: 200px; padding: 20px 14px; }
 }
+
+.product-tile { min-width: 0; }
+.products-grid { align-items: stretch; }
+.search-box:focus-within { outline: 3px solid rgba(46,125,50,.16); box-shadow: 0 8px 24px rgba(46,125,50,.1); }
+@media (prefers-reduced-motion: reduce) {
+  .product-tile { animation: none; }
+}
