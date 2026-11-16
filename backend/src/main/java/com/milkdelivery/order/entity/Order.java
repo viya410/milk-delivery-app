@@ -25,6 +25,15 @@ public class Order {
     private Double totalAmount;
 
     @Enumerated(EnumType.STRING)
+    @Column
+    private ProductCategory category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_id")
+    @JsonIgnore
+    private Purchase purchase;
+
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private OrderStatus status;
 
