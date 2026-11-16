@@ -26,6 +26,7 @@ public class OrderMapper {
                 address,
                 order.getTotalAmount(),
                 order.getStatus().name(),
+                order.getCategory() == null ? "DAIRY" : order.getCategory().name(),
                 order.getOrderDate(),
                 order.getItems()
                         .stream()
