@@ -37,6 +37,10 @@ public class Product {
 
     private Boolean hasSizeSelection = false;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "category")
+    private ProductCategory category = ProductCategory.DAIRY;
+
     @OneToMany(
             mappedBy = "product",
             cascade = CascadeType.ALL,
@@ -123,6 +127,14 @@ public class Product {
 
     public void setHasSizeSelection(Boolean hasSizeSelection) {
         this.hasSizeSelection = hasSizeSelection;
+    }
+
+    public ProductCategory getCategory() {
+        return category == null ? ProductCategory.DAIRY : category;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category == null ? ProductCategory.DAIRY : category;
     }
 
     public List<ProductSize> getSizes() {
