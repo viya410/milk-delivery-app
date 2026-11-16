@@ -42,25 +42,26 @@ export class ProductList implements OnInit {
   readonly errorMessage = signal('');
 
   ngOnInit(): void {
+    this.cartService.loadCart();
     this.loadProducts();
   }
 
-  private loadProducts(): void {
+  loadProducts(): void {
     this.loading.set(true);
+    this.errorMessage.set('');
 
     this.productService.getProducts().subscribe({
       next: (response: Product[]) => {
         this.allProducts.set(response);
 
         this.filteredProducts.set(response);
-
         this.loading.set(false);
       },
 
       error: (error) => {
         console.error(error);
 
-        this.errorMessage.set('Unable to load products.');
+        this.errorMessage.set('Unable to load products. Please check your connection and try again.');
 
         this.loading.set(false);
       },
