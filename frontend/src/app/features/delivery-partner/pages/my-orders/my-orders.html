@@ -1,1 +1,118 @@
-<p>my-orders works!</p>
+<section class="page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">DELIVERY PARTNER</p>
+      <h1>My Orders</h1>
+      <p class="intro">Keep track of your assigned deliveries and confirm drop-offs.</p>
+    </div>
+    <button mat-stroked-button type="button" class="refresh-button" (click)="loadOrders()" [disabled]="loading()">
+      <mat-icon>refresh</mat-icon>
+      Refresh
+    </button>
+  </header>
+
+  @if (actionSuccess()) {
+    <div class="notice success" role="status"><mat-icon>check_circle</mat-icon>{{ actionSuccess() }}</div>
+  }
+  @if (actionError()) {
+    <div class="notice error" role="alert"><mat-icon>error_outline</mat-icon>{{ actionError() }}</div>
+  }
+
+  @if (loading()) {
+    <div class="state-card" role="status">
+      <mat-icon class="state-icon">hourglass_top</mat-icon>
+      <h2>Loading your orders</h2>
+      <p>Please wait while we get your assigned deliveries.</p>
+    </div>
+  } @else if (loadError()) {
+    <div class="state-card">
+      <mat-icon class="state-icon error-icon">cloud_off</mat-icon>
+      <h2>Couldn't load orders</h2>
+      <p>{{ loadError() }}</p>
+      <button mat-raised-button color="primary" type="button" (click)="loadOrders()">Try again</button>
+    </div>
+  } @else if (orders().length === 0) {
+    <div class="state-card">
+      <mat-icon class="state-icon">local_shipping</mat-icon>
+      <h2>No assigned orders yet</h2>
+      <p>When you pick an available order, it will appear here.</p>
+    </div>
+  } @else {
+    <div class="orders-list">
+      @for (order of orders(); track order.id) {
+        <mat-card class="order-card">
+          <mat-card-content>
+            <div class="order-topline">
+              <div>
+                <span class="order-number">ORDER #{{ order.id }}</span>
+                <p class="order-date">{{ order.orderDate | date:'medium' }}</p>
+              </div>
+              <span class="status-pill" [class.in-progress]="isInProgress(order)" [class.delivered]="order.status === 'DELIVERED'">
+                {{ statusLabel(order.status) }}
+              </span>
+            </div>
+
+            <div class="customer-block">
+              <h2>{{ order.customerName }}</h2>
+              <a class="phone-link" [href]="'tel:' + order.customerPhone">
+                <mat-icon>call</mat-icon>{{ order.customerPhone }}
+              </a>
+            </div>
+
+            <div class="detail-row">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ order.address }}</span>
+            </div>
+
+            <div class="items-block">
+              <h3>Order items</h3>
+              @for (item of order.items; track item.productId) {
+                <div class="item-row">
+                  <span>{{ item.productName }} <small>× {{ item.quantity }}{{ item.unit ? ' ' + item.unit : '' }}</small></span>
+                  <strong>₹{{ item.price * item.quantity | number:'1.2-2' }}</strong>
+                </div>
+              }
+            </div>
+
+            <div class="order-total">
+              <span>Total amount</span>
+              <strong>₹{{ order.totalAmount | number:'1.2-2' }}</strong>
+            </div>
+
+            @if (isInProgress(order)) {
+              @if (verificationOrderId() === order.id) {
+                <div class="verification-panel">
+                  <label [for]="'otp-' + order.id">Customer delivery OTP</label>
+                  <p>Ask the customer for their 6-digit code to confirm delivery.</p>
+                  <input
+                    [id]="'otp-' + order.id"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    maxlength="6"
+                    placeholder="Enter 6-digit OTP"
+                    [value]="otp()"
+                    (input)="otp.set($any($event.target).value)"
+                  />
+                  <div class="verification-actions">
+                    <button mat-stroked-button type="button" (click)="cancelVerification()" [disabled]="verifyingOrderId() === order.id">Cancel</button>
+                    <button mat-raised-button color="primary" type="button" (click)="verifyDelivery(order.id)" [disabled]="verifyingOrderId() === order.id">
+                      {{ verifyingOrderId() === order.id ? 'Verifying…' : 'Confirm delivery' }}
+                    </button>
+                  </div>
+                </div>
+              } @else {
+                <button mat-raised-button color="primary" type="button" class="confirm-button" (click)="openVerification(order.id)">
+                  <mat-icon>verified</mat-icon>
+                  Complete delivery
+                </button>
+              }
+            } @else if (order.status === 'DELIVERED') {
+              <div class="delivered-note"><mat-icon>check_circle</mat-icon>Delivery completed</div>
+            }
+          </mat-card-content>
+        </mat-card>
+      }
+    </div>
+  }
+</section>
