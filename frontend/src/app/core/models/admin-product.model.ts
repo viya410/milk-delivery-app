@@ -22,6 +22,8 @@ export interface AdminProduct {
 
   unit: string;
 
+  category?: string;
+
   imageUrl: string;
 
   available: boolean;
