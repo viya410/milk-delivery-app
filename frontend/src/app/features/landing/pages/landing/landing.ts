@@ -43,6 +43,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
   private sectionObserver?: IntersectionObserver;
 
+  private revealObserver?: IntersectionObserver;
+
   @ViewChild('testimonialSection')
   testimonialSection?: ElementRef<HTMLElement>;
 
@@ -68,6 +70,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     this.observeTestimonialsSection();
 
     this.observeLandingSections();
+
+    this.observeScrollReveal();
   }
 
   private observeTestimonialsSection(): void {
@@ -195,6 +199,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     this.testimonialSectionObserver?.disconnect();
 
     this.sectionObserver?.disconnect();
+    this.revealObserver?.disconnect();
+    document.body.classList.remove('landing-scroll-ready');
     document.body.style.overflow = '';
   }
 
@@ -353,6 +359,38 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return `${years} ${years === 1 ? 'year' : 'years'} ago`;
+  }
+
+  private observeScrollReveal(): void {
+    const revealElements = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-scroll-reveal]'),
+    );
+
+    if (!revealElements.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      || !('IntersectionObserver' in window)) {
+      revealElements.forEach((element) => element.classList.add('is-visible'));
+      return;
+    }
+
+    document.body.classList.add('landing-scroll-ready');
+
+    this.revealObserver = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          (entry.target as HTMLElement).classList.add('is-visible');
+          observer.unobserve(entry.target);
+        });
+      },
+      {
+        threshold: 0.12,
+        rootMargin: '0px 0px -8% 0px',
+      },
+    );
+
+    revealElements.forEach((element) => this.revealObserver?.observe(element));
   }
 
   private observeLandingSections(): void {
