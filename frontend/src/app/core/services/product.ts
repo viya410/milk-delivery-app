@@ -1,6 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { HttpParams } from '@angular/common/http';
+import { ProductCategory } from '../../features/products/models/product';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +14,9 @@ export class ProductService {
   private apiUrl =
     `${environment.apiUrl}/products`;
 
-  getProducts() {
-
-    return this.http.get<any[]>(
-      this.apiUrl
-    );
+  getProducts(category: ProductCategory = 'DAIRY') {
+    const params = new HttpParams().set('category', category);
+    return this.http.get<any[]>(this.apiUrl, { params });
   }
 
   getProductById(id: number) {
