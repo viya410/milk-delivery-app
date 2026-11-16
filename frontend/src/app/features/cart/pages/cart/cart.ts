@@ -34,6 +34,7 @@ export class Cart implements OnInit, AfterViewInit, OnDestroy {
     this.rowsSubscription = this.cartRows.changes.subscribe((rows: QueryList<ElementRef<HTMLElement>>) => {
       this.motion.animateEntrance(rows.toArray().map((row) => row.nativeElement));
     });
+    this.motion.animateEntrance(this.cartRows.toArray().map((row) => row.nativeElement));
   }
 
   ngOnDestroy(): void {
