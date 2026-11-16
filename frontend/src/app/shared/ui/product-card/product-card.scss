@@ -369,3 +369,7 @@
     font-size: 11px;
   }
 }
+
+.add-btn:active { transform: scale(.94); }
+.add-btn:focus-visible, .quantity-controls button:focus-visible { outline: 3px solid rgba(46,125,50,.35); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .add-btn { transition: none; } }
