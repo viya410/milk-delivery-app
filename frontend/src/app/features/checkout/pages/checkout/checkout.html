@@ -3,7 +3,7 @@
     <div class="checkout-heading">
       <p class="eyebrow">ALMOST THERE</p>
       <h1>Complete Your Order</h1>
-      <p>Choose where you'd like your fresh dairy delivered.</p>
+      <p>One delivery address and one bill for your farm-fresh selection.</p>
     </div>
 
     <section class="checkout-section" aria-labelledby="address-heading">
@@ -66,14 +66,24 @@
 
       @if (cartItems().length) {
         <div class="summary-items">
-          @for (item of cartItems(); track item.id) {
+          @for (category of categoryOrder; track category) {
+            @if (categoryItems(category).length) {
+              <section class="checkout-category">
+                <header class="checkout-category-heading">
+                  <strong>{{ categoryLabel(category) }}</strong>
+                  <span>₹{{ categoryTotal(category) | number:'1.2-2' }}</span>
+                </header>
+                @for (item of categoryItems(category); track item.id) {
             <div class="summary-item">
               <div>
                 <strong>{{ item.productName }}</strong>
                 <small>{{ item.quantity }} × {{ item.unit }}</small>
               </div>
               <span>₹{{ item.price * item.quantity | number:'1.2-2' }}</span>
-            </div>
+                </div>
+                }
+              </section>
+            }
           }
         </div>
       } @else {
