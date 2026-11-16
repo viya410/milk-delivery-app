@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth';
-import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-customer-bottom-nav',
@@ -13,10 +12,6 @@ import { filter } from 'rxjs/operators';
 export class CustomerBottomNavComponent {
   readonly auth = inject(AuthService);
   readonly router = inject(Router);
-
-  private readonly routeChanges = this.router.events.pipe(
-    filter((event) => event instanceof NavigationEnd),
-  );
 
   navigationMode(): 'delivery-partner' | 'admin' | 'customer' | 'hidden' {
     if (!this.auth.isLoggedIn()) return 'hidden';
