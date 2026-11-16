@@ -10,45 +10,35 @@ export class MotionService {
 
   animateCartFly(image: HTMLImageElement, target: HTMLElement): void {
     if (this.prefersReducedMotion()) return;
-
     const source = image.getBoundingClientRect();
     const destination = target.getBoundingClientRect();
     const clone = image.cloneNode(true) as HTMLImageElement;
-
     Object.assign(clone.style, {
-      position: 'fixed',
-      left: `${source.left}px`,
-      top: `${source.top}px`,
-      width: `${source.width}px`,
-      height: `${source.height}px`,
-      zIndex: '100000',
-      pointerEvents: 'none',
-      objectFit: 'contain',
-      borderRadius: '16px',
-      margin: '0',
+      position: 'fixed', left: `${source.left}px`, top: `${source.top}px`,
+      width: `${source.width}px`, height: `${source.height}px`,
+      zIndex: '100000', pointerEvents: 'none', objectFit: 'contain',
+      borderRadius: '16px', margin: '0',
+      filter: 'drop-shadow(0 8px 12px rgba(46,125,50,.28))',
     });
-
     document.body.appendChild(clone);
-
     gsap.to(clone, {
       left: destination.left + destination.width / 2 - 15,
       top: destination.top + destination.height / 2 - 15,
-      width: 30,
-      height: 30,
-      opacity: 0.2,
-      scale: 0.25,
-      rotation: 20,
-      duration: 0.85,
-      ease: 'power3.inOut',
+      width: 30, height: 30, opacity: 0.15, scale: 0.2, rotation: 28,
+      duration: 0.78, ease: 'back.in(1.4)',
       onComplete: () => {
         clone.remove();
-        gsap.fromTo(target, { scale: 1 }, {
-          scale: 1.12,
-          duration: 0.16,
-          yoyo: true,
-          repeat: 1,
-          ease: 'power1.inOut',
-        });
+        target.classList.remove('cart-bounce');
+        void target.offsetWidth;
+        target.classList.add('cart-bounce');
+        const badge = target.querySelector('.cart-badge');
+        if (badge) {
+          badge.classList.remove('cart-badge-pop');
+          void (badge as HTMLElement).offsetWidth;
+          badge.classList.add('cart-badge-pop');
+          gsap.delayedCall(0.55, () => badge.classList.remove('cart-badge-pop'));
+        }
+        gsap.delayedCall(0.55, () => target.classList.remove('cart-bounce'));
       },
       onInterrupt: () => clone.remove(),
     });
