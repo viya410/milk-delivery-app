@@ -124,8 +124,7 @@
 
   :host {
     right: 16px;
-
-    bottom: 16px;
+    bottom: calc(76px + env(safe-area-inset-bottom));
   }
 
   .floating-cart {
