@@ -71,10 +71,10 @@ Do not trust client-supplied prices, category totals or bill totals. Recalculate
 
 ## Delivery sequence
 
-1. **Foundation (current branch):** category enum and product category API filter; document domain boundaries.
-2. **Department navigation:** persistent category context and authenticated department switcher; landing page introduces all three departments.
-3. **Catalog/admin:** category-aware browsing and admin product category assignment; category-aware search and product details.
-4. **Central cart:** category on cart responses, combined cart UI grouped by department.
+1. **Foundation:** category enum, product category API filter, category-aware admin product form/list, persisted customer department switcher, and landing page introduction.
+2. **Department navigation:** persistent category context and authenticated department switcher are implemented. The separate landing-page department selector has been removed so customers use the centralized switcher after login.
+3. **Catalog/admin:** category-aware browsing and admin product category assignment are implemented; category-specific search, product details, imagery and product metadata remain.
+4. **Central cart:** category is included in cart responses and the customer cart/checkout summaries are grouped by department while retaining one combined total.
 5. **Single bill checkout:** parent purchase, one payment, atomic category-order creation, combined receipt.
 6. **Operations:** category-aware inventory and separate department fulfilment workflows; admin and delivery partner screens.
 7. **Migration and QA:** backfill legacy products to Dairy, preserve old orders, integration tests for mixed-category carts and payment failures.
