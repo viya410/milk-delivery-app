@@ -67,7 +67,7 @@ export class CartService {
   }
 
   addToCart(request: { productId: number; quantity: number; productSizeId?: number }) {
-    return this.http.post(this.apiUrl, request);
+    return this.http.post(this.apiUrl, request).pipe(tap(() => this.loadCart()));
   }
 
   increaseQuantity(cartId: number) {
