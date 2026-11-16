@@ -28,6 +28,7 @@ public class CartItemResponse {
     public CartItemResponse(
             Long id,
             Long productId,
+            String category,
             String productName,
             Double price,
             String imageUrl,
