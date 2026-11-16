@@ -1,6 +1,6 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
@@ -17,7 +17,7 @@ import { environment } from '../../../../../environments/environment';
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatIconModule, MatDialogModule],
+  imports: [CommonModule, RouterLink, MatButtonModule, MatIconModule, MatDialogModule],
   templateUrl: './checkout.html',
   styleUrl: './checkout.scss'
 })
