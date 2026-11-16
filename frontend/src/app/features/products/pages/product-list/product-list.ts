@@ -45,6 +45,17 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   readonly selectedCategory = signal('ALL');
+
+  readonly categoryExperience: Record<string, { eyebrow: string; title: string; description: string; visual: string; visualLabel: string }> = {
+    ALL: { eyebrow: 'FRESH FROM OUR FARM', title: 'Goodness from the farm, all in one place', description: 'Explore fresh dairy, desi poultry and seasonal vegetables, carefully brought to your home.', visual: '🧺', visualLabel: 'A basket of farm-fresh produce' },
+    DAIRY: { eyebrow: 'FRESH MILK & DAIRY', title: 'Dairy goodness, delivered fresh', description: 'Milk, curd, butter, paneer and more — fresh from our farm to your family.', visual: '🥛', visualLabel: 'A fresh glass of milk' },
+    POULTRY: { eyebrow: 'DESI & FARM FRESH', title: 'Farm-raised poultry, full of goodness', description: 'Explore fresh desi eggs and carefully raised poultry from our farm.', visual: '🥚', visualLabel: 'A tray of farm-fresh eggs' },
+    VEGETABLES: { eyebrow: 'SEASONAL & LOCALLY GROWN', title: 'Fresh vegetables, picked for you', description: 'Bring home seasonal, farm-grown vegetables selected for freshness and flavour.', visual: '🥬', visualLabel: 'A basket of fresh vegetables' },
+  };
+
+  get activeCategoryExperience() {
+    return this.categoryExperience[this.selectedCategory()] ?? this.categoryExperience['ALL'];
+  }
   readonly allProducts = signal<Product[]>([]);
   readonly filteredProducts = signal<Product[]>([]);
   readonly searchText = signal('');
@@ -65,7 +76,7 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.cartService.loadCart();
     this.categoryChanges = this.route.queryParamMap.subscribe((params) => {
-      const requestedCategory = (params.get('category') ?? 'ALL').toUpperCase();
+      const requestedCategory = (params.get('category') ?? 'ALL').trim().toUpperCase();
       const validCategory = this.categories.some((category) => category.value === requestedCategory);
       this.selectedCategory.set(validCategory ? requestedCategory : 'ALL');
       this.applyFilters();
@@ -114,7 +125,7 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
     const search = this.searchText();
 
     const filtered = this.allProducts().filter((product) => {
-      const productCategory = (product.category ?? 'DAIRY').toUpperCase();
+      const productCategory = (product.category ?? '').trim().toUpperCase();
       const matchesCategory = category === 'ALL' || productCategory === category;
       const matchesSearch = !search ||
         product.name.toLowerCase().includes(search) ||
