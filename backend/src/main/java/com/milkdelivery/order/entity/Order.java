@@ -2,12 +2,13 @@ package com.milkdelivery.order.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.milkdelivery.address.entity.Address;
+import com.milkdelivery.deliverypartner.entity.DeliveryPartner;
+import com.milkdelivery.subscription.entity.Subscription;
 import com.milkdelivery.user.entity.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import com.milkdelivery.subscription.entity.Subscription;
 
 @Entity
 @Table(name = "orders")
@@ -26,6 +27,24 @@ public class Order {
 
     @Column(nullable = false)
     private LocalDateTime orderDate;
+
+    @Column
+    private LocalDateTime pickedAt;
+
+    @Column
+    private LocalDateTime packedAt;
+
+    @Column
+    private LocalDateTime deliveredAt;
+
+    @Column(length = 6)
+    private String deliveryOtp;
+
+    @Column
+    private LocalDateTime otpGeneratedAt;
+
+    @Column(nullable = false)
+    private boolean otpVerified = false;
 
     @OneToMany(
             mappedBy = "order",
@@ -46,6 +65,10 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subscription_id")
     private Subscription subscription;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "delivery_partner_id")
+    private DeliveryPartner deliveryPartner;
 
     public Order() {
     }
@@ -78,6 +101,22 @@ public class Order {
         this.orderDate = orderDate;
     }
 
+    public LocalDateTime getPickedAt() {
+        return pickedAt;
+    }
+
+    public void setPickedAt(LocalDateTime pickedAt) {
+        this.pickedAt = pickedAt;
+    }
+
+    public LocalDateTime getDeliveredAt() {
+        return deliveredAt;
+    }
+
+    public void setDeliveredAt(LocalDateTime deliveredAt) {
+        this.deliveredAt = deliveredAt;
+    }
+
     public List<OrderItem> getItems() {
         return items;
     }
@@ -108,5 +147,45 @@ public class Order {
 
     public void setSubscription(Subscription subscription) {
         this.subscription = subscription;
+    }
+
+    public DeliveryPartner getDeliveryPartner() {
+        return deliveryPartner;
+    }
+
+    public void setDeliveryPartner(DeliveryPartner deliveryPartner) {
+        this.deliveryPartner = deliveryPartner;
+    }
+
+    public LocalDateTime getPackedAt() {
+        return packedAt;
+    }
+
+    public void setPackedAt(LocalDateTime packedAt) {
+        this.packedAt = packedAt;
+    }
+
+    public String getDeliveryOtp() {
+        return deliveryOtp;
+    }
+
+    public void setDeliveryOtp(String deliveryOtp) {
+        this.deliveryOtp = deliveryOtp;
+    }
+
+    public LocalDateTime getOtpGeneratedAt() {
+        return otpGeneratedAt;
+    }
+
+    public void setOtpGeneratedAt(LocalDateTime otpGeneratedAt) {
+        this.otpGeneratedAt = otpGeneratedAt;
+    }
+
+    public boolean isOtpVerified() {
+        return otpVerified;
+    }
+
+    public void setOtpVerified(boolean otpVerified) {
+        this.otpVerified = otpVerified;
     }
 }

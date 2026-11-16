@@ -16,11 +16,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
-public class AuthServiceImpl
-        implements AuthService {
+public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
 
@@ -39,208 +36,92 @@ public class AuthServiceImpl
             JwtService jwtService,
             CustomUserDetailsService customUserDetailsService
     ) {
-
         this.userRepository = userRepository;
-
         this.passwordEncoder = passwordEncoder;
-
         this.authenticationManager = authenticationManager;
-
         this.jwtService = jwtService;
-
         this.customUserDetailsService = customUserDetailsService;
-
     }
 
     @Override
-    public void register(
-            RegisterRequest request
-    ) {
+    public void register(RegisterRequest request) {
 
-        if (
+        if (request.getEmail() != null
+                && !request.getEmail().isBlank()
+                && userRepository.existsByEmail(request.getEmail())) {
 
-                request.getEmail() != null &&
-
-                        !request.getEmail().isBlank() &&
-
-                        userRepository.existsByEmail(
-
-                                request.getEmail()
-
-                        )
-
-        )  {
-
-            throw new RuntimeException(
-                    "Email already exists"
-            );
-
+            throw new RuntimeException("Email already exists");
         }
 
-        if (
-
-                userRepository.existsByPhoneNumber(
-                        request.getPhoneNumber()
-                )
-
-        ) {
-
-            throw new RuntimeException(
-                    "Phone number already exists"
-            );
-
+        if (userRepository.existsByPhoneNumber(request.getPhoneNumber())) {
+            throw new RuntimeException("Phone number already exists");
         }
 
         User user = new User();
 
-        user.setFullName(
-                request.getFullName()
-        );
+        user.setFullName(request.getFullName());
 
         user.setEmail(
-
-                request.getEmail() != null &&
-                        !request.getEmail().isBlank()
-
+                request.getEmail() != null && !request.getEmail().isBlank()
                         ? request.getEmail()
-
                         : null
-
         );
 
-        user.setPhoneNumber(
-                request.getPhoneNumber()
-        );
+        user.setPhoneNumber(request.getPhoneNumber());
 
         user.setPassword(
-
-                passwordEncoder.encode(
-
-                        request.getPassword()
-
-                )
-
+                passwordEncoder.encode(request.getPassword())
         );
 
-        user.setRole(
-                Role.ROLE_USER
-        );
+        user.setRole(Role.ROLE_CUSTOMER);
 
-        userRepository.save(
-                user
-        );
-
+        userRepository.save(user);
     }
 
     @Override
-    public AuthResponse login(
-            LoginRequest request
-    ) {
+    public AuthResponse login(LoginRequest request) {
 
-        User user =
-
-                userRepository
-
-                        .findByEmail(
-
-                                request.getUsername()
-
-                        )
-
-                        .or(() ->
-
-                                userRepository.findByPhoneNumber(
-
-                                        request.getUsername()
-
-                                )
-
-                        )
-
-                        .orElseThrow(
-
-                                () ->
-
-                                        new RuntimeException(
-
-                                                "User not found"
-
-                                        )
-
-                        );
+        User user = userRepository
+                .findByEmail(request.getUsername())
+                .or(() -> userRepository.findByPhoneNumber(request.getUsername()))
+                .orElseThrow(() -> new RuntimeException("User not found"));
 
         authenticationManager.authenticate(
-
                 new UsernamePasswordAuthenticationToken(
-
                         request.getUsername(),
-
                         request.getPassword()
-
                 )
-
         );
 
         UserDetails userDetails =
-
                 new org.springframework.security.core.userdetails.User(
-
                         user.getEmail() != null
-
                                 ? user.getEmail()
-
                                 : user.getPhoneNumber(),
-
                         user.getPassword(),
-
                         java.util.List.of(
-
                                 new org.springframework.security.core.authority.SimpleGrantedAuthority(
-
                                         user.getRole().name()
-
                                 )
-
                         )
-
                 );
 
-        String token =
-
-                jwtService.generateToken(
-
-                        userDetails
-
-                );
+        String token = jwtService.generateToken(userDetails);
 
         return new AuthResponse(
-
                 token,
-
                 toUserResponse(user)
-
         );
-
     }
 
-    private UserResponse toUserResponse(
-            User user
-    ) {
+    private UserResponse toUserResponse(User user) {
 
         return new UserResponse(
-
                 user.getId(),
-
                 user.getFullName(),
-
                 user.getEmail(),
-
                 user.getPhoneNumber(),
-
                 user.getRole()
-
         );
-
     }
-
 }

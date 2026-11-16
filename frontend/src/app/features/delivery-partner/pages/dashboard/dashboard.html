@@ -1,0 +1,29 @@
+@if (loading()) {
+  <h2>Loading dashboard...</h2>
+} @else {
+  <div class="dashboard-container">
+    <h1>Delivery Partner Dashboard</h1>
+
+    <div class="status-card">
+      <h3>Status</h3>
+      <p>{{ dashboard()?.status }}</p>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>Available Orders</h3>
+        <p>{{ dashboard()?.availableOrders }}</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Assigned Orders</h3>
+        <p>{{ dashboard()?.assignedOrders }}</p>
+      </div>
+
+      <div class="stat-card">
+        <h3>Completed Today</h3>
+        <p>{{ dashboard()?.completedToday }}</p>
+      </div>
+    </div>
+  </div>
+}

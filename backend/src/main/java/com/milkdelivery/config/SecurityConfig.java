@@ -47,13 +47,14 @@ public class SecurityConfig {
                         .requestMatchers("/api/products/**")
                         .permitAll()
 
-                        .requestMatchers(
-                                "/api/reviews/approved"
-                        )
+                        .requestMatchers("/api/reviews/approved")
                         .permitAll()
 
                         .requestMatchers("/api/admin/**")
                         .hasRole("ADMIN")
+
+                        .requestMatchers("/api/delivery-partner/**")
+                        .hasRole("DELIVERY_PARTNER")
 
                         .anyRequest()
                         .authenticated()

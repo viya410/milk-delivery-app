@@ -130,42 +130,56 @@ public class AdminService {
             return orderMapper.toOrderResponse(order);
         }
 
-        switch (status) {
+        // -------- VALIDATE STATUS FLOW --------
 
-            case DELIVERED -> {
+        switch (previousStatus) {
 
-                for (OrderItem item : order.getItems()) {
+            case PLACED -> {
+                if (status != OrderStatus.PACKED &&
+                        status != OrderStatus.CANCELLED) {
+                    throw new RuntimeException(
+                            "A placed order can only be packed or cancelled."
+                    );
+                }
+            }
 
-                    inventoryService.consumeReservedStock(
-                            item.getProduct(),
-                            item.getQuantity()
+            case PACKED -> {
+                if (status != OrderStatus.CANCELLED) {
+                    throw new RuntimeException(
+                            "Packed orders can only be picked by a delivery partner or cancelled."
+                    );
+                }
+            }
+
+            case OUT_FOR_DELIVERY ->
+                    throw new RuntimeException(
+                            "Orders that are out for delivery can only be completed through OTP verification by the assigned delivery partner."
                     );
 
-                }
+            case DELIVERED, CANCELLED ->
+                    throw new RuntimeException(
+                            "Completed orders cannot change status."
+                    );
+        }
 
+        // -------- INVENTORY --------
+
+        if (status == OrderStatus.CANCELLED &&
+                previousStatus != OrderStatus.DELIVERED) {
+
+            for (OrderItem item : order.getItems()) {
+
+                inventoryService.releaseReservedStock(
+                        item.getProduct(),
+                        item.getQuantity()
+                );
             }
+        }
 
-            case CANCELLED -> {
+        // -------- TIMESTAMPS --------
 
-                if (previousStatus != OrderStatus.DELIVERED) {
-
-                    for (OrderItem item : order.getItems()) {
-
-                        inventoryService.releaseReservedStock(
-                                item.getProduct(),
-                                item.getQuantity()
-                        );
-
-                    }
-
-                }
-
-            }
-
-            default -> {
-                // No inventory action required
-            }
-
+        if (status == OrderStatus.PACKED) {
+            order.setPackedAt(java.time.LocalDateTime.now());
         }
 
         order.setStatus(status);
@@ -173,7 +187,6 @@ public class AdminService {
         order = orderRepository.save(order);
 
         return orderMapper.toOrderResponse(order);
-
     }
 
     public AdminDashboardResponse getDashboard() {
