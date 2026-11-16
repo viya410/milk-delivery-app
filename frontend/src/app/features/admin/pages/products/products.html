@@ -3,7 +3,7 @@
     <div class="page-header">
       <div>
         <h1>Products</h1>
-        <p>Manage your milk inventory</p>
+        <p>Manage products across Dairy, Poultry and Vegetables</p>
       </div>
 
       <button mat-raised-button color="primary" (click)="addProduct()">
@@ -76,6 +76,16 @@
                 }
               </div>
             </div>
+          </td>
+        </ng-container>
+
+        <!-- Farm department -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef>Department</th>
+          <td mat-cell *matCellDef="let product">
+            <span class="department-pill" [attr.data-category]="product.category || 'DAIRY'">
+              {{ product.category || 'DAIRY' }}
+            </span>
           </td>
         </ng-container>
 

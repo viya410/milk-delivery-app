@@ -1,6 +1,9 @@
 package com.milkdelivery.order.entity;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.milkdelivery.product.entity.ProductCategory;
+import com.milkdelivery.purchase.entity.Purchase;
 import com.milkdelivery.address.entity.Address;
 import com.milkdelivery.deliverypartner.entity.DeliveryPartner;
 import com.milkdelivery.subscription.entity.Subscription;
@@ -20,6 +23,15 @@ public class Order {
 
     @Column(nullable = false)
     private Double totalAmount;
+
+    @Enumerated(EnumType.STRING)
+    @Column
+    private ProductCategory category;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchase_id")
+    @JsonIgnore
+    private Purchase purchase;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -76,6 +88,11 @@ public class Order {
     public Long getId() {
         return id;
     }
+
+    public ProductCategory getCategory() { return category; }
+    public void setCategory(ProductCategory category) { this.category = category; }
+    public Purchase getPurchase() { return purchase; }
+    public void setPurchase(Purchase purchase) { this.purchase = purchase; }
 
     public Double getTotalAmount() {
         return totalAmount;

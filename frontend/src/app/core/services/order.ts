@@ -12,6 +12,7 @@ export class OrderService {
   private http = inject(HttpClient);
 
   private apiUrl = `${environment.apiUrl}/orders`;
+  private purchasesUrl = `${environment.apiUrl}/purchases`;
 
   readonly orders = signal<any[]>([]);
 
@@ -25,6 +26,17 @@ export class OrderService {
         addressId,
       },
     );
+  }
+
+  placePurchase(addressId: number, paymentReference?: string) {
+    return this.http.post<any>(this.purchasesUrl, {
+      addressId,
+      paymentReference: paymentReference || null
+    });
+  }
+
+  getPurchases() {
+    return this.http.get<any[]>(this.purchasesUrl);
   }
 
   getOrders() {

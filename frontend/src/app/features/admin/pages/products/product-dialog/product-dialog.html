@@ -14,6 +14,15 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
+        <mat-label>Farm Department</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="DAIRY">Dairy</mat-option>
+          <mat-option value="POULTRY">Poultry</mat-option>
+          <mat-option value="VEGETABLES">Vegetables</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
         <mat-label>Description</mat-label>
         <textarea rows="3" matInput formControlName="description"> </textarea>
       </mat-form-field>
@@ -31,6 +40,7 @@
             <mat-option value="ML">Milli Litre</mat-option>
             <mat-option value="GM">Gram</mat-option>
             <mat-option value="KG">Kilogram</mat-option>
+            <mat-option value="PCS">Pieces</mat-option>
           </mat-select>
         </mat-form-field>
       </div>

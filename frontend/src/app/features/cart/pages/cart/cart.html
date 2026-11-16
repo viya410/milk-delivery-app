@@ -22,13 +22,20 @@
       <div class="empty-cart">
         <div class="empty-cart-icon">🛒</div>
         <h2>Your cart is waiting</h2>
-        <p>Discover fresh milk, curd, paneer and more from our farm.</p>
+        <p>Discover dairy, poultry and farm-grown vegetables from our farm.</p>
         <a class="shop-btn" routerLink="/products">Explore Products</a>
       </div>
     } @else {
       <div class="cart-layout">
         <div class="cart-items">
-          @for (item of cartItems(); track item.id) {
+          @for (category of categoryOrder; track category) {
+            @if (categoryItems(category).length) {
+              <section class="cart-category" [attr.data-category]="category">
+                <header class="cart-category-heading">
+                  <h2>{{ categoryLabel(category) }}</h2>
+                  <strong>₹{{ categoryTotal(category) | number:'1.2-2' }}</strong>
+                </header>
+                @for (item of categoryItems(category); track item.id) {
             <article #cartRow class="cart-item" [class.item-busy]="isBusy(item.id)">
               <div class="item-image">
                 @if (item.imageUrl) {
@@ -58,7 +65,10 @@
               @if (isBusy(item.id)) {
                 <span class="item-updating" role="status">Updating…</span>
               }
-            </article>
+                </article>
+                }
+              </section>
+            }
           }
         </div>
 

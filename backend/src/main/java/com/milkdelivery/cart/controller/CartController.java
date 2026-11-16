@@ -76,6 +76,8 @@ public class CartController {
 
                 item.getProduct().getId(),
 
+                item.getProduct().getCategory() == null ? "DAIRY" : item.getProduct().getCategory().name(),
+
                 item.getProduct().getName(),
 
                 price,

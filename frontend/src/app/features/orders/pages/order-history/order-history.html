@@ -18,7 +18,7 @@
         <p>{{ errorMessage() }}</p>
         <button type="button" class="retry-button" (click)="loadOrders()">Try again</button>
       </div>
-    } @else if (!orders().length) {
+    } @else if (!orders().length && !purchases().length) {
       <div class="orders-state">
         <span class="state-symbol">🛍️</span>
         <h2>No orders yet</h2>
@@ -27,11 +27,37 @@
       </div>
     } @else {
       <div class="order-list">
+        @for (purchase of purchases(); track purchase.purchaseId) {
+          <article class="order-card purchase-card">
+            <div class="order-top">
+              <div>
+                <span class="order-label">BILL</span>
+                <h2>#{{ purchase.purchaseId }}</h2>
+                <time>{{ purchase.createdAt | date:'mediumDate' }}</time>
+              </div>
+              <div class="order-total">
+                <strong>₹{{ purchase.grandTotal | number:'1.2-2' }}</strong>
+                <span class="status-pill status-pill-confirmed">Single bill</span>
+              </div>
+            </div>
+            <div class="purchase-departments">
+              @for (child of purchase.orders || []; track child.orderId) {
+                <div class="purchase-department">
+                  <div>
+                    <strong>{{ categoryLabel(child.category) }} order #{{ child.orderId }}</strong>
+                    <span class="status-pill" [class]="'status-pill ' + statusClass(child.status)">{{ statusLabel(child.status) }}</span>
+                  </div>
+                  <strong>₹{{ child.totalAmount | number:'1.2-2' }}</strong>
+                </div>
+              }
+            </div>
+          </article>
+        }
         @for (order of orders(); track order.id) {
           <article class="order-card">
             <div class="order-top">
               <div>
-                <span class="order-label">ORDER</span>
+                <span class="order-label">{{ categoryLabel(order.category) }} ORDER</span>
                 <h2>#{{ order.id }}</h2>
                 @if (order.createdAt || order.orderDate) {
                   <time>{{ (order.createdAt || order.orderDate) | date:'mediumDate' }}</time>

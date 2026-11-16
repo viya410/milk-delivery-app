@@ -785,3 +785,7 @@ mat-form-field {
     font-size: 9px;
   }
 }
+
+.department-pill { display: inline-flex; padding: 5px 9px; border-radius: 999px; background: #eef6eb; color: #35683a; font-size: 10px; font-weight: 800; white-space: nowrap; }
+.department-pill[data-category="POULTRY"] { background: #fff2df; color: #8a5a1e; }
+.department-pill[data-category="VEGETABLES"] { background: #e8f5e9; color: #2e7d32; }

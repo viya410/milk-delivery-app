@@ -11,6 +11,7 @@ public class OrderResponse {
     private String address;
     private Double totalAmount;
     private String status;
+    private String category;
     private LocalDateTime orderDate;
     private List<OrderItemResponse> items;
 
@@ -25,6 +26,7 @@ public class OrderResponse {
             String address,
             Double totalAmount,
             String status,
+            String category,
             LocalDateTime orderDate,
             List<OrderItemResponse> items
     ) {
@@ -35,6 +37,7 @@ public class OrderResponse {
         this.address = address;
         this.totalAmount = totalAmount;
         this.status = status;
+        this.category = category;
         this.orderDate = orderDate;
         this.items = items;
     }
@@ -62,6 +65,8 @@ public class OrderResponse {
     public Double getTotalAmount() {
         return totalAmount;
     }
+
+    public String getCategory() { return category; }
 
     public String getStatus() {
         return status;

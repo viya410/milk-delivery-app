@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
+import { ProductCategory } from '../../../products/models/product';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -39,6 +40,8 @@ export class Checkout implements OnInit {
   readonly isPlacingOrder = signal(false);
   readonly errorMessage = signal('');
   readonly addressError = signal('');
+  readonly categoryOrder: ProductCategory[] = ['DAIRY', 'POULTRY', 'VEGETABLES'];
+  private verifiedPaymentReference?: string;
 
   ngOnInit(): void {
     this.loadAddresses();
@@ -85,6 +88,18 @@ export class Checkout implements OnInit {
         error: () => this.addressError.set('We could not save that address. Please try again.')
       });
     });
+  }
+
+  categoryLabel(category: ProductCategory): string {
+    return category === 'POULTRY' ? 'Poultry' : category === 'VEGETABLES' ? 'Vegetables' : 'Dairy';
+  }
+
+  categoryItems(category: ProductCategory): any[] {
+    return this.cartItems().filter((item) => (item.category || 'DAIRY') === category);
+  }
+
+  categoryTotal(category: ProductCategory): number {
+    return this.categoryItems(category).reduce((total, item) => total + item.price * item.quantity, 0);
   }
 
   getTotal(): number {
@@ -164,9 +179,13 @@ export class Checkout implements OnInit {
         this.paymentService.savePayment({
           razorpayOrderId: response.razorpay_order_id,
           razorpayPaymentId: response.razorpay_payment_id,
+          razorpaySignature: response.razorpay_signature,
           amount
         }).subscribe({
-          next: () => this.placeActualOrder(),
+          next: () => {
+            this.verifiedPaymentReference = response.razorpay_order_id;
+            this.placeActualOrder(this.verifiedPaymentReference);
+          },
           error: () => {
             this.isPlacingOrder.set(false);
             this.errorMessage.set('Payment was verified, but we could not record it. Please contact support before trying again.');
@@ -180,8 +199,8 @@ export class Checkout implements OnInit {
     });
   }
 
-  private placeActualOrder(): void {
-    this.orderService.placeOrder(this.selectedAddress().id).subscribe({
+  private placeActualOrder(paymentReference?: string): void {
+    this.orderService.placePurchase(this.selectedAddress().id, paymentReference).subscribe({
       next: () => {
         this.dashboardService.refreshSummary();
         this.orderService.refreshOrders();

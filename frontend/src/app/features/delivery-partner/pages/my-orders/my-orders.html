@@ -44,7 +44,7 @@
           <mat-card-content>
             <div class="order-topline">
               <div>
-                <span class="order-number">ORDER #{{ order.id }}</span>
+                <span class="order-number">{{ order.category || 'DAIRY' }} ORDER #{{ order.id }}</span>
                 <p class="order-date">{{ order.orderDate | date:'medium' }}</p>
               </div>
               <span class="status-pill" [class.in-progress]="isInProgress(order)" [class.delivered]="order.status === 'DELIVERED'">
