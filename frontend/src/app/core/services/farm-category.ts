@@ -1,4 +1,4 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductCategory } from '../../features/products/models/product';
 
@@ -6,7 +6,7 @@ const STORAGE_KEY = 'fresh-farm-active-category';
 
 @Injectable({ providedIn: 'root' })
 export class FarmCategoryService {
-  private readonly router = new Router;
+  private readonly router = inject(Router);
   readonly selected = signal<ProductCategory>(this.readSavedCategory());
 
   private readSavedCategory(): ProductCategory {
