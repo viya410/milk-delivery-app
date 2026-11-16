@@ -41,4 +41,4 @@ Before device testing, confirm the API base URL in the Angular production enviro
 
 ## Validation still required
 
-Run `npm install`, `npm run build`, and `npm test` in the frontend. Then generate the native projects and test Android and iOS on real devices. This repository change does not include generated native platform folders or a backend/API migration.
+Run `npm install` first (this updates `package-lock.json` for the new dependencies), then run `npm run build` and `npm test` in the frontend. Commit the regenerated lockfile with the dependency changes. Then generate the native projects and test Android and iOS on real devices. This repository change does not include generated native platform folders or a backend/API migration.
