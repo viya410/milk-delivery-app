@@ -2,11 +2,24 @@
   <div class="hero">
     <div class="hero-left">
       <span class="hero-tag">🌿 100% Farm Fresh</span>
-      <h1>Fresh Dairy Delivered Daily</h1>
-      <p>Milk, Curd, Butter, Paneer & more, delivered fresh from our farm.</p>
+      <h1>Fresh From Our Farm</h1>
+      <p>Explore farm-fresh dairy, desi poultry and seasonal vegetables, all in one place.</p>
     </div>
     <div class="hero-right" aria-hidden="true">🥛</div>
   </div>
+
+  <nav class="category-list" aria-label="Filter products by category">
+    @for (category of categories; track category.value) {
+      <button
+        type="button"
+        [class.active]="selectedCategory() === category.value"
+        [attr.aria-pressed]="selectedCategory() === category.value"
+        (click)="selectCategory(category.value)"
+      >
+        {{ category.label }}
+      </button>
+    }
+  </nav>
 
   <div class="search-section">
     <label class="search-box">
@@ -34,7 +47,7 @@
     <div class="catalog-state" role="status">
       <span class="state-symbol">🥛</span>
       <h2>Finding fresh products</h2>
-      <p>Loading today's dairy selection…</p>
+      <p>Loading today's farm-fresh selection…</p>
     </div>
   } @else if (errorMessage()) {
     <div class="catalog-state" role="alert">
@@ -47,7 +60,7 @@
     <div class="catalog-state">
       <span class="state-symbol">⌕</span>
       <h2>No products found</h2>
-      <p>Try another search term or clear your search.</p>
+      <p>Try another search term, choose another category, or clear your search.</p>
       <button type="button" class="retry-button" (click)="clearSearch()">Clear search</button>
     </div>
   } @else {
