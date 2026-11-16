@@ -27,7 +27,9 @@ public class Product {
 
     private String unit;
 
-    private String imageUrl;@Column(nullable = false)
+    private String imageUrl;
+
+    @Column(nullable = false)
     private Boolean available = true;
 
     private Boolean hasSizeSelection = false;
@@ -100,7 +102,7 @@ public class Product {
         this.imageUrl = imageUrl;
     }
 
-public Boolean getAvailable() {
+    public Boolean getAvailable() {
         return available;
     }
 
