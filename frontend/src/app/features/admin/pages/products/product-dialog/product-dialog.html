@@ -61,14 +61,8 @@
     <section class="card-section">
       <h3>Product Image</h3>
       <mat-form-field appearance="outline">
-        <mat-label>Select Image</mat-label>
-        <mat-select formControlName="imageUrl">
-          @for (image of productImages; track image) {
-            <mat-option [value]="image">
-              {{ image }}
-            </mat-option>
-          }
-        </mat-select>
+        <mat-label>Product image filename</mat-label>
+        <input matInput formControlName="imageUrl" placeholder="e.g. chicken-fresh.jpg or spinach-bunch.jpg" />
       </mat-form-field>
 
       @if (form.value.imageUrl) {
