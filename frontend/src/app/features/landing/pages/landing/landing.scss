@@ -1519,7 +1519,7 @@ Navbar + Hero + Features + Process + Plans
 }
 
 /* Scroll-triggered entrance reveals */
-body.landing-scroll-ready [data-scroll-reveal] {
+.scroll-reveal-pending[data-scroll-reveal] {
   opacity: 0;
   transform: translate3d(0, 30px, 0) scale(.99);
   transition:
@@ -1527,37 +1527,37 @@ body.landing-scroll-ready [data-scroll-reveal] {
     transform .72s cubic-bezier(.2,.72,.25,1);
   will-change: opacity, transform;
 }
-body.landing-scroll-ready [data-scroll-reveal].is-visible {
+.scroll-reveal-pending[data-scroll-reveal].is-visible {
   opacity: 1;
   transform: translate3d(0,0,0) scale(1);
   will-change: auto;
 }
-body.landing-scroll-ready .feature-card:nth-child(2),
-body.landing-scroll-ready .step:nth-child(3),
-body.landing-scroll-ready .plan-card:nth-child(2),
-body.landing-scroll-ready .product-card:nth-child(2),
-body.landing-scroll-ready .stat-card:nth-child(2),
-body.landing-scroll-ready .testimonial:nth-child(2),
-body.landing-scroll-ready .faq-card:nth-child(2) { transition-delay: .09s; }
-body.landing-scroll-ready .feature-card:nth-child(3),
-body.landing-scroll-ready .step:nth-child(5),
-body.landing-scroll-ready .product-card:nth-child(3),
-body.landing-scroll-ready .stat-card:nth-child(3),
-body.landing-scroll-ready .testimonial:nth-child(3),
-body.landing-scroll-ready .faq-card:nth-child(3) { transition-delay: .18s; }
-body.landing-scroll-ready .feature-card:nth-child(4),
-body.landing-scroll-ready .step:nth-child(7),
-body.landing-scroll-ready .product-card:nth-child(4),
-body.landing-scroll-ready .stat-card:nth-child(4),
-body.landing-scroll-ready .faq-card:nth-child(4) { transition-delay: .27s; }
+.scroll-reveal-pending.feature-card:nth-child(2),
+.scroll-reveal-pending.step:nth-child(3),
+.scroll-reveal-pending.plan-card:nth-child(2),
+.scroll-reveal-pending.product-card:nth-child(2),
+.scroll-reveal-pending.stat-card:nth-child(2),
+.scroll-reveal-pending.testimonial:nth-child(2),
+.scroll-reveal-pending.faq-card:nth-child(2) { transition-delay: .09s; }
+.scroll-reveal-pending.feature-card:nth-child(3),
+.scroll-reveal-pending.step:nth-child(5),
+.scroll-reveal-pending.product-card:nth-child(3),
+.scroll-reveal-pending.stat-card:nth-child(3),
+.scroll-reveal-pending.testimonial:nth-child(3),
+.scroll-reveal-pending.faq-card:nth-child(3) { transition-delay: .18s; }
+.scroll-reveal-pending.feature-card:nth-child(4),
+.scroll-reveal-pending.step:nth-child(7),
+.scroll-reveal-pending.product-card:nth-child(4),
+.scroll-reveal-pending.stat-card:nth-child(4),
+.scroll-reveal-pending.faq-card:nth-child(4) { transition-delay: .27s; }
 @media (max-width: 768px) {
-  body.landing-scroll-ready [data-scroll-reveal] {
+  .scroll-reveal-pending[data-scroll-reveal] {
     transform: translate3d(0,22px,0) scale(.995);
     transition-duration: .58s;
   }
 }
 @media (prefers-reduced-motion: reduce) {
-  body.landing-scroll-ready [data-scroll-reveal] {
+  .scroll-reveal-pending[data-scroll-reveal] {
     opacity: 1;
     transform: none;
     transition: none;
