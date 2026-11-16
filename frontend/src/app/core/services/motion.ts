@@ -8,6 +8,29 @@ export class MotionService {
       && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   }
 
+  animateEntrance(elements: HTMLElement[]): void {
+    const visibleElements = elements.filter(Boolean);
+    if (!visibleElements.length) return;
+
+    if (this.prefersReducedMotion()) {
+      gsap.set(visibleElements, { clearProps: 'all' });
+      return;
+    }
+
+    gsap.fromTo(
+      visibleElements,
+      { autoAlpha: 0, y: 22 },
+      {
+        autoAlpha: 1,
+        y: 0,
+        duration: 0.55,
+        stagger: 0.12,
+        ease: 'power2.out',
+        clearProps: 'transform',
+      },
+    );
+  }
+
   animateCartFly(image: HTMLImageElement, target: HTMLElement): void {
     if (this.prefersReducedMotion()) return;
     const source = image.getBoundingClientRect();
