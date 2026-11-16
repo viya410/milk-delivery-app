@@ -2,10 +2,12 @@ import { Injectable, computed, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { ProductCategory } from '../../features/products/models/product';
 
 export interface CartItem {
   id: number;
   productId: number;
+  category: ProductCategory;
   productName: string;
   price: number;
   imageUrl: string;
