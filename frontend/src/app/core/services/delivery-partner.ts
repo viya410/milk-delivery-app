@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { DeliveryPartnerDashboard } from '../models/delivery-partner-dashboard';
 import { OrderResponse } from '../models/order-response';
+import { DeliveryPartnerProfile } from '../models/delivery-partner-profile';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +13,10 @@ import { OrderResponse } from '../models/order-response';
 export class DeliveryPartnerService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = `${environment.apiUrl}/delivery-partner`;
+
+  getProfile(): Observable<DeliveryPartnerProfile> {
+    return this.http.get<DeliveryPartnerProfile>(`${this.apiUrl}/profile`);
+  }
 
   getDashboard(): Observable<DeliveryPartnerDashboard> {
     return this.http.get<DeliveryPartnerDashboard>(`${this.apiUrl}/dashboard`);
