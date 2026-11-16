@@ -1,5 +1,5 @@
 export interface DeliveryPartnerProfile {
-  id: number;
+  id: number | null;
   fullName: string;
   email: string | null;
   phoneNumber: string;
