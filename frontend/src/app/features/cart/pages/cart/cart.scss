@@ -71,3 +71,13 @@
 @media (prefers-reduced-motion: reduce) {
   .checkout-btn { transition: none; }
 }
+
+/* One cart, grouped into farm departments */
+.cart-category { margin-bottom: 22px; }
+.cart-category-heading {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 0 0 12px; padding: 13px 16px; border: 1px solid #e4eddf;
+  border-radius: 14px; background: #f7fbf5;
+}
+.cart-category-heading h2 { margin: 0; color: #2f5d35; font-size: 16px; font-weight: 800; }
+.cart-category-heading strong { color: #263b29; font-size: 14px; }
