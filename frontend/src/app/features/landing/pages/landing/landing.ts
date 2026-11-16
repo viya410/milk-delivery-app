@@ -366,7 +366,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
   private observeScrollReveal(): void {
     const revealElements = Array.from(
-      document.querySelectorAll<HTMLElement>('[data-scroll-reveal]'),
+      document.querySelectorAll<HTMLElement>('[data-scroll-reveal]:not(.is-visible)'),
     );
 
     if (!revealElements.length) return;
