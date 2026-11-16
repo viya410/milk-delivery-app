@@ -1,11 +1,18 @@
 <section class="products-page">
-  <div class="hero">
+  <div class="hero" [attr.data-category]="selectedCategory()">
     <div class="hero-left">
-      <span class="hero-tag">🌿 100% Farm Fresh</span>
-      <h1>Fresh From Our Farm</h1>
-      <p>Explore farm-fresh dairy, desi poultry and seasonal vegetables, all in one place.</p>
+      <span class="hero-tag"><span class="hero-tag-leaf">✳</span>{{ activeCategoryExperience.eyebrow }}</span>
+      <h1>{{ activeCategoryExperience.title }}</h1>
+      <p>{{ activeCategoryExperience.description }}</p>
+      <div class="hero-proof">
+        <span>✓ Farm fresh</span><span>✓ Carefully selected</span><span>✓ Delivered to your door</span>
+      </div>
     </div>
-    <div class="hero-right" aria-hidden="true">🥛</div>
+    <div class="hero-visual" role="img" [attr.aria-label]="activeCategoryExperience.visualLabel">
+      <span class="hero-visual-glow"></span>
+      <span class="hero-visual-emoji">{{ activeCategoryExperience.visual }}</span>
+      <span class="hero-visual-caption">FROM RK FARMS</span>
+    </div>
   </div>
 
   <nav class="category-list" aria-label="Filter products by category">
