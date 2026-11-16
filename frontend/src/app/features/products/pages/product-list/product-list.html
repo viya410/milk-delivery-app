@@ -8,11 +8,23 @@
         <span>✓ Farm fresh</span><span>✓ Carefully selected</span><span>✓ Delivered to your door</span>
       </div>
     </div>
-    <div class="hero-visual" role="img" [attr.aria-label]="activeCategoryExperience.visualLabel">
-      <span class="hero-visual-glow"></span>
-      <span class="hero-visual-emoji">{{ activeCategoryExperience.visual }}</span>
-      <span class="hero-visual-caption">FROM RK FARMS</span>
-    </div>
+    @if (selectedCategory() === 'ALL') {
+      <div class="hero-visual hero-visual--all" role="img" aria-label="RK Farms milk, fresh vegetables and desi eggs">
+        <img
+          class="hero-farm-image"
+          src="/assets/images/rk-farms-all.jpg"
+          alt="RK Farms fresh milk, farm vegetables and desi eggs"
+          fetchpriority="high"
+        />
+        <span class="hero-image-caption">FRESH FROM RK FARMS</span>
+      </div>
+    } @else {
+      <div class="hero-visual" role="img" [attr.aria-label]="activeCategoryExperience.visualLabel">
+        <span class="hero-visual-glow"></span>
+        <span class="hero-visual-emoji">{{ activeCategoryExperience.visual }}</span>
+        <span class="hero-visual-caption">FROM RK FARMS</span>
+      </div>
+    }
   </div>
 
   <nav class="category-list" aria-label="Filter products by category">
