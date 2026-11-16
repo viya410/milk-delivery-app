@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  min-height: 100%;
+}
+
+.admin-shell {
+  display: flex;
+  min-height: 100%;
+  min-width: 0;
+}
+
+.admin-navigation {
+  flex: 0 0 auto;
+  min-width: 76px;
+}
+
+.admin-content {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  padding: clamp(12px, 2vw, 24px);
+}
+
+@media (max-width: 768px) {
+  .admin-shell {
+    display: block;
+  }
+
+  .admin-navigation {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    min-width: 0;
+    overflow-x: auto;
+    background: #fff;
+  }
+
+  .admin-content {
+    padding: 12px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  }
+}
