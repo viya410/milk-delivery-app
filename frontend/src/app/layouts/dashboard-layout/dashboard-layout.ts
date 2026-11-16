@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -12,16 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
   standalone: true,
   imports: [
     RouterOutlet,
-
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
   ],
   templateUrl: './dashboard-layout.html',
-  styleUrl: './dashboard-layout.scss'
+  styleUrl: './dashboard-layout.scss',
 })
-export class DashboardLayout {
-
-}
+export class DashboardLayout {}

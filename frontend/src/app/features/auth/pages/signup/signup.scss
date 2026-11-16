@@ -87,3 +87,17 @@ button[type='submit']:disabled {
     transform: rotate(360deg);
   }
 }
+
+.account-type { display: flex; flex-direction: column; gap: 9px; }
+.account-type-label { margin: 0; color: #475569; font-size: 13px; font-weight: 650; }
+.account-type-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.account-type-options button {
+  min-height: 46px; padding: 8px 12px; border: 1px solid #d7dee7;
+  border-radius: 9px; background: #fff; color: #475569; font: inherit;
+  font-size: 13px; font-weight: 650; cursor: pointer;
+}
+.account-type-options button.selected {
+  border-color: #247a3d; background: #edf7ef; color: #247a3d;
+  box-shadow: inset 0 0 0 1px #247a3d;
+}
+.account-type-hint { margin: 0; color: #64748b; font-size: 12px; line-height: 1.45; }

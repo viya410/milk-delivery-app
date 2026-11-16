@@ -5,33 +5,39 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { DeliveryPartnerDashboard } from '../models/delivery-partner-dashboard';
 import { OrderResponse } from '../models/order-response';
+import { DeliveryPartnerProfile } from '../models/delivery-partner-profile';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DeliveryPartnerService {
-
   private readonly http = inject(HttpClient);
+  private readonly apiUrl = `${environment.apiUrl}/delivery-partner`;
 
-  private readonly apiUrl =
-    `${environment.apiUrl}/delivery-partner`;
+  getProfile(): Observable<DeliveryPartnerProfile> {
+    return this.http.get<DeliveryPartnerProfile>(`${this.apiUrl}/profile`);
+  }
 
   getDashboard(): Observable<DeliveryPartnerDashboard> {
-    return this.http.get<DeliveryPartnerDashboard>(
-      `${this.apiUrl}/dashboard`
+    return this.http.get<DeliveryPartnerDashboard>(`${this.apiUrl}/dashboard`);
+  }
+
+  getAvailableOrders(): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders/available`);
+  }
+
+  getMyOrders(): Observable<OrderResponse[]> {
+    return this.http.get<OrderResponse[]>(`${this.apiUrl}/orders/my`);
+  }
+
+  pickOrder(orderId: number): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(`${this.apiUrl}/orders/${orderId}/pick`, {});
+  }
+
+  verifyDeliveryOtp(orderId: number, otp: string): Observable<OrderResponse> {
+    return this.http.post<OrderResponse>(
+      `${this.apiUrl}/orders/${orderId}/verify-otp`,
+      { otp }
     );
   }
-  getAvailableOrders(): Observable<OrderResponse[]> {
-  return this.http.get<OrderResponse[]>(
-    `${this.apiUrl}/orders/available`
-  );
-}
-
-pickOrder(orderId: number): Observable<void> {
-  return this.http.post<void>(
-    `${this.apiUrl}/orders/${orderId}/pick`,
-    {}
-  );
-}
-
 }

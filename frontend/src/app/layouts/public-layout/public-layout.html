@@ -1,9 +1,7 @@
 <div class="public-layout">
-
   <app-header></app-header>
 
   <div class="app-layout">
-
     <app-sidebar
       [class.expanded]="layoutService.sidebarExpanded()"
       [class.collapsed]="!layoutService.sidebarExpanded()">
@@ -12,9 +10,8 @@
     <main class="page-content">
       <router-outlet></router-outlet>
     </main>
-
   </div>
 
   <app-footer></app-footer>
-
+  <app-customer-bottom-nav></app-customer-bottom-nav>
 </div>

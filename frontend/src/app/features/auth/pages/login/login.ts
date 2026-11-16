@@ -113,6 +113,8 @@ export class Login {
             try {
               if (role === 'ROLE_ADMIN') {
                 await this.router.navigateByUrl('/admin/dashboard');
+              } else if (role === 'ROLE_DELIVERY_PARTNER') {
+                await this.router.navigateByUrl('/delivery-partner/dashboard');
               } else {
                 await this.router.navigateByUrl('/dashboard/home');
               }

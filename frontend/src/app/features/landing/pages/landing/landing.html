@@ -142,55 +142,44 @@
   </div>
 }
 
-<section class="hero" id="home">
-  <div class="container hero-grid">
-    <div class="hero-content">
-      <span class="badge">🌿 100% ORGANIC & FARM FRESH</span>
+<section class="hero hero-video" id="home">
+  <video
+    class="hero-video-media"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="assets/images/farm-hero.jpg"
+    aria-label="A glimpse of our farm and fresh dairy delivery"
+  >
+    <source src="/videos/fresh-farm-hero.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-video-shade" aria-hidden="true"></div>
 
-      <h1>
-        Bringing
-        <div class="product-badge">Farm Fresh</div>
-        Goodness to Your Doorstep
-      </h1>
-
-      <p>
-        Fresh milk collected every morning from healthy cattle, quality checked, chilled immediately
-        and delivered fresh to your family.
-      </p>
-
+  <div class="container hero-video-content">
+    <div class="hero-copy" data-scroll-reveal>
+      <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span> FARM FRESH. EVERY MORNING.</span>
+      <h1>Good mornings<br /><em>start at the farm.</em></h1>
+      <p>Fresh dairy, carefully collected and quality checked, then brought straight to your doorstep.</p>
       <div class="hero-actions">
-        <button class="btn-primary" routerLink="/auth/signup">Start Subscription</button>
-
-        <button class="btn-outline" routerLink="/products">Browse Products</button>
+        <button class="btn-primary hero-main-cta" routerLink="/products">Shop fresh products <span aria-hidden="true">→</span></button>
+        <button class="btn-outline hero-secondary-cta" routerLink="/auth/signup">Create your account</button>
       </div>
-
-      <div class="hero-highlights">
-        <div class="highlight-chip">
-          <span>🌿</span>
-          <p>100% Organic</p>
-        </div>
-
-        <div class="highlight-chip">
-          <span>🥛</span>
-          <p>Farm Fresh</p>
-        </div>
-
-        <div class="highlight-chip">
-          <span>🚚</span>
-          <p>Daily Delivery</p>
-        </div>
-
-        <div class="highlight-chip">
-          <span>❤️</span>
-          <p>Healthy & Natural</p>
-        </div>
+      <div class="hero-proof">
+        <span>✓ Farm-fresh dairy</span>
+        <span>✓ Quality checked</span>
+        <span>✓ Doorstep delivery</span>
       </div>
     </div>
-
-    <div class="hero-image">
-      <img src="assets/images/farm-hero.jpg" alt="Farm Fresh" />
+    <div class="hero-video-note" aria-hidden="true">
+      <span class="hero-note-mark">✳</span>
+      <span>From our farm<br /><strong>to your family</strong></span>
     </div>
   </div>
+  <a class="hero-scroll-cue" href="#features" aria-label="Scroll to discover more">
+    <span>SCROLL TO DISCOVER</span><span class="hero-scroll-line"></span>
+  </a>
 </section>
 <!-- ==========================================================
 PART 2 : FEATURES + PROCESS + PLANS
@@ -199,32 +188,32 @@ Replace your existing Features, Process and Plans sections
 
 <section class="features" id="features">
   <div class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-scroll-reveal>
       <span>WHY CHOOSE US</span>
       <h2>Fresh From Our Farm</h2>
       <p>Every drop of milk is collected fresh, tested and delivered with care.</p>
     </div>
 
     <div class="feature-grid">
-      <article class="feature-card">
+      <article class="feature-card" data-scroll-reveal>
         <div class="icon">🌿</div>
         <h3>100% Organic</h3>
         <p>No preservatives, hormones or harmful additives.</p>
       </article>
 
-      <article class="feature-card">
+      <article class="feature-card" data-scroll-reveal>
         <div class="icon">🐄</div>
         <h3>Healthy Cattle</h3>
         <p>Our cows are ethically raised and well cared for.</p>
       </article>
 
-      <article class="feature-card">
+      <article class="feature-card" data-scroll-reveal>
         <div class="icon">🥛</div>
         <h3>Morning Fresh</h3>
         <p>Collected and delivered every morning.</p>
       </article>
 
-      <article class="feature-card">
+      <article class="feature-card" data-scroll-reveal>
         <div class="icon">🚚</div>
         <h3>Doorstep Delivery</h3>
         <p>Fast delivery before your day begins.</p>
@@ -235,13 +224,13 @@ Replace your existing Features, Process and Plans sections
 
 <section class="process" id="process">
   <div class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-scroll-reveal>
       <span>OUR PROCESS</span>
       <h2>From Farm To Home</h2>
     </div>
 
     <div class="timeline">
-      <div class="step">
+      <div class="step" data-scroll-reveal>
         <div class="emoji-circle">🐄</div>
         <h4>Farm Care</h4>
         <p>Healthy cattle produce quality milk.</p>
@@ -249,7 +238,7 @@ Replace your existing Features, Process and Plans sections
 
       <div class="line"></div>
 
-      <div class="step">
+      <div class="step" data-scroll-reveal>
         <div class="circle">2</div>
         <div class="emoji">🥛</div>
         <h4>Collection</h4>
@@ -258,7 +247,7 @@ Replace your existing Features, Process and Plans sections
 
       <div class="line"></div>
 
-      <div class="step">
+      <div class="step" data-scroll-reveal>
         <div class="circle">3</div>
         <div class="emoji">🧪</div>
         <h4>Quality Test</h4>
@@ -267,7 +256,7 @@ Replace your existing Features, Process and Plans sections
 
       <div class="line"></div>
 
-      <div class="step">
+      <div class="step" data-scroll-reveal>
         <div class="circle">4</div>
         <div class="emoji">🚚</div>
         <h4>Delivery</h4>
@@ -279,14 +268,14 @@ Replace your existing Features, Process and Plans sections
 
 <section class="plans" id="plans">
   <div class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-scroll-reveal>
       <span>DELIVERY PLANS</span>
       <h2>Choose A Plan</h2>
       <p>Pause, resume or change quantity anytime.</p>
     </div>
 
     <div class="plans-grid">
-      <div class="plan-card">
+      <div class="plan-card" data-scroll-reveal>
         <h3>Weekly</h3>
 
         <div class="price">
@@ -305,7 +294,7 @@ Replace your existing Features, Process and Plans sections
         <button class="btn-outline">Start Weekly</button>
       </div>
 
-      <div class="plan-card featured">
+      <div class="plan-card featured" data-scroll-reveal>
         <div class="badge-popular">MOST POPULAR</div>
 
         <h3>Monthly</h3>
@@ -334,7 +323,7 @@ PRODUCTS
 
 <section class="products" id="products">
   <div class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-scroll-reveal>
       <span>OUR PRODUCTS</span>
 
       <h2>Fresh From The Farm</h2>
@@ -344,7 +333,7 @@ PRODUCTS
 
     <div class="products-grid">
       @for (product of products(); track product.id) {
-        <article class="product-card">
+        <article class="product-card" data-scroll-reveal>
           @if (product.imageUrl) {
             <div class="product-image">
               <img [src]="getProductImage(product.imageUrl)" [alt]="product.name" />
@@ -380,22 +369,22 @@ STATS
 
 <section class="stats">
   <div class="container stats-grid">
-    <div class="stat-card">
+    <div class="stat-card" data-scroll-reveal>
       <h2>500+</h2>
       <p>Happy Families</p>
     </div>
 
-    <div class="stat-card">
+    <div class="stat-card" data-scroll-reveal>
       <h2>200+</h2>
       <p>Healthy Cattle</p>
     </div>
 
-    <div class="stat-card">
+    <div class="stat-card" data-scroll-reveal>
       <h2>50+</h2>
       <p>Fresh Products</p>
     </div>
 
-    <div class="stat-card">
+    <div class="stat-card" data-scroll-reveal>
       <h2>100%</h2>
       <p>Morning Delivery</p>
     </div>
@@ -408,7 +397,7 @@ TESTIMONIALS
 
 <section #testimonialSection class="testimonials" id="testimonials">
   <div class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-scroll-reveal>
       <span>TESTIMONIALS</span>
 
       <h2>Loved By Families</h2>
@@ -419,7 +408,7 @@ TESTIMONIALS
     @if (approvedReviews().length > 0) {
       <div #testimonialGrid class="testimonial-grid">
         @for (review of approvedReviews(); track review.id; let i = $index) {
-          <article class="testimonial" [class.in-focus]="i === activeTestimonial()">
+          <article data-scroll-reveal class="testimonial" [class.in-focus]="i === activeTestimonial()">
             <div class="quote">❝</div>
 
             <div class="testimonial-stars" [attr.aria-label]="review.rating + ' out of 5 stars'">
@@ -458,32 +447,32 @@ FAQ
 
 <section class="faq">
   <div class="container">
-    <div class="section-heading">
+    <div class="section-heading" data-scroll-reveal>
       <span>FAQ</span>
 
       <h2>Frequently Asked Questions</h2>
     </div>
 
     <div class="faq-grid">
-      <article class="faq-card">
+      <article class="faq-card" data-scroll-reveal>
         <h3>Can I pause my subscription?</h3>
 
         <p>Yes. Pause or resume deliveries anytime from your dashboard.</p>
       </article>
 
-      <article class="faq-card">
+      <article class="faq-card" data-scroll-reveal>
         <h3>What time do you deliver?</h3>
 
         <p>Every morning before 7:00 AM.</p>
       </article>
 
-      <article class="faq-card">
+      <article class="faq-card" data-scroll-reveal>
         <h3>Can I change my quantity?</h3>
 
         <p>Absolutely. Increase or decrease your quantity whenever needed.</p>
       </article>
 
-      <article class="faq-card">
+      <article class="faq-card" data-scroll-reveal>
         <h3>Is the milk preservative free?</h3>
 
         <p>Yes. Fresh Farm milk contains no preservatives or artificial additives.</p>
@@ -498,13 +487,13 @@ CTA
 
 <section class="cta" #contactSection id="contact">
   <div class="container cta-card">
-    <div class="cta-content">
+    <div class="cta-content" data-scroll-reveal>
       <h2>Ready For Farm Fresh Milk Every Morning?</h2>
 
       <p>Join hundreds of happy families enjoying fresh dairy delivered daily.</p>
     </div>
 
-    <div class="cta-actions">
+    <div class="cta-actions" data-scroll-reveal>
       <button class="btn-primary" (click)="navigateToProducts()">Shop Now</button>
 
       <div class="contact-mini">

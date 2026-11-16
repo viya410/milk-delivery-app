@@ -198,3 +198,11 @@
     font-size: 10px;
   }
 }
+
+
+@media (max-width: 768px) {
+  /* Mobile navigation is provided by the role-aware bottom bar. */
+  .app-header > button.header-icon-btn:first-of-type {
+    display: none;
+  }
+}

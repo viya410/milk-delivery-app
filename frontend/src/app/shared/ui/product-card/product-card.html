@@ -1,6 +1,11 @@
 <div class="product-card">
   <div class="image-wrapper" (click)="viewProduct()">
     <img #productImage [src]="'assets/images/products/' + product.imageUrl" [alt]="product.name" />
+    @if (quantity > 0) {
+      <span class="cart-quantity-badge" aria-live="polite">
+        In cart <strong>{{ quantity }}</strong>
+      </span>
+    }
   </div>
 
   <div class="card-content">

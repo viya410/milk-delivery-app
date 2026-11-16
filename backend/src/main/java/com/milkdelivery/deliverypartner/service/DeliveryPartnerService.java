@@ -57,4 +57,6 @@ public interface DeliveryPartnerService {
     DeliveryPartnerDashboardResponse getDashboard(
             Authentication authentication
     );
+
+    DeliveryPartnerResponse getProfile(Authentication authentication);
 }

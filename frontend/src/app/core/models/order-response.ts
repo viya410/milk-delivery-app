@@ -1,8 +1,10 @@
 export interface OrderItemResponse {
-  id: number;
+  id?: number;
+  productId: number;
   productName: string;
   quantity: number;
   price: number;
+  unit?: string;
 }
 
 export interface OrderResponse {

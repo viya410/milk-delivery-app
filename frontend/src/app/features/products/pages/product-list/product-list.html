@@ -1,49 +1,69 @@
 <section class="products-page">
   <div class="hero">
     <div class="hero-left">
-      <span class="hero-tag"> 🌿 100% Farm Fresh </span>
-
+      <span class="hero-tag">🌿 100% Farm Fresh</span>
       <h1>Fresh Dairy Delivered Daily</h1>
-
       <p>Milk, Curd, Butter, Paneer & more, delivered fresh from our farm.</p>
     </div>
-
-    <div class="hero-right">🥛</div>
+    <div class="hero-right" aria-hidden="true">🥛</div>
   </div>
 
   <div class="search-section">
-    <div class="search-box">
-      <i class="fa-solid fa-magnifying-glass"></i>
+    <label class="search-box">
+      <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+      <input
+        type="search"
+        aria-label="Search products"
+        placeholder="Search milk, paneer, butter..."
+        [value]="searchText()"
+        (input)="search($event)"
+      />
+      @if (searchText()) {
+        <button type="button" class="clear-search" aria-label="Clear search" (click)="clearSearch()">×</button>
+      }
+    </label>
+    <p class="results-count">
+      @if (!loading() && !errorMessage()) {
+        {{ filteredProducts().length }} products
+        @if (searchText()) { matching “{{ searchText() }}” }
+      }
+    </p>
+  </div>
 
-      <input placeholder="Search milk, paneer, butter..." (input)="search($event)" />
+  @if (loading()) {
+    <div class="catalog-state" role="status">
+      <span class="state-symbol">🥛</span>
+      <h2>Finding fresh products</h2>
+      <p>Loading today's dairy selection…</p>
     </div>
-  </div>
-
-  <div class="category-list">
-    <button class="active">All</button>
-
-    <button class="coming-soon">🥛 Milk</button>
-
-    <button class="coming-soon">🥣 Curd</button>
-
-    <button class="coming-soon">🧀 Paneer</button>
-
-    <button class="coming-soon">🧈 Butter</button>
-
-    <button class="coming-soon">🍯 Ghee</button>
-  </div>
-
-  <div class="products-grid">
-    @for (product of filteredProducts(); track product.id) {
-      <app-product-card
-        [product]="product"
-        [quantity]="cartService.getQuantity(product.id)"
-        (view)="viewProduct($event)"
-        (add)="addToCart($event)"
-        (increase)="increase($event)"
-        (decrease)="decrease($event)"
-      >
-      </app-product-card>
-    }
-  </div>
+  } @else if (errorMessage()) {
+    <div class="catalog-state" role="alert">
+      <span class="state-symbol">!</span>
+      <h2>Products couldn't be loaded</h2>
+      <p>{{ errorMessage() }}</p>
+      <button type="button" class="retry-button" (click)="loadProducts()">Try again</button>
+    </div>
+  } @else if (filteredProducts().length === 0) {
+    <div class="catalog-state">
+      <span class="state-symbol">⌕</span>
+      <h2>No products found</h2>
+      <p>Try another search term or clear your search.</p>
+      <button type="button" class="retry-button" (click)="clearSearch()">Clear search</button>
+    </div>
+  } @else {
+    <div class="products-grid">
+      @for (product of filteredProducts(); track product.id) {
+        <div #productTile class="product-tile">
+          <app-product-card
+            [product]="product"
+            [quantity]="cartService.getQuantity(product.id)"
+            (view)="viewProduct($event)"
+            (add)="addToCart($event)"
+            (increase)="increase($event)"
+            (decrease)="decrease($event)"
+          ></app-product-card>
+        </div>
+      }
+    </div>
+  }
 </section>

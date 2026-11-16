@@ -29,3 +29,10 @@
 
   margin-top: 2rem;
 }
+
+@media (max-width: 600px) {
+  .payment-failed { min-height: calc(100dvh - 56px); padding: 20px 14px calc(100px + env(safe-area-inset-bottom)); box-sizing: border-box; }
+  .card { width: 100%; max-width: 420px; box-sizing: border-box; padding: 28px 18px; border-radius: 18px; }
+  .actions { flex-direction: column; }
+  .actions button { min-height: 48px; }
+}

@@ -6,6 +6,7 @@ import com.milkdelivery.auth.dto.RegisterRequest;
 import com.milkdelivery.auth.service.AuthService;
 import com.milkdelivery.deliverypartner.dto.request.DeliveryPartnerRegisterRequest;
 import com.milkdelivery.deliverypartner.service.DeliveryPartnerService;
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,7 +33,7 @@ public class AuthController {
 
     @PostMapping("/delivery-partner/register")
     public void registerDeliveryPartner(
-            @RequestBody DeliveryPartnerRegisterRequest request
+            @Valid @RequestBody DeliveryPartnerRegisterRequest request
     ) {
         deliveryPartnerService.registerDeliveryPartner(request);
     }

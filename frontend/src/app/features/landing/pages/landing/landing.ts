@@ -43,6 +43,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
   private sectionObserver?: IntersectionObserver;
 
+  private revealObserver?: IntersectionObserver;
+
   @ViewChild('testimonialSection')
   testimonialSection?: ElementRef<HTMLElement>;
 
@@ -68,6 +70,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     this.observeTestimonialsSection();
 
     this.observeLandingSections();
+
+    this.observeScrollReveal();
   }
 
   private observeTestimonialsSection(): void {
@@ -195,6 +199,10 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     this.testimonialSectionObserver?.disconnect();
 
     this.sectionObserver?.disconnect();
+    this.revealObserver?.disconnect();
+    document.querySelectorAll('.scroll-reveal-pending').forEach((element) => {
+      element.classList.remove('scroll-reveal-pending');
+    });
     document.body.style.overflow = '';
   }
 
@@ -204,6 +212,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
         console.log('Received products:', products);
 
         this.products.set(products.slice(0, 4));
+        setTimeout(() => this.observeScrollReveal());
 
         console.log('Assigned products:', this.products());
         console.log('Assigned length:', this.products().length);
@@ -353,6 +362,41 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     }
 
     return `${years} ${years === 1 ? 'year' : 'years'} ago`;
+  }
+
+  private observeScrollReveal(): void {
+    const revealElements = Array.from(
+      document.querySelectorAll<HTMLElement>('[data-scroll-reveal]:not(.is-visible)'),
+    );
+
+    if (!revealElements.length) return;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      || !('IntersectionObserver' in window)) {
+      revealElements.forEach((element) => element.classList.add('is-visible'));
+      return;
+    }
+
+    if (!this.revealObserver) {
+      this.revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            (entry.target as HTMLElement).classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: '0px 0px -8% 0px',
+        },
+      );
+    }
+
+    revealElements.forEach((element) => {
+      element.classList.add('scroll-reveal-pending');
+      this.revealObserver?.observe(element);
+    });
   }
 
   private observeLandingSections(): void {

@@ -44,11 +44,11 @@ export class AuthService {
   }
 
   register(request: RegisterRequest): Observable<void> {
-    return this.http.post<void>(
-      `${this.API_URL}/register`,
+    return this.http.post<void>(`${this.API_URL}/register`, request);
+  }
 
-      request,
-    );
+  registerDeliveryPartner(request: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${this.API_URL}/delivery-partner/register`, request);
   }
 
   logout(): void {

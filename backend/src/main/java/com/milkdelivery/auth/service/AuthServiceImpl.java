@@ -73,7 +73,7 @@ public class AuthServiceImpl implements AuthService {
                 passwordEncoder.encode(request.getPassword())
         );
 
-        user.setRole(Role.ROLE_CUSTOMER);
+        user.setRole(Role.ROLE_USER);
 
         userRepository.save(user);
     }

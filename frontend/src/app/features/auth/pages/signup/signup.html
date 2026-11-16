@@ -7,6 +7,19 @@
     </div>
 
     <form [formGroup]="signupForm" (ngSubmit)="submit()">
+      <div class="account-type">
+        <p class="account-type-label">I want to sign up as</p>
+        <div class="account-type-options">
+          <button type="button" [class.selected]="accountType() === 'customer'"
+            (click)="setAccountType('customer')">Customer</button>
+          <button type="button" [class.selected]="accountType() === 'delivery-partner'"
+            (click)="setAccountType('delivery-partner')">Delivery Partner</button>
+        </div>
+        @if (accountType() === 'delivery-partner') {
+          <p class="account-type-hint">Create a delivery partner account to pick up and deliver customer orders.</p>
+        }
+      </div>
+
       <mat-form-field appearance="outline">
         <mat-label> Full Name </mat-label>
 
@@ -20,9 +33,14 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label> Email (Optional) </mat-label>
+        <mat-label>{{ accountType() === 'delivery-partner' ? 'Email' : 'Email (Optional)' }}</mat-label>
 
-        <input matInput type="email" formControlName="email" />
+        <input matInput type="email" formControlName="email" [required]="accountType() === 'delivery-partner'" />
+        @if (signupForm.controls.email.hasError('required')) {
+          <mat-error>Email is required for delivery partner signup.</mat-error>
+        } @else if (signupForm.controls.email.hasError('email')) {
+          <mat-error>Enter a valid email address.</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -67,10 +85,10 @@
           <span class="button-loading">
             <span class="button-spinner"></span>
 
-            Creating Account...
+            {{ accountType() === 'delivery-partner' ? 'Creating Delivery Account...' : 'Creating Account...' }}
           </span>
         } @else {
-          Create Account
+          {{ accountType() === 'delivery-partner' ? 'Create Delivery Partner Account' : 'Create Account' }}
         }
       </button>
       <div class="login-link">

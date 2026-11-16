@@ -71,27 +71,15 @@ export class CartService {
   }
 
   increaseQuantity(cartId: number) {
-    return this.http
-      .put(
-        `${this.apiUrl}/${cartId}/increase`,
-
-        {},
-      )
-      .pipe(tap(() => this.loadCart()));
+    return this.http.put(`${this.apiUrl}/${cartId}/increase`, {});
   }
 
   decreaseQuantity(cartId: number) {
-    return this.http
-      .put(
-        `${this.apiUrl}/${cartId}/decrease`,
-
-        {},
-      )
-      .pipe(tap(() => this.loadCart()));
+    return this.http.put(`${this.apiUrl}/${cartId}/decrease`, {});
   }
 
   removeItem(cartId: number) {
-    return this.http.delete(`${this.apiUrl}/${cartId}`).pipe(tap(() => this.loadCart()));
+    return this.http.delete(`${this.apiUrl}/${cartId}`);
   }
 
   clearCart() {

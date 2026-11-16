@@ -1,1 +1,82 @@
-<p>profile works!</p>
+<section class="profile-page">
+  <header class="page-heading">
+    <div>
+      <p class="eyebrow">YOUR ACCOUNT</p>
+      <h1>My Profile</h1>
+      <p class="subtitle">Your delivery partner account information</p>
+    </div>
+    <button mat-stroked-button type="button" class="refresh-button" (click)="loadProfile()" [disabled]="loading()">
+      <mat-icon>refresh</mat-icon>
+      Refresh
+    </button>
+  </header>
+
+  @if (loading() && !profile()) {
+    <div class="state-card" role="status">
+      <mat-icon class="state-icon">hourglass_top</mat-icon>
+      <h2>Loading profile</h2>
+      <p>Getting your account information.</p>
+    </div>
+  } @else if (profile(); as person) {
+    @if (errorMessage()) {
+      <div class="profile-warning" role="status">
+        <mat-icon>info_outline</mat-icon>
+        <span>{{ errorMessage() }}</span>
+        <button mat-button type="button" (click)="loadProfile()">Retry</button>
+      </div>
+    }
+    <article class="profile-card">
+      <div class="identity">
+        <div class="avatar" aria-hidden="true">{{ initials }}</div>
+        <div class="identity-copy">
+          <h2>{{ person.fullName }}</h2>
+          <p>Delivery Partner</p>
+          <span class="status-pill" [class.inactive]="person.status === 'INACTIVE'">
+            <span class="status-dot"></span>{{ statusLabel(person.status) }}
+          </span>
+        </div>
+      </div>
+
+      <div class="details-section">
+        <h3>Personal information</h3>
+        <div class="detail-row">
+          <span class="detail-icon"><mat-icon>mail_outline</mat-icon></span>
+          <div><small>Email address</small><strong>{{ person.email || 'Not provided' }}</strong></div>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon"><mat-icon>call</mat-icon></span>
+          <div><small>Mobile number</small><strong>{{ person.phoneNumber }}</strong></div>
+          @if (person.phoneNumber) {
+            <a class="quick-action" [href]="'tel:' + person.phoneNumber" aria-label="Call your number"><mat-icon>open_in_new</mat-icon></a>
+          }
+        </div>
+      </div>
+
+      <div class="details-section partner-details">
+        <h3>Delivery partner details</h3>
+        <div class="detail-row">
+          <span class="detail-icon"><mat-icon>badge</mat-icon></span>
+          <div><small>Partner ID</small><strong>{{ person.id ?? 'Not synced' }}</strong></div>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon"><mat-icon>qr_code</mat-icon></span>
+          <div><small>Employee code</small><strong>{{ person.employeeCode || 'Not assigned yet' }}</strong></div>
+        </div>
+        <div class="detail-row">
+          <span class="detail-icon"><mat-icon>route</mat-icon></span>
+          <div><small>Assigned route</small><strong>{{ person.routeName || 'No route assigned' }}</strong></div>
+        </div>
+      </div>
+
+      <div class="profile-note">
+        <mat-icon>info_outline</mat-icon>
+        <p>Need to change your personal or delivery details? Please contact your administrator. Profile editing is not enabled yet.</p>
+      </div>
+    </article>
+
+    <button mat-stroked-button type="button" class="logout-button" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+      Sign out
+    </button>
+  }
+</section>

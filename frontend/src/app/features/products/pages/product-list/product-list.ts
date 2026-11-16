@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -12,6 +12,8 @@ import { AuthService } from '../../../../core/services/auth';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { ProductSizeSheet } from '../../../../shared/ui/product-size-sheet/product-size-sheet';
 import { ProductSize } from '../../models/product';
+import { MotionService } from '../../../../core/services/motion';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
@@ -20,7 +22,7 @@ import { ProductSize } from '../../models/product';
   templateUrl: './product-list.html',
   styleUrl: './product-list.scss',
 })
-export class ProductList implements OnInit {
+export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   private readonly productService = inject(ProductService);
 
   private readonly router = inject(Router);
@@ -30,6 +32,13 @@ export class ProductList implements OnInit {
   readonly cartService = inject(CartService);
 
   private readonly authService = inject(AuthService);
+
+  private readonly motion = inject(MotionService);
+
+  @ViewChildren('productTile', { read: ElementRef })
+  private productTiles!: QueryList<ElementRef<HTMLElement>>;
+
+  private tileChanges?: Subscription;
 
   readonly allProducts = signal<Product[]>([]);
 
@@ -41,30 +50,46 @@ export class ProductList implements OnInit {
 
   readonly errorMessage = signal('');
 
+  ngAfterViewInit(): void {
+    this.tileChanges = this.productTiles.changes.subscribe((tiles: QueryList<ElementRef<HTMLElement>>) => {
+      this.motion.animateEntrance(tiles.toArray().map((tile) => tile.nativeElement));
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.tileChanges?.unsubscribe();
+  }
+
   ngOnInit(): void {
+    this.cartService.loadCart();
     this.loadProducts();
   }
 
-  private loadProducts(): void {
+  loadProducts(): void {
     this.loading.set(true);
+    this.errorMessage.set('');
 
     this.productService.getProducts().subscribe({
       next: (response: Product[]) => {
         this.allProducts.set(response);
 
         this.filteredProducts.set(response);
-
         this.loading.set(false);
       },
 
       error: (error) => {
         console.error(error);
 
-        this.errorMessage.set('Unable to load products.');
+        this.errorMessage.set('Unable to load products. Please check your connection and try again.');
 
         this.loading.set(false);
       },
     });
+  }
+
+  clearSearch(): void {
+    this.searchText.set('');
+    this.filteredProducts.set(this.allProducts());
   }
 
   search(event: Event): void {

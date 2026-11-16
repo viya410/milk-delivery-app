@@ -411,3 +411,10 @@ p strong {
     opacity: 0.45;
   }
 }
+
+@media (max-width: 768px) {
+  .success-page { min-height: calc(100dvh - 56px); padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .success-icon-wrapper { animation: none; }
+}
