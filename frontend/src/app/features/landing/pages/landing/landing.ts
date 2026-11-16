@@ -377,23 +377,26 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    revealElements.forEach((element) => element.classList.add('scroll-reveal-pending'));
+    if (!this.revealObserver) {
+      this.revealObserver = new IntersectionObserver(
+        (entries, observer) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            (entry.target as HTMLElement).classList.add('is-visible');
+            observer.unobserve(entry.target);
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: '0px 0px -8% 0px',
+        },
+      );
+    }
 
-    this.revealObserver = new IntersectionObserver(
-      (entries, observer) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          (entry.target as HTMLElement).classList.add('is-visible');
-          observer.unobserve(entry.target);
-        });
-      },
-      {
-        threshold: 0.12,
-        rootMargin: '0px 0px -8% 0px',
-      },
-    );
-
-    revealElements.forEach((element) => this.revealObserver?.observe(element));
+    revealElements.forEach((element) => {
+      element.classList.add('scroll-reveal-pending');
+      this.revealObserver?.observe(element);
+    });
   }
 
   private observeLandingSections(): void {
