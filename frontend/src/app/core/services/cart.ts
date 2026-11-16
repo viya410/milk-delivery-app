@@ -67,7 +67,7 @@ export class CartService {
   }
 
   addToCart(request: { productId: number; quantity: number; productSizeId?: number }) {
-    return this.http.post(this.apiUrl, request).pipe(tap(() => this.loadCart()));
+    return this.http.post(this.apiUrl, request);
   }
 
   increaseQuantity(cartId: number) {
@@ -77,7 +77,7 @@ export class CartService {
 
         {},
       )
-      .pipe(tap(() => this.loadCart()));
+      ;
   }
 
   decreaseQuantity(cartId: number) {
@@ -87,11 +87,11 @@ export class CartService {
 
         {},
       )
-      .pipe(tap(() => this.loadCart()));
+      ;
   }
 
   removeItem(cartId: number) {
-    return this.http.delete(`${this.apiUrl}/${cartId}`).pipe(tap(() => this.loadCart()));
+    return this.http.delete(`${this.apiUrl}/${cartId}`);
   }
 
   clearCart() {
