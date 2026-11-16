@@ -142,55 +142,44 @@
   </div>
 }
 
-<section class="hero" id="home">
-  <div class="container hero-grid">
-    <div class="hero-content" data-scroll-reveal>
-      <span class="badge">🌿 100% ORGANIC & FARM FRESH</span>
+<section class="hero hero-video" id="home">
+  <video
+    class="hero-video-media"
+    autoplay
+    muted
+    loop
+    playsinline
+    preload="metadata"
+    poster="assets/images/farm-hero.jpg"
+    aria-label="A glimpse of our farm and fresh dairy delivery"
+  >
+    <source src="/videos/fresh-farm-hero.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-video-shade" aria-hidden="true"></div>
 
-      <h1>
-        Bringing
-        <div class="product-badge">Farm Fresh</div>
-        Goodness to Your Doorstep
-      </h1>
-
-      <p>
-        Fresh milk collected every morning from healthy cattle, quality checked, chilled immediately
-        and delivered fresh to your family.
-      </p>
-
+  <div class="container hero-video-content">
+    <div class="hero-copy" data-scroll-reveal>
+      <span class="hero-eyebrow"><span class="hero-eyebrow-dot"></span> FARM FRESH. EVERY MORNING.</span>
+      <h1>Good mornings<br /><em>start at the farm.</em></h1>
+      <p>Fresh dairy, carefully collected and quality checked, then brought straight to your doorstep.</p>
       <div class="hero-actions">
-        <button class="btn-primary" routerLink="/auth/signup">Start Subscription</button>
-
-        <button class="btn-outline" routerLink="/products">Browse Products</button>
+        <button class="btn-primary hero-main-cta" routerLink="/products">Shop fresh products <span aria-hidden="true">→</span></button>
+        <button class="btn-outline hero-secondary-cta" routerLink="/auth/signup">Create your account</button>
       </div>
-
-      <div class="hero-highlights">
-        <div class="highlight-chip">
-          <span>🌿</span>
-          <p>100% Organic</p>
-        </div>
-
-        <div class="highlight-chip">
-          <span>🥛</span>
-          <p>Farm Fresh</p>
-        </div>
-
-        <div class="highlight-chip">
-          <span>🚚</span>
-          <p>Daily Delivery</p>
-        </div>
-
-        <div class="highlight-chip">
-          <span>❤️</span>
-          <p>Healthy & Natural</p>
-        </div>
+      <div class="hero-proof">
+        <span>✓ Farm-fresh dairy</span>
+        <span>✓ Quality checked</span>
+        <span>✓ Doorstep delivery</span>
       </div>
     </div>
-
-    <div class="hero-image" data-scroll-reveal>
-      <img src="assets/images/farm-hero.jpg" alt="Farm Fresh" />
+    <div class="hero-video-note" aria-hidden="true">
+      <span class="hero-note-mark">✳</span>
+      <span>From our farm<br /><strong>to your family</strong></span>
     </div>
   </div>
+  <a class="hero-scroll-cue" href="#features" aria-label="Scroll to discover more">
+    <span>SCROLL TO DISCOVER</span><span class="hero-scroll-line"></span>
+  </a>
 </section>
 <!-- ==========================================================
 PART 2 : FEATURES + PROCESS + PLANS
