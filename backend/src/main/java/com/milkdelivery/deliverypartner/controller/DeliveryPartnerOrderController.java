@@ -60,6 +60,13 @@ public class DeliveryPartnerOrderController {
         );
     }
 
+    @GetMapping("/profile")
+    public com.milkdelivery.deliverypartner.dto.response.DeliveryPartnerResponse getProfile(
+            Authentication authentication
+    ) {
+        return deliveryPartnerService.getProfile(authentication);
+    }
+
     @GetMapping("/dashboard")
     public DeliveryPartnerDashboardResponse getDashboard(
             Authentication authentication
