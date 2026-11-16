@@ -4,9 +4,13 @@ export interface ProductSize {
   price: number;
 }
 
+export type ProductCategory = 'DAIRY' | 'POULTRY' | 'VEGETABLES';
+
 export interface Product {
 
   id: number;
+
+  category?: ProductCategory;
 
   name: string;
 
