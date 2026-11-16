@@ -59,8 +59,18 @@ public class PaymentController {
     @PostMapping("/create-order")
     public PaymentOrderResponse createOrder(@RequestBody CreateOrderRequest request,
                                             Authentication authentication) throws Exception {
-        double total = currentCartTotal(currentUser(authentication));
-        return paymentService.createOrder(total);
+        User user = currentUser(authentication);
+        double total = currentCartTotal(user);
+        PaymentOrderResponse gatewayOrder = paymentService.createOrder(total);
+
+        Payment pendingPayment = new Payment();
+        pendingPayment.setRazorpayOrderId(gatewayOrder.getId());
+        pendingPayment.setAmount(total);
+        pendingPayment.setStatus(com.milkdelivery.payment.entity.PaymentStatus.PENDING);
+        pendingPayment.setUser(user);
+        paymentRepository.save(pendingPayment);
+
+        return gatewayOrder;
     }
 
     @PostMapping("/verify")
@@ -80,13 +90,14 @@ public class PaymentController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Payment signature verification failed.");
         }
 
-        PaymentRequest trustedRequest = new PaymentRequest();
-        trustedRequest.setRazorpayOrderId(request.getRazorpayOrderId());
-        trustedRequest.setRazorpayPaymentId(request.getRazorpayPaymentId());
-        trustedRequest.setAmount(currentCartTotal(user));
-
-        Payment payment = paymentService.savePayment(trustedRequest);
-        payment.setUser(user);
+        Payment payment = paymentRepository.findByRazorpayOrderIdAndUser(request.getRazorpayOrderId(), user)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Payment order was not found."));
+        if (payment.getStatus() != com.milkdelivery.payment.entity.PaymentStatus.PENDING) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Payment order has already been finalized.");
+        }
+        payment.setRazorpayPaymentId(request.getRazorpayPaymentId());
+        payment.setStatus(com.milkdelivery.payment.entity.PaymentStatus.SUCCESS);
+        payment.setPaymentDate(java.time.LocalDateTime.now());
         return paymentRepository.save(payment);
     }
 
