@@ -53,14 +53,16 @@
   } @else {
     <div class="products-grid">
       @for (product of filteredProducts(); track product.id) {
-        <app-product-card
-          [product]="product"
-          [quantity]="cartService.getQuantity(product.id)"
-          (view)="viewProduct($event)"
-          (add)="addToCart($event)"
-          (increase)="increase($event)"
-          (decrease)="decrease($event)"
-        ></app-product-card>
+        <div #productTile class="product-tile">
+          <app-product-card
+            [product]="product"
+            [quantity]="cartService.getQuantity(product.id)"
+            (view)="viewProduct($event)"
+            (add)="addToCart($event)"
+            (increase)="increase($event)"
+            (decrease)="decrease($event)"
+          ></app-product-card>
+        </div>
       }
     </div>
   }
