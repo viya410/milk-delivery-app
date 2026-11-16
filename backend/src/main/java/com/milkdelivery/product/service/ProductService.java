@@ -35,6 +35,20 @@ public class ProductService {
 
     }
 
+    /**
+     * Category-aware customer catalogue. Legacy rows without a category are
+     * treated as dairy so existing products remain visible after rollout.
+     */
+    public List<Product> getProductsByCategory(
+            com.milkdelivery.product.entity.ProductCategory category
+    ) {
+        return productRepository.findAll().stream()
+                .filter(product -> category == com.milkdelivery.product.entity.ProductCategory.DAIRY
+                        ? product.getCategory() == com.milkdelivery.product.entity.ProductCategory.DAIRY
+                        : product.getCategory() == category)
+                .toList();
+    }
+
     public Product getProductById(
             Long id
     ) {
@@ -78,6 +92,7 @@ public class ProductService {
         product.setCategory(updatedProduct.getCategory());
         product.setAvailable(updatedProduct.getAvailable());
         product.setHasSizeSelection(updatedProduct.getHasSizeSelection());
+        product.setCategory(updatedProduct.getCategory());
 
         product.getSizes().clear();
 
