@@ -16,7 +16,7 @@
               <mat-card-title> Order #{{ order.id }} </mat-card-title>
 
               <mat-card-subtitle>
-                {{ order.status }}
+                {{ (order.category || 'DAIRY') }} · {{ order.status }}
               </mat-card-subtitle>
             </mat-card-header>
 
