@@ -1,6 +1,7 @@
 package com.milkdelivery.address.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.milkdelivery.route.entity.Route;
 import com.milkdelivery.user.entity.User;
 import jakarta.persistence.*;
 
@@ -16,6 +17,11 @@ public class Address {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "route_id")
+    @JsonIgnore
+    private Route route;
 
     private String customerName;
 
@@ -39,6 +45,26 @@ public class Address {
 
     public Long getId() {
         return id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(
+            User user
+    ) {
+        this.user = user;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(
+            Route route
+    ) {
+        this.route = route;
     }
 
     public String getCustomerName() {
@@ -109,16 +135,6 @@ public class Address {
             String pincode
     ) {
         this.pincode = pincode;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(
-            User user
-    ) {
-        this.user = user;
     }
 
     public boolean isActive() {

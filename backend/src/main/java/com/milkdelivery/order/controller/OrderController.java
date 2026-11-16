@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.milkdelivery.order.dto.OrderResponse;
 
 import java.util.List;
+import com.milkdelivery.order.dto.OrderTimelineResponse;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -41,6 +42,20 @@ public class OrderController {
 
         return ResponseEntity.ok(
                 orderService.cancelOrder(orderId, authentication)
+        );
+    }
+
+    @GetMapping("/{orderId}/timeline")
+    public ResponseEntity<OrderTimelineResponse> getOrderTimeline(
+            @PathVariable Long orderId,
+            Authentication authentication
+    ) {
+
+        return ResponseEntity.ok(
+                orderService.getOrderTimeline(
+                        orderId,
+                        authentication
+                )
         );
     }
 }

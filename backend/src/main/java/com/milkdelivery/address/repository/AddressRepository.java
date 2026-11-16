@@ -1,8 +1,8 @@
 package com.milkdelivery.address.repository;
 
 import com.milkdelivery.address.entity.Address;
+import com.milkdelivery.route.entity.Route;
 import com.milkdelivery.user.entity.User;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -21,6 +21,10 @@ public interface AddressRepository
 
     Optional<Address> findFirstByUserAndActiveTrueOrderByIdAsc(
             User user
+    );
+
+    boolean existsByRoute(
+            Route route
     );
 
     /*

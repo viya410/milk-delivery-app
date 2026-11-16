@@ -35,6 +35,9 @@ export class Sidebar {
   readonly isAdmin = () =>
   this.authService.user()?.role === 'ROLE_ADMIN';
 
+  readonly isDeliveryPartner = () =>
+  this.authService.user()?.role === 'ROLE_DELIVERY_PARTNER';
+
   constructor() {
 this.router.events
   .pipe(filter(event => event instanceof NavigationEnd))

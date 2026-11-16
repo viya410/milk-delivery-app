@@ -23,6 +23,7 @@ import com.milkdelivery.inventory.service.InventoryService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import com.milkdelivery.order.dto.OrderTimelineResponse;
 
 @Service
 @Transactional
@@ -180,5 +181,37 @@ public class OrderService {
         Order savedOrder = orderRepository.save(order);
 
         return orderMapper.toOrderResponse(savedOrder);
+    }
+
+    public OrderTimelineResponse getOrderTimeline(
+            Long orderId,
+            Authentication authentication
+    ) {
+
+        User user = getCurrentUser(authentication);
+
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() ->
+                        new RuntimeException("Order not found.")
+                );
+
+        if (!order.getUser().getId().equals(user.getId())) {
+            throw new AccessDeniedException(
+                    "You are not allowed to view this order."
+            );
+        }
+
+        OrderTimelineResponse response =
+                new OrderTimelineResponse();
+
+        response.setOrderId(order.getId());
+        response.setStatus(order.getStatus());
+
+        response.setPlacedAt(order.getOrderDate());
+        response.setPackedAt(order.getPackedAt());
+        response.setPickedAt(order.getPickedAt());
+        response.setDeliveredAt(order.getDeliveredAt());
+
+        return response;
     }
 }

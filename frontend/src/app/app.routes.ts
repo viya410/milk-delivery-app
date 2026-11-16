@@ -91,6 +91,14 @@ export const routes: Routes = [
           },
         ],
       },
+      {
+        path: 'delivery-partner',
+        canActivate: [authGuard],
+        loadChildren: () =>
+          import('./features/delivery-partner/delivery-partner.routes').then(
+            (m) => m.DELIVERY_PARTNER_ROUTES,
+          ),
+      },
     ],
   },
 

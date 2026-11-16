@@ -1,6 +1,8 @@
 package com.milkdelivery.order.repository;
 
+import com.milkdelivery.deliverypartner.entity.DeliveryPartner;
 import com.milkdelivery.order.entity.Order;
+import com.milkdelivery.order.entity.OrderStatus;
 import com.milkdelivery.subscription.entity.Subscription;
 import com.milkdelivery.user.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +15,7 @@ public interface OrderRepository
         extends JpaRepository<Order, Long> {
 
     List<Order> findByUser(User user);
+
     Optional<Order> findById(Long id);
 
     List<Order> findByUserOrderByOrderDateDesc(User user);
@@ -20,7 +23,7 @@ public interface OrderRepository
     long countByUser(User user);
 
     long countByStatus(
-            String status
+            OrderStatus status
     );
 
     List<Order> findTop5ByOrderByOrderDateDesc();
@@ -42,6 +45,36 @@ public interface OrderRepository
     );
 
     boolean existsByOrderDateBetween(
+            LocalDateTime start,
+            LocalDateTime end
+    );
+
+    /**
+     * Orders available for a delivery partner to pick.
+     */
+    List<Order> findByStatusAndDeliveryPartnerIsNullOrderByOrderDateAsc(
+            OrderStatus status
+    );
+
+    /**
+     * Orders currently assigned to a delivery partner.
+     */
+    List<Order> findByDeliveryPartnerOrderByOrderDateDesc(
+            DeliveryPartner deliveryPartner
+    );
+
+    long countByStatusAndDeliveryPartnerIsNull(
+            OrderStatus status
+    );
+
+    long countByDeliveryPartnerAndStatus(
+            DeliveryPartner deliveryPartner,
+            OrderStatus status
+    );
+
+    long countByDeliveryPartnerAndStatusAndDeliveredAtBetween(
+            DeliveryPartner deliveryPartner,
+            OrderStatus status,
             LocalDateTime start,
             LocalDateTime end
     );
