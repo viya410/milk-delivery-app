@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, QueryList, ViewChildren, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { ProductService } from '../../../../core/services/product';
 import { Product } from '../../models/product';
@@ -24,30 +24,31 @@ import { Subscription } from 'rxjs';
 })
 export class ProductList implements OnInit, AfterViewInit, OnDestroy {
   private readonly productService = inject(ProductService);
-
   private readonly router = inject(Router);
-
+  private readonly route = inject(ActivatedRoute);
   private readonly bottomSheet = inject(MatBottomSheet);
-
   readonly cartService = inject(CartService);
-
   private readonly authService = inject(AuthService);
-
   private readonly motion = inject(MotionService);
 
   @ViewChildren('productTile', { read: ElementRef })
   private productTiles!: QueryList<ElementRef<HTMLElement>>;
 
   private tileChanges?: Subscription;
+  private categoryChanges?: Subscription;
 
+  readonly categories = [
+    { value: 'ALL', label: 'All' },
+    { value: 'DAIRY', label: 'Dairy' },
+    { value: 'POULTRY', label: 'Poultry' },
+    { value: 'VEGETABLES', label: 'Vegetables' },
+  ];
+
+  readonly selectedCategory = signal('ALL');
   readonly allProducts = signal<Product[]>([]);
-
   readonly filteredProducts = signal<Product[]>([]);
-
   readonly searchText = signal('');
-
   readonly loading = signal(true);
-
   readonly errorMessage = signal('');
 
   ngAfterViewInit(): void {
@@ -58,10 +59,17 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.tileChanges?.unsubscribe();
+    this.categoryChanges?.unsubscribe();
   }
 
   ngOnInit(): void {
     this.cartService.loadCart();
+    this.categoryChanges = this.route.queryParamMap.subscribe((params) => {
+      const requestedCategory = (params.get('category') ?? 'ALL').toUpperCase();
+      const validCategory = this.categories.some((category) => category.value === requestedCategory);
+      this.selectedCategory.set(validCategory ? requestedCategory : 'ALL');
+      this.applyFilters();
+    });
     this.loadProducts();
   }
 
@@ -72,101 +80,79 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
     this.productService.getProducts().subscribe({
       next: (response: Product[]) => {
         this.allProducts.set(response);
-
-        this.filteredProducts.set(response);
+        this.applyFilters();
         this.loading.set(false);
       },
-
       error: (error) => {
         console.error(error);
-
         this.errorMessage.set('Unable to load products. Please check your connection and try again.');
-
         this.loading.set(false);
       },
     });
   }
 
+  selectCategory(category: string): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { category: category === 'ALL' ? null : category },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   clearSearch(): void {
     this.searchText.set('');
-    this.filteredProducts.set(this.allProducts());
+    this.applyFilters();
   }
 
   search(event: Event): void {
-    const value = (event.target as HTMLInputElement).value.trim().toLowerCase();
+    this.searchText.set((event.target as HTMLInputElement).value.trim().toLowerCase());
+    this.applyFilters();
+  }
 
-    this.searchText.set(value);
+  private applyFilters(): void {
+    const category = this.selectedCategory();
+    const search = this.searchText();
 
-    if (!value) {
-      this.filteredProducts.set(this.allProducts());
+    const filtered = this.allProducts().filter((product) => {
+      const productCategory = (product.category ?? 'DAIRY').toUpperCase();
+      const matchesCategory = category === 'ALL' || productCategory === category;
+      const matchesSearch = !search ||
+        product.name.toLowerCase().includes(search) ||
+        (product.description ?? '').toLowerCase().includes(search) ||
+        (product.unit ?? '').toLowerCase().includes(search);
 
-      return;
-    }
+      return matchesCategory && matchesSearch;
+    });
 
-    this.filteredProducts.set(
-      this.allProducts().filter(
-        (product) =>
-          product.name.toLowerCase().includes(value) ||
-          product.description.toLowerCase().includes(value) ||
-          product.unit.toLowerCase().includes(value),
-      ),
-    );
+    this.filteredProducts.set(filtered);
   }
 
   addToCart(productId: number): void {
     if (!this.authService.isLoggedIn()) {
       this.router.navigate(['/auth/login']);
-
       return;
     }
 
     const product = this.allProducts().find((x) => x.id === productId);
-
-    if (!product) {
-      return;
-    }
+    if (!product) return;
 
     if (product.sizes?.length) {
       this.bottomSheet
-        .open(ProductSizeSheet, {
-          data: product,
-        })
+        .open(ProductSizeSheet, { data: product })
         .afterDismissed()
         .subscribe((size: ProductSize) => {
-          if (!size) {
-            return;
-          }
-
-          this.cartService
-            .addToCart({
-              productId,
-
-              productSizeId: size.id,
-
-              quantity: 1,
-            })
-            .subscribe();
+          if (!size) return;
+          this.cartService.addToCart({ productId, productSizeId: size.id, quantity: 1 }).subscribe();
         });
-
       return;
     }
 
-    this.cartService
-      .addToCart({
-        productId,
-
-        quantity: 1,
-      })
-      .subscribe();
+    this.cartService.addToCart({ productId, quantity: 1 }).subscribe();
   }
 
   increase(productId: number): void {
     const item = this.cartService.getCartItem(productId);
-
-    if (!item) {
-      return;
-    }
-
+    if (!item) return;
     this.cartService.increaseQuantity(item.id).subscribe({
       next: () => this.cartService.loadCart(),
     });
@@ -174,15 +160,11 @@ export class ProductList implements OnInit, AfterViewInit, OnDestroy {
 
   decrease(productId: number): void {
     const item = this.cartService.getCartItem(productId);
+    if (!item) return;
 
-    if (!item) {
-      return;
-    }
-
-    const request =
-      item.quantity === 1
-        ? this.cartService.removeItem(item.id)
-        : this.cartService.decreaseQuantity(item.id);
+    const request = item.quantity === 1
+      ? this.cartService.removeItem(item.id)
+      : this.cartService.decreaseQuantity(item.id);
 
     request.subscribe({
       next: () => this.cartService.loadCart(),
