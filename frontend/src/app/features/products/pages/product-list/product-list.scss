@@ -385,3 +385,20 @@
 
   box-shadow: none;
 }
+
+/* Customer catalog states and mobile search refinements */
+.results-count { min-height: 16px; margin: 8px 4px 0; color: #718096; font-size: 12px; }
+.clear-search { flex: 0 0 36px; width: 36px; height: 36px; border: 0; border-radius: 50%; background: #eef3ee; color: #475569; font-size: 22px; cursor: pointer; }
+.catalog-state { display: flex; min-height: 230px; flex-direction: column; align-items: center; justify-content: center; padding: 24px; border: 1px dashed #d5e0d5; border-radius: 18px; background: #fff; text-align: center; }
+.state-symbol { display: grid; width: 48px; height: 48px; place-items: center; border-radius: 50%; background: #edf7ee; color: #2e7d32; font-size: 27px; font-weight: 700; }
+.catalog-state h2 { margin: 14px 0 6px; color: #263442; font-size: 18px; }
+.catalog-state p { max-width: 360px; margin: 0 0 16px; color: #718096; font-size: 13px; line-height: 1.5; }
+.retry-button { min-height: 44px; padding: 0 20px; border: 0; border-radius: 999px; background: #2e7d32; color: #fff; font-weight: 700; cursor: pointer; }
+@media (max-width: 768px) {
+  .products-page { padding-bottom: calc(90px + env(safe-area-inset-bottom)); }
+  .search-box { min-height: 48px; box-sizing: border-box; }
+}
+@media (max-width: 480px) {
+  .clear-search { min-width: 40px; min-height: 40px; }
+  .catalog-state { min-height: 200px; padding: 20px 14px; }
+}
