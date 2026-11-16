@@ -283,23 +283,23 @@
 
   /* Add button */
   .add-btn {
-    width: 68px;
-    height: 32px;
+    width: 76px;
+    min-height: 44px;
 
     font-size: 11px;
   }
 
   /* Quantity controls */
   .quantity-controls {
-    width: 78px;
-    height: 32px;
+    width: 88px;
+    min-height: 44px;
 
     padding: 0 4px;
   }
 
   .quantity-controls button {
-    width: 23px;
-    height: 23px;
+    width: 30px;
+    height: 30px;
 
     font-size: 14px;
   }
@@ -347,20 +347,20 @@
   }
 
   .add-btn {
-    width: 58px;
-    height: 29px;
+    width: 72px;
+    min-height: 44px;
 
     font-size: 10px;
   }
 
   .quantity-controls {
-    width: 68px;
-    height: 29px;
+    width: 82px;
+    min-height: 44px;
   }
 
   .quantity-controls button {
-    width: 21px;
-    height: 21px;
+    width: 30px;
+    height: 30px;
 
     font-size: 13px;
   }
