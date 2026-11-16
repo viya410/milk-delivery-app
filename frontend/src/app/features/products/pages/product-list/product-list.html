@@ -1,9 +1,9 @@
 <section class="products-page">
   <div class="hero">
     <div class="hero-left">
-      <span class="hero-tag">🌿 100% Farm Fresh</span>
-      <h1>Fresh Dairy Delivered Daily</h1>
-      <p>Milk, Curd, Butter, Paneer & more, delivered fresh from our farm.</p>
+      <span class="hero-tag">🌿 FRESH FROM OUR FARM</span>
+      <h1>{{ farmCategory.label() }} products, delivered fresh</h1>
+      <p>{{ categoryDescription() }}</p>
     </div>
     <div class="hero-right" aria-hidden="true">🥛</div>
   </div>
@@ -34,7 +34,7 @@
     <div class="catalog-state" role="status">
       <span class="state-symbol">🥛</span>
       <h2>Finding fresh products</h2>
-      <p>Loading today's dairy selection…</p>
+      <p>Loading today's {{ farmCategory.label().toLowerCase() }} selection…</p>
     </div>
   } @else if (errorMessage()) {
     <div class="catalog-state" role="alert">
