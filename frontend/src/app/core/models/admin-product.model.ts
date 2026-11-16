@@ -8,11 +8,15 @@ export interface ProductSize {
 
 }
 
+export type ProductCategory = 'DAIRY' | 'POULTRY' | 'VEGETABLES';
+
 export interface AdminProduct {
 
   id: number;
 
   name: string;
+
+  category: ProductCategory;
 
   description: string;
 
