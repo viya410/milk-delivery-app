@@ -1,44 +1,33 @@
 spring:
   application:
     name: milk-delivery-backend
-
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5433/milk_delivery}
     username: ${DB_USERNAME:milkadmin}
     password: ${DB_PASSWORD:milkadmin123}
-
   jpa:
     hibernate:
       ddl-auto: ${DDL_AUTO:update}
     show-sql: ${SHOW_SQL:true}
 
-  mail:
-    host: ${MAIL_HOST:localhost}
-    port: ${MAIL_PORT:587}
-    username: ${MAIL_USERNAME:}
-    password: ${MAIL_PASSWORD:}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
-
 server:
   port: ${PORT:8080}
 
 razorpay:
-  key-id: RAZORPAY_ID
-  key-secret: RAZORKEY_SECRET
+  key-id: ${RAZORPAY_KEY_ID:}
+  key-secret: ${RAZORPAY_KEY_SECRET:}
 
 jwt:
-  secret: your-super-secret-key-which-should-be-at-least-32-characters-long
+  secret: ${JWT_SECRET:your-super-secret-key-which-should-be-at-least-32-characters-long}
   expiration: 86400000
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID:}
+  auth-token: ${TWILIO_AUTH_TOKEN:}
+  from-number: ${TWILIO_FROM_NUMBER:}
+  messaging-service-sid: ${TWILIO_MESSAGING_SERVICE_SID:}
 
 logging:
   level:
     org.hibernate.SQL: DEBUG
     org.hibernate.orm.jdbc.bind: TRACE
-
-app:
-  frontend-url: ${FRONTEND_URL:http://localhost:4200}
