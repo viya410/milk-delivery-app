@@ -1,58 +1,66 @@
-<div class="login-wrapper">
-  <mat-card class="login-card">
-    <div class="brand-section">
-      <img class="brand-logo" src="assets/images/logo.jpg" alt="RK Dairy Farms" />
+<main class="auth-shell login-shell">
+  <section class="auth-panel login-panel">
+    <a class="brand-mark" routerLink="/landing" aria-label="RK Farms home">
+      <img src="assets/images/logo.jpg" alt="RK Farms" />
+      <span>RK <strong>Farms</strong></span>
+    </a>
 
-      <h1>Milk Delivery</h1>
-
-      <p>Fresh dairy products delivered daily</p>
+    <div class="auth-copy">
+      <span class="eyebrow">WELCOME BACK</span>
+      <h1>Start your<br /><em>day fresh.</em></h1>
+      <p>Good to see you again. Sign in to manage your deliveries and explore fresh dairy, poultry and farm-grown vegetables.</p>
     </div>
 
-    <form [formGroup]="loginForm" (ngSubmit)="submit()">
-      <mat-form-field appearance="outline">
-        <mat-label>Email or Mobile Number</mat-label>
+    <form [formGroup]="loginForm" (ngSubmit)="submit()" class="auth-form">
+      <label class="field-label" for="login-username">Email or mobile number</label>
+      <div class="input-wrap">
+        <mat-icon>person_outline</mat-icon>
+        <input id="login-username" type="text" formControlName="username" autocomplete="username" placeholder="Enter email or mobile number" />
+      </div>
+      @if (loginForm.controls.username.touched && loginForm.controls.username.invalid) {
+        <span class="field-error">Please enter your email or mobile number.</span>
+      }
 
-        <input matInput type="text" formControlName="username" />
-
-        @if (loginForm.controls.username.touched && loginForm.controls.username.invalid) {
-          <mat-error> Email or Mobile Number is required </mat-error>
-        }
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Password</mat-label>
-
-        <input matInput [type]="hidePassword() ? 'password' : 'text'" formControlName="password" />
-
-        <button mat-icon-button matSuffix type="button" (click)="hidePassword.set(!hidePassword())">
-          <mat-icon>
-            {{ hidePassword() ? 'visibility_off' : 'visibility' }}
-          </mat-icon>
+      <label class="field-label" for="login-password">Password</label>
+      <div class="input-wrap">
+        <mat-icon>lock_outline</mat-icon>
+        <input id="login-password" [type]="hidePassword() ? 'password' : 'text'" formControlName="password" autocomplete="current-password" placeholder="Enter your password" />
+        <button class="visibility-button" type="button" (click)="hidePassword.set(!hidePassword())" [attr.aria-label]="hidePassword() ? 'Show password' : 'Hide password'">
+          <mat-icon>{{ hidePassword() ? 'visibility' : 'visibility_off' }}</mat-icon>
         </button>
-      </mat-form-field>
+      </div>
+      @if (loginForm.controls.password.touched && loginForm.controls.password.invalid) {
+        <span class="field-error">Password must be at least 6 characters.</span>
+      }
 
-      <div class="forgot-password">
-        <mat-checkbox> Remember Me </mat-checkbox>
-
-        <a routerLink="/auth/forgot-password" class="forgot-password"> Forgot Password? </a>
+      <div class="form-meta">
+        <span class="secure-note"><mat-icon>verified_user</mat-icon> Secure sign in</span>
+        <a routerLink="/auth/forgot-password">Forgot password?</a>
       </div>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="loading">
-        @if (loading) {
-          <span class="button-loading">
-            <span class="button-spinner"></span>
+      @if (errorMessage) {
+        <div class="auth-error" role="alert">{{ errorMessage }}</div>
+      }
 
-            Logging in...
-          </span>
-        } @else {
-          Login
-        }
+      <button class="primary-auth-button" type="submit" [disabled]="loading">
+        @if (loading) { <span class="button-spinner"></span> Signing you in... }
+        @else { Sign in <mat-icon>arrow_forward</mat-icon> }
       </button>
-      <div class="signup-link">
-        Don't have an account?
-
-        <a routerLink="/auth/signup"> Sign Up </a>
-      </div>
     </form>
-  </mat-card>
-</div>
+
+    <p class="auth-switch">New to the farm? <a routerLink="/auth/signup">Create an account <mat-icon>arrow_outward</mat-icon></a></p>
+    <div class="auth-footer">Fresh from our farm to your home <span>•</span> RK Farms</div>
+  </section>
+
+  <aside class="auth-visual login-visual">
+    <div class="visual-shade"></div>
+    <div class="visual-topline"><span>GROWN WITH CARE</span><span class="live-dot"></span></div>
+    <div class="visual-message">
+      <span class="visual-kicker">A LITTLE CLOSER TO THE FARM</span>
+      <h2>Real goodness.<br /><em>Every single day.</em></h2>
+      <p>Fresh dairy, farm-raised poultry and seasonal vegetables, brought home with care.</p>
+      <div class="department-pills"><span>DAIRY</span><span>POULTRY</span><span>VEGETABLES</span></div>
+    </div>
+    <div class="visual-caption"><span class="caption-line"></span> FARM FRESH · LOCALLY GROWN</div>
+  </aside>
+</main>
