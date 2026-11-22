@@ -13,6 +13,8 @@ public interface UserRepository
             String email
     );
 
+    Optional<User> findByEmailIgnoreCase(String email);
+
     Optional<User> findByPhoneNumber(
             String phoneNumber
     );
