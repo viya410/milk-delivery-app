@@ -45,8 +45,8 @@ public class PasswordResetService {
 
     @Transactional
     public void requestReset(ForgotPasswordRequest request) {
-        String email = request.email().trim().toLowerCase();
-        users.findByEmail(email).ifPresent(user -> {
+        String email = request.email().trim();
+        users.findByEmailIgnoreCase(email).ifPresent(user -> {
             byte[] bytes = new byte[32];
             secureRandom.nextBytes(bytes);
             String rawToken = Base64.getUrlEncoder().withoutPadding().encodeToString(bytes);
