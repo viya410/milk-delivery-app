@@ -12,6 +12,18 @@ spring:
       ddl-auto: ${DDL_AUTO:update}
     show-sql: ${SHOW_SQL:true}
 
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
 server:
   port: ${PORT:8080}
 
@@ -23,22 +35,10 @@ jwt:
   secret: your-super-secret-key-which-should-be-at-least-32-characters-long
   expiration: 86400000
 
-  logging:
-    level:
-      org.hibernate.SQL: DEBUG
-      org.hibernate.orm.jdbc.bind: TRACE
-# Configure SMTP credentials through deployment environment variables.
-  mail:
-    host: ${MAIL_HOST:}
-    port: ${MAIL_PORT:587}
-    username: ${MAIL_USERNAME:}
-    password: ${MAIL_PASSWORD:}
-    properties:
-      mail:
-        smtp:
-          auth: true
-          starttls:
-            enable: true
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.orm.jdbc.bind: TRACE
 
 app:
   frontend-url: ${FRONTEND_URL:http://localhost:4200}
