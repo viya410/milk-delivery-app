@@ -39,8 +39,7 @@ export class ForgotPassword {
         },
         error: () => {
           this.loading.set(false);
-          // Keep the response generic to avoid revealing whether an account exists.
-          this.submitted.set(true);
+          this.errorMessage.set('We could not send the reset email right now. Please try again shortly.');
         }
       });
   }
