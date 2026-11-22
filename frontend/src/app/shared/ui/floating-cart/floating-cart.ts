@@ -23,7 +23,8 @@ export class FloatingCartComponent {
 
   private readonly currentRoute = signal(this.router.url);
 
-  private readonly hiddenRoutes = ['/cart', '/checkout', '/order-success'];
+  // Shopping controls are intentionally unavailable until the customer enters the marketplace.
+  private readonly hiddenRoutes = ['/auth', '/cart', '/checkout', '/order-success'];
 
   readonly showCart = computed(() => {
     const isHiddenRoute = this.hiddenRoutes.some((route) => this.currentRoute().startsWith(route));
