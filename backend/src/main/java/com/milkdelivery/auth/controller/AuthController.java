@@ -16,43 +16,18 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-
     private final AuthService authService;
     private final DeliveryPartnerService deliveryPartnerService;
     private final PasswordResetService passwordResetService;
 
-    public AuthController(AuthService authService,
-            DeliveryPartnerService deliveryPartnerService,
-            PasswordResetService passwordResetService) {
-        this.authService = authService;
-        this.deliveryPartnerService = deliveryPartnerService;
-        this.passwordResetService = passwordResetService;
+    public AuthController(AuthService authService, DeliveryPartnerService deliveryPartnerService, PasswordResetService passwordResetService) {
+        this.authService = authService; this.deliveryPartnerService = deliveryPartnerService; this.passwordResetService = passwordResetService;
     }
-
-    @PostMapping("/register")
-    public void register(@RequestBody RegisterRequest request) {
-        authService.register(request);
-    }
-
-    @PostMapping("/delivery-partner/register")
-    public void registerDeliveryPartner(@Valid @RequestBody DeliveryPartnerRegisterRequest request) {
-        deliveryPartnerService.registerDeliveryPartner(request);
-    }
-
-    @PostMapping("/login")
-    public AuthResponse login(@RequestBody LoginRequest request) {
-        return authService.login(request);
-    }
-
-    @PostMapping("/forgot-password")
-    @ResponseStatus(HttpStatus.OK)
-    public void forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
-        passwordResetService.requestReset(request);
-    }
-
-    @PostMapping("/reset-password")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
-        passwordResetService.resetPassword(request);
-    }
+    @PostMapping("/register") public void register(@RequestBody RegisterRequest request) { authService.register(request); }
+    @PostMapping("/delivery-partner/register") public void registerDeliveryPartner(@Valid @RequestBody DeliveryPartnerRegisterRequest request) { deliveryPartnerService.registerDeliveryPartner(request); }
+    @PostMapping("/login") public AuthResponse login(@RequestBody LoginRequest request) { return authService.login(request); }
+    @PostMapping("/forgot-password") @ResponseStatus(HttpStatus.OK)
+    public void forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) { passwordResetService.requestReset(request); }
+    @PostMapping("/reset-password") @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void resetPassword(@Valid @RequestBody ResetPasswordRequest request) { passwordResetService.resetPassword(request); }
 }
