@@ -20,16 +20,9 @@ Pre-requisites: Needs java, docker & postgres sql installed
 5. Build and run your maven project using the command: ./mvnw spring-boot:run
 
 
-## Password recovery email setup
 
-Password recovery uses an email address on the account. Phone-only accounts need an email address added before they can use this flow; SMS recovery is not configured.
+## Mobile OTP password recovery
 
-Configure these environment variables for the backend before testing email delivery:
+Forgot-password verification uses the registered Indian mobile number. The backend sends a six-digit OTP by SMS; the OTP expires after 5 minutes, is stored only as a SHA-256 hash, and is limited to 5 verification attempts with a 60-second resend cooldown.
 
-- `MAIL_HOST`: SMTP server hostname.
-- `MAIL_PORT`: SMTP port (usually `587` for STARTTLS).
-- `MAIL_USERNAME`: SMTP account username / sender address.
-- `MAIL_PASSWORD`: SMTP app password or SMTP credential.
-- `FRONTEND_URL`: public frontend origin used to build reset links (for local development, `http://localhost:4200`).
-
-Do not commit SMTP credentials. The backend creates the `password_reset_tokens` table through the configured JPA schema management. Reset links expire after 30 minutes and are single-use. The raw token is not stored in the database; only its SHA-256 hash is persisted.
+Configure Twilio SMS delivery using backend environment variables: `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, and either `TWILIO_FROM_NUMBER` or `TWILIO_MESSAGING_SERVICE_SID`. Use a sender enabled for the destination country and comply with local sender registration and messaging rules. Keep credentials in deployment secrets; never commit them.
