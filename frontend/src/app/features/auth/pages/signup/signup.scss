@@ -1,103 +1,91 @@
-.signup-wrapper {
-  min-height: 100vh;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  padding: 24px;
-
-  background: #f5f7fb;
+@use '../login/login' as login-theme;
+:host { display:block; min-height:100svh; }
+.auth-shell { min-height:100svh; display:grid; grid-template-columns:minmax(520px,54%) 1fr; padding:18px; background:#f1f3ed; }
+.auth-panel { position:relative; z-index:1; display:flex; flex-direction:column; padding:clamp(24px,3.4vw,48px) clamp(30px,4vw,62px); background:#06472d; color:#f7f8ed; border-radius:24px 0 0 24px; overflow:hidden; }
+.brand-mark { display:flex; align-items:center; gap:10px; color:#fff; text-decoration:none; font-size:19px; letter-spacing:-.04em; font-weight:500; }
+.brand-mark img { width:34px; height:34px; border-radius:50%; object-fit:cover; background:#fff; }
+.brand-mark strong { color:#d3f34e; }
+.auth-copy { margin:24px 0 18px; animation:signup-rise .6s both; }
+.eyebrow,.step-label { display:block; color:#c5e96b; font-size:9px; font-weight:800; letter-spacing:.17em; }
+.auth-copy h1 { margin:11px 0 10px; color:#fff; font-size:clamp(35px,3.5vw,48px); line-height:.98; letter-spacing:-.055em; }
+.auth-copy h1 em { color:#d4f34f; font-style:normal; }
+.auth-copy p { max-width:420px; margin:0; color:rgba(244,248,235,.72); font-size:12px; line-height:1.55; }
+.auth-form { width:100%; max-width:620px; display:flex; flex-direction:column; gap:12px; animation:signup-rise .7s .08s both; }
+.account-heading h2 { margin:7px 0 3px; color:#fff; font-size:17px; letter-spacing:-.025em; }
+.account-heading p { margin:0; color:rgba(245,248,236,.62); font-size:11px; }
+.step-label { display:flex; align-items:center; gap:8px; color:#d5f34f; font-size:9px; }
+.step-label i { width:28px; height:1px; background:rgba(213,243,79,.5); }
+.account-type-options { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.account-choice { min-width:0; display:flex; align-items:center; gap:10px; padding:11px; border:1px solid rgba(255,255,255,.18); border-radius:12px; background:rgba(255,255,255,.055); color:#fff; text-align:left; cursor:pointer; transition:transform .2s,border-color .2s,background .2s; }
+.account-choice:hover { transform:translateY(-2px); border-color:rgba(212,243,79,.6); }
+.account-choice.selected { border-color:#d4f34f; background:rgba(212,243,79,.11); box-shadow:inset 0 0 0 1px rgba(212,243,79,.2); }
+.choice-icon { flex:0 0 38px; width:38px; height:38px; display:grid; place-items:center; border-radius:10px; color:#d4f34f; background:rgba(212,243,79,.12); }
+.choice-copy { display:flex; flex:1; min-width:0; flex-direction:column; gap:3px; }
+.choice-copy strong { font-size:11px; }
+.choice-copy small { color:rgba(245,248,236,.6); font-size:9px; }
+.choice-check { color:rgba(255,255,255,.22); font-size:18px; }
+.account-choice.selected .choice-check { color:#d4f34f; }
+.details-heading { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:2px; }
+.secure-note { display:flex; align-items:center; gap:4px; color:rgba(245,248,236,.52); font-size:9px; }
+.secure-note mat-icon { font-size:12px; width:12px; height:12px; }
+.form-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px 12px; }
+.form-field { min-width:0; display:flex; flex-direction:column; gap:5px; }
+.form-field label { color:rgba(247,248,237,.9); font-size:10px; font-weight:650; }
+.input-wrap { min-height:42px; display:flex; align-items:center; gap:8px; padding:0 10px; border:1px solid rgba(255,255,255,.17); border-radius:9px; background:rgba(255,255,255,.08); transition:border-color .2s,box-shadow .2s; }
+.input-wrap:focus-within { border-color:#d3f34e; box-shadow:0 0 0 3px rgba(211,243,78,.1); }
+.input-wrap > mat-icon { color:#b8d4bd; font-size:16px; width:17px; height:17px; }
+.input-wrap input { width:100%; min-width:0; border:0; outline:0; background:transparent; color:#fff; font:inherit; font-size:10px; }
+.input-wrap input::placeholder { color:rgba(245,248,236,.42); }
+.visibility-button { border:0; background:transparent; color:#c6d9c8; cursor:pointer; padding:3px; }
+.visibility-button mat-icon { font-size:16px; }
+.full-field { grid-column:1/-1; }
+.field-error { color:#ffd3c9; font-size:9px; }
+.terms-check { color:rgba(245,248,236,.7); font-size:10px; }
+.primary-auth-button { min-height:45px; display:flex; align-items:center; justify-content:center; gap:9px; border:0; border-radius:9px; background:#d4f34f; color:#163a20; font-size:12px; font-weight:800; cursor:pointer; transition:transform .2s,box-shadow .2s; }
+.primary-auth-button:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 9px 20px rgba(0,0,0,.18); }
+.primary-auth-button:disabled { opacity:.7; cursor:wait; }
+.primary-auth-button mat-icon { font-size:17px; }
+.button-spinner { width:14px; height:14px; border:2px solid rgba(22,58,32,.25); border-top-color:#163a20; border-radius:50%; animation:signup-spin .7s linear infinite; }
+.auth-switch { margin:15px 0 0; color:rgba(245,248,236,.7); font-size:10px; }
+.auth-switch a { display:inline-flex; align-items:center; gap:2px; margin-left:4px; color:#d4f34f; font-weight:700; text-decoration:none; }
+.auth-switch a mat-icon { font-size:12px; width:12px; height:12px; }
+.auth-footer { margin-top:auto; padding-top:14px; color:rgba(245,248,236,.4); font-size:9px; }
+.auth-footer span { color:#d4f34f; padding:0 5px; }
+.auth-visual { position:relative; min-height:calc(100svh - 36px); display:flex; flex-direction:column; justify-content:space-between; padding:clamp(28px,4vw,54px); overflow:hidden; border-radius:0 24px 24px 0; background-image:url('/assets/images/farm-hero.jpg'); background-size:cover; background-position:center; color:#fff; }
+.visual-shade { position:absolute; inset:0; background:linear-gradient(180deg,rgba(5,35,19,.12),rgba(5,35,19,.08) 36%,rgba(5,35,19,.78)); }
+.visual-topline,.visual-message,.visual-caption { position:relative; z-index:1; }
+.visual-topline { display:flex; align-items:center; gap:9px; font-size:9px; font-weight:800; letter-spacing:.18em; }
+.live-dot { width:7px; height:7px; border-radius:50%; background:#d4f34f; box-shadow:0 0 0 5px rgba(212,243,79,.2); }
+.visual-message { margin-bottom:3vh; animation:signup-rise .8s .15s both; }
+.visual-kicker { color:#d4f34f; font-size:9px; font-weight:800; letter-spacing:.16em; }
+.visual-message h2 { margin:12px 0; font-size:clamp(35px,4vw,58px); line-height:.98; letter-spacing:-.055em; }
+.visual-message h2 em { color:#d4f34f; font-style:normal; }
+.visual-message p { max-width:340px; color:rgba(255,255,255,.84); font-size:12px; line-height:1.6; }
+.department-pills { display:flex; flex-wrap:wrap; gap:7px; margin-top:18px; }
+.department-pills span { padding:8px 10px; border:1px solid rgba(255,255,255,.55); border-radius:30px; background:rgba(8,48,27,.3); backdrop-filter:blur(8px); font-size:8px; font-weight:800; letter-spacing:.1em; }
+.visual-caption { display:flex; align-items:center; gap:9px; font-size:8px; font-weight:800; letter-spacing:.16em; }
+.caption-line { width:30px; height:1px; background:#d4f34f; }
+@keyframes signup-rise { from { opacity:0; transform:translateY(15px); } to { opacity:1; transform:translateY(0); } }
+@keyframes signup-spin { to { transform:rotate(360deg); } }
+@media (max-width:1050px) { .auth-shell { grid-template-columns:minmax(500px,58%) 1fr; padding:10px; } .auth-panel { padding:24px 28px; } .auth-visual { min-height:calc(100svh - 20px); padding:26px; } }
+@media (max-width:700px) {
+  .auth-shell { display:block; min-height:100svh; padding:0; background:#06472d; }
+  .auth-panel { min-height:100svh; padding:20px 20px 22px; border-radius:0; background:linear-gradient(155deg,#075334 0%,#043c27 75%); }
+  .brand-mark img { width:30px; height:30px; }
+  .auth-copy { margin:21px 0 18px; }
+  .auth-copy h1 { font-size:clamp(36px,10vw,48px); }
+  .auth-copy p { font-size:11px; }
+  .auth-form { gap:11px; }
+  .account-heading h2 { font-size:16px; }
+  .account-choice { padding:9px; gap:7px; }
+  .choice-icon { flex-basis:32px; width:32px; height:32px; }
+  .choice-copy strong { font-size:10px; }
+  .choice-copy small { font-size:8px; }
+  .form-grid { gap:10px 8px; }
+  .input-wrap { min-height:44px; padding:0 8px; gap:6px; }
+  .input-wrap input { font-size:10px; }
+  .details-heading { margin-top:3px; }
+  .auth-footer { margin-top:auto; padding-top:22px; }
 }
-
-.signup-card {
-  width: 100%;
-  max-width: 500px;
-
-  padding: 32px;
-}
-
-.brand-section {
-  text-align: center;
-  margin-bottom: 24px;
-
-  h1 {
-    margin-bottom: 8px;
-  }
-
-  p {
-    color: #666;
-  }
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-mat-form-field {
-  width: 100%;
-}
-
-.login-link {
-  text-align: center;
-}
-
-a {
-  text-decoration: none;
-}
-
-button[type='submit'] {
-  height: 50px;
-
-  border-radius: 10px;
-}
-
-button[type='submit']:disabled {
-  cursor: not-allowed;
-
-  opacity: 0.75;
-}
-
-.button-loading {
-  display: inline-flex;
-
-  align-items: center;
-  justify-content: center;
-
-  gap: 10px;
-}
-
-.button-spinner {
-  width: 18px;
-  height: 18px;
-
-  border: 2px solid rgba(255, 255, 255, 0.4);
-
-  border-top-color: #fff;
-
-  border-radius: 50%;
-
-  animation: buttonSpin 0.8s linear infinite;
-}
-
-@keyframes buttonSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.account-type { display: flex; flex-direction: column; gap: 9px; }
-.account-type-label { margin: 0; color: #475569; font-size: 13px; font-weight: 650; }
-.account-type-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.account-type-options button {
-  min-height: 46px; padding: 8px 12px; border: 1px solid #d7dee7;
-  border-radius: 9px; background: #fff; color: #475569; font: inherit;
-  font-size: 13px; font-weight: 650; cursor: pointer;
-}
-.account-type-options button.selected {
-  border-color: #247a3d; background: #edf7ef; color: #247a3d;
-  box-shadow: inset 0 0 0 1px #247a3d;
-}
-.account-type-hint { margin: 0; color: #64748b; font-size: 12px; line-height: 1.45; }
+@media (max-width:380px) { .auth-panel { padding-left:15px; padding-right:15px; } .account-type-options { gap:6px; } .account-choice { padding:8px 6px; } .choice-copy small { font-size:7px; } .form-grid { grid-template-columns:1fr; } .full-field { grid-column:auto; } }
+@media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation:none!important; transition:none!important; } }
