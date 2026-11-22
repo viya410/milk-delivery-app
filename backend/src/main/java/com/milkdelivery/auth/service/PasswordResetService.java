@@ -57,7 +57,7 @@ public class PasswordResetService {
         });
     }
 
-    @Transactional
+    @Transactional(noRollbackFor = ResponseStatusException.class)
     public void resetPassword(ResetPasswordRequest request) {
         User user = users.findByPhoneNumber(request.phoneNumber()).orElseThrow(this::invalidOtp);
         PasswordResetOtp record = otps.findTopByUserAndUsedAtIsNullOrderByCreatedAtDesc(user).orElseThrow(this::invalidOtp);
