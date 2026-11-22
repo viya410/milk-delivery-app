@@ -121,7 +121,7 @@
 
 /* Desktop signup: compact the complete form to fit a standard laptop viewport. */
 @media (min-width:701px) {
-  .auth-shell { min-height:100svh; height:100svh; grid-template-columns:minmax(520px,54%) 1fr; padding:12px; overflow:hidden; }
+  .auth-shell { box-sizing:border-box; min-height:100svh; height:100svh; grid-template-columns:minmax(520px,54%) 1fr; padding:12px; overflow:hidden; }
   .auth-panel { min-height:0; height:calc(100svh - 24px); padding:20px clamp(28px,3.2vw,48px) 16px; overflow-y:auto; scrollbar-width:thin; }
   .brand-mark img { width:29px; height:29px; }
   .brand-mark { font-size:17px; }
