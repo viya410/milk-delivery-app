@@ -43,12 +43,12 @@ export class AuthService {
       );
   }
 
-  requestPasswordReset(email: string): Observable<void> {
-    return this.http.post<void>(`${this.API_URL}/forgot-password`, { email });
+  requestPasswordReset(phoneNumber: string): Observable<void> {
+    return this.http.post<void>(`${this.API_URL}/forgot-password`, { phoneNumber });
   }
 
-  resetPassword(token: string, newPassword: string): Observable<void> {
-    return this.http.post<void>(`${this.API_URL}/reset-password`, { token, newPassword });
+  resetPassword(phoneNumber: string, otp: string, newPassword: string): Observable<void> {
+    return this.http.post<void>(`${this.API_URL}/reset-password`, { phoneNumber, otp, newPassword });
   }
 
   register(request: RegisterRequest): Observable<void> {
