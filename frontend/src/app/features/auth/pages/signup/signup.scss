@@ -68,6 +68,30 @@
 @keyframes signup-spin { to { transform:rotate(360deg); } }
 @media (max-width:1050px) { .auth-shell { grid-template-columns:minmax(500px,58%) 1fr; padding:10px; } .auth-panel { padding:24px 28px; } .auth-visual { min-height:calc(100svh - 20px); padding:26px; } }
 @media (max-width:700px) {
+  :host { min-height:100svh; }
+  .auth-shell { min-height:100svh; }
+  .auth-panel { min-height:100svh; box-sizing:border-box; }
+  .auth-copy { margin:16px 0 13px; }
+  .auth-copy h1 { font-size:clamp(33px,9vw,43px); }
+  .auth-form { gap:9px; }
+  .input-wrap { min-height:42px; }
+  .primary-auth-button { min-height:48px; }
+  .auth-footer { padding-top:16px; }
+}
+@media (max-width:700px) and (max-height:780px) {
+  .auth-panel { padding-top:13px; padding-bottom:13px; }
+  .auth-copy { margin:12px 0 10px; }
+  .auth-copy h1 { font-size:34px; margin:7px 0; }
+  .auth-copy p { font-size:10px; line-height:1.35; }
+  .auth-form { gap:7px; }
+  .account-choice { padding:7px; }
+  .choice-icon { flex-basis:29px; width:29px; height:29px; }
+  .form-grid { gap:7px 8px; }
+  .input-wrap { min-height:39px; }
+  .auth-switch { margin-top:10px; }
+  .auth-footer { padding-top:10px; }
+}
+@media (max-width:700px) {
   .auth-shell { display:block; min-height:100svh; padding:0; background:#06472d; }
   .auth-panel { min-height:100svh; padding:20px 20px 22px; border-radius:0; background:linear-gradient(155deg,#075334 0%,#043c27 75%); }
   .brand-mark img { width:30px; height:30px; }
