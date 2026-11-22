@@ -28,7 +28,6 @@ jwt:
       org.hibernate.SQL: DEBUG
       org.hibernate.orm.jdbc.bind: TRACE
 # Configure SMTP credentials through deployment environment variables.
-spring:
   mail:
     host: ${MAIL_HOST:}
     port: ${MAIL_PORT:587}
